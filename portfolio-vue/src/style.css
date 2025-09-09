@@ -2,8 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Fonte cyberpunk */
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&display=swap');
+
 :root {
   --primary: #3b82f6;
   --primary-dark: #1d4ed8;
@@ -324,12 +323,12 @@ body::before {
   font-size: 2.5rem;
   font-weight: 700;
   margin-bottom: 1rem;
-  color: var(--white);
+  color: var(--primary);
 }
 
 .section-subtitle {
   font-size: 1.2rem;
-  color: var(--gray);
+  color: var(--white);
 }
 
 /* About */
@@ -349,7 +348,7 @@ body::before {
 .about-text {
   font-size: 1.1rem;
   line-height: 1.8;
-  color: var(--light-gray);
+  color: var(--gray);
 }
 
 .about-paragraph {
@@ -768,7 +767,7 @@ body::before {
 
 .section-subtitle {
   font-size: 1.2rem;
-  color: var(--gray);
+  color: var(--white);
 }
 
 /* About */
