@@ -1,11 +1,11 @@
 export const navItems = [
-  { name: 'Início', href: '#home' },
-  { name: 'Sobre', href: '#about' },
-  { name: 'Designer', href: '#design' },
-  { name: 'Programação', href: '#programming' },
-  { name: 'Pesquisa', href: '#research' },
-  { name: 'Habilidades', href: '#skills' },
-  { name: 'Contato', href: '#contact' },
+  { name: 'Início', to: { path: '/', hash: '#home' } },
+  { name: 'Sobre', to: { path: '/', hash: '#about' } },
+  { name: 'Designer', to: '/designer' },
+  { name: 'Programação', to: '/programacao' },
+  { name: 'Pesquisa', to: '/pesquisa' },
+  { name: 'Habilidades', to: { path: '/', hash: '#skills' } },
+  { name: 'Contato', to: { path: '/', hash: '#contact' } },
 ]
 
 export const floatingSkills = [
@@ -53,62 +53,54 @@ export const technologies = [
   'Vercel',
 ]
 
-export const projects = [
-  {
-    title: 'Portfólio Vue',
-    description: 'Portfólio pessoal responsivo criado com Vue 3, Vite e CSS moderno.',
-    tech: ['Vue.js', 'Vite', 'CSS'],
-    link: 'https://github.com/EmillySatiro',
-    image: '/logo_emilly_sátiro.png',
-  },
-  {
-    title: 'Sistema de Cantina',
-    description: 'Aplicação web para gerenciamento de cantina universitária, vendas e dashboard.',
-    tech: ['Vue.js', 'Node.js', 'CSS'],
-    link: 'https://github.com/EmillySatiro',
-    image: '/Git_log.webp',
-  },
-  {
-    title: 'Mask R-CNN Amastigotas',
-    description: 'Segmentação e detecção de amastigotas com visão computacional e redes neurais.',
-    tech: ['Python', 'PyTorch', 'Machine Learning'],
-    link: 'https://github.com/EmillySatiro',
-    image: '/Git_log.webp',
-  },
-  {
-    title: 'Sistema RPG',
-    description: 'Sistema de criação de personagens de RPG em Haskell com interface de console.',
-    tech: ['Haskell', 'Console App'],
-    link: 'https://github.com/EmillySatiro',
-    image: '/Git_log.webp',
-  },
-]
-
 export const skills = [
   {
-    name: 'Desenvolvimento Web',
-    description: 'Criação de interfaces responsivas, APIs e aplicações completas.',
-    items: ['HTML', 'CSS', 'JavaScript', 'TypeScript', 'Vue.js', 'React', 'Node.js', 'Flask'],
+    name: 'Front-end',
+    type: 'Interface',
+    level: 'Avançado',
+    symbol: '</>',
+    description: 'Criação de telas responsivas, componentes reutilizáveis e experiências web.',
+    items: ['React', 'Vue.js', 'Quasar', 'HTML5', 'CSS', 'TailwindCSS', 'Vite'],
   },
   {
-    name: 'Inteligência Artificial',
-    description: 'Soluções com machine learning, visão computacional e análise de dados.',
-    items: ['Python', 'PyTorch', 'Detectron2', 'Scikit-learn', 'OpenCV', 'Pandas', 'NumPy'],
+    name: 'Full Stack',
+    type: 'Sistemas',
+    level: 'Intermediário',
+    symbol: '{}',
+    description: 'Desenvolvimento de aplicações completas com integração entre interface, API e dados.',
+    items: ['Node.js', 'FastAPI', 'APIs REST', 'Firebase', 'Docker'],
   },
   {
-    name: 'Design e Produto',
-    description: 'Prototipação, identidade visual e organização de experiências digitais.',
-    items: ['Figma', 'Canva', 'Photoshop', 'UI/UX', 'Wireframes'],
+    name: 'UI/UX Design',
+    type: 'Produto',
+    level: 'Avançado',
+    symbol: 'UI',
+    description: 'Prototipação, fluxos de navegação, organização visual e design de interfaces.',
+    items: ['Figma', 'Wireframes', 'UI Design', 'UX Design', 'Identidade visual'],
   },
   {
-    name: 'Processos e Documentação',
-    description: 'Levantamento de requisitos, modelagem e documentação de software.',
-    items: ['UML', 'Scrum', 'Kanban', 'Requisitos', 'Documentação Técnica'],
+    name: 'IA e Dados',
+    type: 'Pesquisa',
+    level: 'Intermediário',
+    symbol: 'AI',
+    description: 'Pesquisa aplicada, análise de dados, classificação e visão computacional.',
+    items: ['Python', 'Jupyter', 'Machine Learning', 'Visão computacional', 'OpenCV'],
   },
   {
-    name: 'Banco de Dados e Infraestrutura',
-    description: 'Organização de dados, versionamento e entrega de aplicações.',
-    items: ['PostgreSQL', 'SQLite', 'Redis', 'Docker', 'Git', 'GitHub', 'Vercel'],
+    name: 'Banco de Dados',
+    type: 'Dados',
+    level: 'Intermediário',
+    symbol: 'DB',
+    description: 'Modelagem, estruturação de entidades e integração com aplicações web.',
+    items: ['PostgreSQL', 'SQLite', 'Modelagem', 'Integração de dados'],
+  },
+  {
+    name: 'Processos',
+    type: 'Organização',
+    level: 'Intermediário',
+    symbol: 'DOC',
+    description: 'Organização de projetos, documentação técnica e levantamento de requisitos.',
+    items: ['Git', 'GitHub', 'Documentação', 'Requisitos', 'Arquitetura'],
   },
 ]
 

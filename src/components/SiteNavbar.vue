@@ -4,13 +4,13 @@
       <div class="nav-actions">
         <ul class="nav-list" :class="{ 'is-open': isMenuOpen }">
           <li v-for="item in items" :key="item.name">
-            <a
-              :href="item.href"
-              :class="{ active: activeHref === item.href }"
-              @click="setActive(item.href)"
+            <RouterLink
+              :to="item.to"
+              :class="{ active: isActive(item.to) }"
+              @click="closeMenu"
             >
               {{ item.name }}
-            </a>
+            </RouterLink>
           </li>
         </ul>
 
@@ -40,8 +40,13 @@
 </template>
 
 <script>
+import { RouterLink } from 'vue-router'
+
 export default {
   name: 'SiteNavbar',
+  components: {
+    RouterLink,
+  },
   props: {
     items: {
       type: Array,
@@ -52,19 +57,13 @@ export default {
     return {
       isMenuOpen: false,
       theme: 'dark',
-      activeHref: '#home',
     }
   },
   mounted() {
     const savedTheme = localStorage.getItem('theme')
     const prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches
     this.theme = savedTheme || (prefersLight ? 'light' : 'dark')
-    this.activeHref = window.location.hash || '#home'
     this.applyTheme()
-    window.addEventListener('hashchange', this.syncActiveFromHash)
-  },
-  beforeUnmount() {
-    window.removeEventListener('hashchange', this.syncActiveFromHash)
   },
   methods: {
     toggleMenu() {
@@ -73,12 +72,12 @@ export default {
     closeMenu() {
       this.isMenuOpen = false
     },
-    setActive(href) {
-      this.activeHref = href
-      this.closeMenu()
-    },
-    syncActiveFromHash() {
-      this.activeHref = window.location.hash || '#home'
+    isActive(to) {
+      const target = typeof to === 'string' ? { path: to, hash: '' } : to
+      if (target.path !== this.$route.path) return false
+      if (!target.hash) return true
+      if (target.hash === '#home') return this.$route.hash === '' || this.$route.hash === '#home'
+      return this.$route.hash === target.hash
     },
     toggleTheme() {
       this.theme = this.theme === 'dark' ? 'light' : 'dark'
