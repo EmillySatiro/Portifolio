@@ -1,8 +1,8 @@
 <template>
   <main>
-    <HeroSection :skills="floatingSkills" />
+    <HeroSection />
     <AboutSection />
-    <SkillsSection :categories="skills" />
+    <SkillsSection :categories="itProjects" />
     <ContactSection :methods="contactMethods" />
   </main>
 </template>
@@ -12,7 +12,7 @@ import AboutSection from '../components/AboutSection.vue'
 import ContactSection from '../components/ContactSection.vue'
 import HeroSection from '../components/HeroSection.vue'
 import SkillsSection from '../components/SkillsSection.vue'
-import { contactMethods, floatingSkills, skills } from '../data/portfolio'
+import { contactMethods, itProjects } from '../data/portfolio'
 
 export default {
   name: 'HomeView',
@@ -25,8 +25,7 @@ export default {
   data() {
     return {
       contactMethods,
-      floatingSkills,
-      skills,
+      itProjects,
     }
   },
 }

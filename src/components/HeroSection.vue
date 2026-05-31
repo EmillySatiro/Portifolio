@@ -1,15 +1,13 @@
 <template>
-  <section id="home" class="hero section-offset">
-    <div class="hero-frame">
-      <div class="smoke-layer smoke-layer-one" aria-hidden="true"></div>
-      <div class="smoke-layer smoke-layer-two" aria-hidden="true"></div>
-      <div class="smoke-layer smoke-layer-three" aria-hidden="true"></div>
-      <strong class="hero-word" aria-hidden="true">PORTFÓLIO</strong>
-
-      <div class="container hero-intro">
-        <div class="hero-copy">
+  <section id="home" class="hero gothic-hero section-offset">
+    <div class="gothic-frame">
+      <div class="gothic-ornament gothic-ornament-left" aria-hidden="true"></div>
+      <div class="gothic-ornament gothic-ornament-right" aria-hidden="true"></div>
+      <div class="container gothic-layout gothic-layout-single">
+        <div class="gothic-copy">
+          <p class="gothic-kicker">Emílly Sátiro</p>
           <h1>Portfólio</h1>
-          <p class="hero-role">Designer · Desenvolvedora Full Stack · Pesquisadora em IA</p>
+          <p class="gothic-role">Designer · Desenvolvedora Full Stack · Pesquisadora em IA</p>
         </div>
       </div>
     </div>
@@ -19,11 +17,5 @@
 <script>
 export default {
   name: 'HeroSection',
-  props: {
-    skills: {
-      type: Array,
-      required: true,
-    },
-  },
 }
 </script>
