@@ -120,9 +120,4 @@ export const contactMethods = [
     detail: 'github.com/EmillySatiro',
     link: 'https://github.com/EmillySatiro',
   },
-  {
-    title: 'Instagram',
-    detail: '@__urano___',
-    link: 'https://www.instagram.com/__urano___/',
-  },
 ]

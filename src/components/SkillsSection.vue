@@ -6,10 +6,6 @@
           <p class="eyebrow">Habilidades</p>
           <h2>Cartas de competência</h2>
         </div>
-        <p>
-          Um mapa visual das áreas em que atuo, combinando desenvolvimento,
-          design, pesquisa e organização técnica.
-        </p>
       </div>
 
       <div class="skills-grid">

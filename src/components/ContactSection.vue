@@ -3,12 +3,18 @@
     <div class="container">
       <div class="contact-title">
         <p class="eyebrow">Contato</p>
-        <h2>Vamos criar algo?</h2>
-        <p>Estou disponível para oportunidades, parcerias e novos projetos.</p>
+
       </div>
 
       <div class="contact-grid">
-        <div class="contact-methods">
+        <div class="contact-info">
+          <h3>Me encontre por aqui</h3>
+          <p>
+            Para propostas, dúvidas ou convites, envie uma mensagem pelo formulário
+            ou escolha um dos canais profissionais abaixo.
+          </p>
+
+          <div class="contact-methods">
           <a
             v-for="method in methods"
             :key="method.title"
@@ -20,9 +26,11 @@
             <strong>{{ method.title }}</strong>
             <span>{{ method.detail }}</span>
           </a>
+          </div>
         </div>
 
         <form class="contact-form" action="https://formspree.io/f/mpwjkpen" method="POST">
+          <h3>Envie uma mensagem</h3>
           <label>
             Nome
             <input type="text" name="name" placeholder="Seu nome" required />
