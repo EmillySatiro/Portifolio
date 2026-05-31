@@ -1,43 +1,29 @@
 <template>
   <section id="about" class="section about">
-    <div class="container">
-      <div class="split-heading">
-        <div>
-          <p class="eyebrow">Sobre</p>
-          <h2>Perfil profissional</h2>
-        </div>
-        <p>Formação, experiência e tecnologias que sustentam meus projetos.</p>
+    <div class="container about-simple">
+      <div class="about-photo">
+        <img src="/foto.jpg" alt="Foto de Emilly Sátiro" />
       </div>
 
-      <div class="about-grid">
-        <div class="about-copy">
-          <span class="section-number">01</span>
-          <p>
-            Sou estudante de Sistemas de Informação, com foco em desenvolvimento
-            fullstack, inteligência artificial e criação de soluções digitais.
-          </p>
-          <p>
-            Tenho interesse em produtos escaláveis, interfaces responsivas,
-            documentação clara e aplicações que resolvem problemas reais para
-            empresas, equipes e usuários.
-          </p>
+      <div class="about-text-block">
+        <p class="eyebrow">Sobre mim</p>
+        <h2>Quem sou</h2>
+        <p>
+          Sou Emilly Sátiro, graduanda em Sistemas de Informação pela Universidade
+          Federal do Piauí, em Picos, PI. Minha atuação une desenvolvimento web,
+          design de interfaces e pesquisa aplicada em inteligência artificial.
+          Tenho experiência com criação de interfaces, prototipação, front-end,
+          desenvolvimento full stack, comunicação visual, marketing digital e
+          organização de projetos acadêmicos e tecnológicos.
+        </p>
 
-          <div class="stats-grid">
-            <article v-for="stat in stats" :key="stat.label" class="stat-card">
-              <strong>{{ stat.number }}</strong>
-              <span>{{ stat.label }}</span>
-            </article>
-          </div>
+        <div class="about-focus" aria-label="Áreas de atuação">
+          <span>Design de interfaces</span>
+          <span>Desenvolvimento full stack</span>
+          <span>Front-end</span>
+          <span>Pesquisa em IA</span>
+          <span>Visão computacional</span>
         </div>
-
-        <div class="profile-card">
-          <img src="/foto.jpg" alt="Foto de Emilly Sátiro" />
-          <strong>Fullstack + IA</strong>
-        </div>
-      </div>
-
-      <div class="tech-list" aria-label="Tecnologias">
-        <span v-for="technology in technologies" :key="technology">{{ technology }}</span>
       </div>
     </div>
   </section>
@@ -46,15 +32,5 @@
 <script>
 export default {
   name: 'AboutSection',
-  props: {
-    stats: {
-      type: Array,
-      required: true,
-    },
-    technologies: {
-      type: Array,
-      required: true,
-    },
-  },
 }
 </script>
