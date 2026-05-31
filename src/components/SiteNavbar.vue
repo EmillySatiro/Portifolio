@@ -7,6 +7,7 @@
             <RouterLink
               :to="item.to"
               :class="{ active: isActive(item.to) }"
+              :data-section="sectionId(item.to)"
               @click="closeMenu"
             >
               {{ item.name }}
@@ -57,6 +58,7 @@ export default {
     return {
       isMenuOpen: false,
       theme: 'dark',
+      activeHash: '',
     }
   },
   mounted() {
@@ -64,6 +66,13 @@ export default {
     const prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches
     this.theme = savedTheme || (prefersLight ? 'light' : 'dark')
     this.applyTheme()
+    this.updateActiveSection()
+    window.addEventListener('scroll', this.updateActiveSection, { passive: true })
+    window.addEventListener('resize', this.updateActiveSection)
+  },
+  beforeUnmount() {
+    window.removeEventListener('scroll', this.updateActiveSection)
+    window.removeEventListener('resize', this.updateActiveSection)
   },
   methods: {
     toggleMenu() {
@@ -75,9 +84,13 @@ export default {
     isActive(to) {
       const target = typeof to === 'string' ? { path: to, hash: '' } : to
       if (target.path !== this.$route.path) return false
-      if (!target.hash) return true
-      if (target.hash === '#home') return this.$route.hash === '' || this.$route.hash === '#home'
-      return this.$route.hash === target.hash
+      if (!target.hash) return !this.activeHash
+      if (target.hash === '#home') return this.activeHash === '' || this.activeHash === '#home'
+      return this.activeHash === target.hash
+    },
+    sectionId(to) {
+      const target = typeof to === 'string' ? { hash: '' } : to
+      return target.hash ? target.hash.replace('#', '') : ''
     },
     toggleTheme() {
       this.theme = this.theme === 'dark' ? 'light' : 'dark'
@@ -86,6 +99,24 @@ export default {
     },
     applyTheme() {
       document.documentElement.dataset.theme = this.theme
+    },
+    updateActiveSection() {
+      if (this.$route.path !== '/') {
+        this.activeHash = ''
+        return
+      }
+
+      const offset = window.innerHeight * 0.38
+      const sections = ['home', 'about', 'projects', 'contact']
+        .map((id) => document.getElementById(id))
+        .filter(Boolean)
+
+      let current = sections[0]
+      sections.forEach((section) => {
+        if (section.offsetTop <= window.scrollY + offset) current = section
+      })
+
+      this.activeHash = current ? `#${current.id}` : '#home'
     },
   },
 }

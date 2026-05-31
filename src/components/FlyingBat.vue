@@ -28,9 +28,46 @@ export default {
       ease: 'sine.inOut',
     })
 
-    if (prefersReducedMotion || isCoarsePointer) return
+    this.updateMode = () => {
+      const about = document.getElementById('about')
+      this.freeFlight = about ? window.scrollY >= about.offsetTop - 120 : false
+      if (this.freeFlight) {
+        this.flightTween?.play()
+      } else {
+        this.flightTween?.pause()
+      }
+    }
+
+    window.addEventListener('scroll', this.updateMode, { passive: true })
+
+    this.flightTween = gsap.to(bat, {
+      x: 'random(8vw, 78vw)',
+      y: 'random(14vh, 72vh)',
+      rotate: 'random(-18, 18)',
+      duration: 4.2,
+      repeat: -1,
+      repeatRefresh: true,
+      ease: 'sine.inOut',
+      paused: true,
+      onRepeat: () => {
+        if (!this.freeFlight) this.flightTween.pause()
+      },
+    })
+
+    this.updateMode()
+
+    if (prefersReducedMotion || isCoarsePointer) {
+      this.flightTween.play()
+      return
+    }
 
     this.handlePointerMove = (event) => {
+      if (this.freeFlight) {
+        this.flightTween.play()
+        return
+      }
+
+      this.flightTween.pause()
       const side = event.clientX > window.innerWidth * 0.68 ? -1 : 1
       const offsetX = side * Math.min(150, window.innerWidth * 0.12)
       const offsetY = event.clientY > window.innerHeight * 0.5 ? -92 : 76
@@ -49,7 +86,12 @@ export default {
       window.removeEventListener('pointermove', this.handlePointerMove)
     }
 
+    if (this.updateMode) {
+      window.removeEventListener('scroll', this.updateMode)
+    }
+
     this.floatTween?.kill()
+    this.flightTween?.kill()
   },
 }
 </script>
