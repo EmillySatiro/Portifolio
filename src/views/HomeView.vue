@@ -1,32 +1,32 @@
 <template>
-  <main>
+  <main class="home-view-page">
     <HeroSection />
     <AboutSection />
-    <SkillsSection :categories="itProjects" />
-    <ContactSection :methods="contactMethods" />
+    <CurriculumSection />
+    <ContactSection />
   </main>
 </template>
 
 <script>
-import AboutSection from '../components/AboutSection.vue'
-import ContactSection from '../components/ContactSection.vue'
 import HeroSection from '../components/HeroSection.vue'
-import SkillsSection from '../components/SkillsSection.vue'
-import { contactMethods, itProjects } from '../data/portfolio'
+import AboutSection from '../components/AboutSection.vue'
+import CurriculumSection from '../components/CurriculumSection.vue'
+import ContactSection from '../components/ContactSection.vue'
 
 export default {
   name: 'HomeView',
   components: {
-    AboutSection,
-    ContactSection,
     HeroSection,
-    SkillsSection,
-  },
-  data() {
-    return {
-      contactMethods,
-      itProjects,
-    }
+    AboutSection,
+    CurriculumSection,
+    ContactSection,
   },
 }
 </script>
+
+<style scoped>
+.home-view-page {
+  position: relative;
+  width: 100%;
+}
+</style>
