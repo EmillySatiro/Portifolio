@@ -1,8 +1,8 @@
 <template>
-  <main class="route-page designer-under-construction-page">
+  <main class="route-page designer-under-construction-page light-theme-construction">
     <div class="container">
       <div class="construction-content-box">
-        <!-- Large Bat Mascot Image -->
+        <!-- Large Bat Mascot Image (Original Colors) -->
         <div class="large-bat-wrapper">
           <img
             src="/a8973100-1174-11ee-9e14-23aa8edbd820.svg"
@@ -41,14 +41,14 @@ export default {
 </script>
 
 <style scoped>
-.designer-under-construction-page {
+.light-theme-construction {
   min-height: 85vh;
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 8rem 0 6rem 0;
-  background: #0b0a0c;
-  color: var(--alabaster, #f0ebe5);
+  background: #ffffff;
+  color: #171516;
   text-align: center;
 }
 
@@ -65,7 +65,7 @@ export default {
   height: 220px;
   margin-bottom: 2rem;
   animation: batHover 3s ease-in-out infinite alternate;
-  filter: drop-shadow(0 15px 35px rgba(151, 180, 222, 0.35));
+  filter: drop-shadow(0 15px 35px rgba(38, 58, 153, 0.15));
 }
 
 .large-bat-img {
@@ -86,7 +86,7 @@ export default {
   font-weight: 700;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: var(--sky, #97b4de);
+  color: #263a99;
   margin-bottom: 0.6rem;
 }
 
@@ -94,7 +94,7 @@ export default {
   font-family: var(--font-title, 'Cinzel', serif);
   font-size: clamp(2rem, 4vw, 3rem);
   font-weight: 700;
-  color: var(--alabaster, #f0ebe5);
+  color: #171516;
   margin: 0 0 1rem 0;
   line-height: 1.2;
 }
@@ -102,7 +102,7 @@ export default {
 .construction-subtitle {
   font-family: 'Inter', sans-serif;
   font-size: 1rem;
-  color: var(--pastel, #dcd0be);
+  color: #0f172a;
   line-height: 1.6;
   margin: 0 0 2.5rem 0;
 }
@@ -112,20 +112,20 @@ export default {
   align-items: center;
   gap: 0.6rem;
   padding: 0.8rem 1.6rem;
-  background: var(--blue, #263a99);
+  background: #263a99;
   color: #ffffff;
   font-family: 'Inter', sans-serif;
   font-size: 0.9rem;
   font-weight: 700;
   text-decoration: none;
   border-radius: 8px !important;
-  box-shadow: 0 4px 20px rgba(38, 58, 153, 0.4);
+  box-shadow: 0 4px 20px rgba(38, 58, 153, 0.25);
   transition: all 0.25s ease;
 }
 
 .back-home-btn:hover {
   background: #1d2d7c;
   transform: translateY(-3px);
-  box-shadow: 0 8px 25px rgba(38, 58, 153, 0.6);
+  box-shadow: 0 8px 25px rgba(38, 58, 153, 0.4);
 }
 </style>

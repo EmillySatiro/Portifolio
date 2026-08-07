@@ -6,13 +6,9 @@
     <div class="container hero-container">
       <!-- CENTER BLOCK: Exactly in the middle of the screen (50% top, 50% left) -->
       <div class="hero-center-block">
-        <!-- Emílly Sátiro slightly ABOVE PORTFÓLIO with smaller font size -->
-        <div class="hero-author-name">
-          Emílly Sátiro
-        </div>
-        <!-- Huge Main Title PORTFÓLIO -->
-        <h1 class="hero-main-title">
-          PORTFÓLIO
+        <!-- Huge Main Title EMÍLLY SÁTIRO -->
+        <h1 class="hero-main-title" data-text="EMÍLLY SÁTIRO">
+          EMÍLLY SÁTIRO
         </h1>
       </div>
 
@@ -151,28 +147,123 @@ export default {
   padding: 0 1rem;
 }
 
-/* Emílly Sátiro directly ABOVE PORTFÓLIO with smaller, elegant size */
-.hero-author-name {
-  font-family: 'Cinzel', Georgia, serif;
-  font-size: clamp(1.15rem, 2.2vw, 1.5rem);
-  font-weight: 900; /* font-black */
-  line-height: 1.1;
-  color: var(--alabaster, #f0ebe5);
-  margin-bottom: 0.35rem;
-  letter-spacing: 0.02em;
-}
-
-/* Huge PORTFÓLIO title */
+/* Huge EMÍLLY SÁTIRO title - Letreiro Elétrico High-Tech Neon Sign */
 .hero-main-title {
-  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  font-size: clamp(3rem, 7.5vw, 5.2rem); /* text-6xl */
-  font-weight: 700; /* font-bold */
-  line-height: 1;
-  letter-spacing: 0.22em; /* tracking-[13.09px] */
-  color: var(--sky, #97b4de);
+  font-family: 'Cinzel', Georgia, serif;
+  font-size: clamp(2.2rem, 6vw, 4.5rem);
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: 0.12em;
+  color: #ffffff;
   margin: 0;
   text-transform: uppercase;
-  text-shadow: 0 0 35px rgba(151, 180, 222, 0.22);
+  white-space: nowrap;
+  animation: neonLetreiroPulse 10s infinite ease-in-out;
+  will-change: text-shadow, color, transform;
+}
+
+@keyframes neonLetreiroPulse {
+  0% {
+    color: #ffffff;
+    transform: scale(1);
+    text-shadow: 0 0 20px #ffffff, 0 0 40px #97b4de, 0 0 70px #263a99, 0 0 100px rgba(38, 58, 153, 0.5);
+  }
+  
+  /* 3s: Electric Power Spark Burst */
+  12% {
+    color: #ffffff;
+    text-shadow: 0 0 25px #ffffff, 0 0 50px #97b4de, 0 0 85px #263a99;
+  }
+  13% {
+    color: #38bdf8;
+    transform: scale(1.015);
+    text-shadow: 0 0 35px #38bdf8, 0 0 75px #38bdf8, 0 0 120px #263a99, 0 0 150px #97b4de;
+  }
+  14% {
+    color: #ffffff;
+    transform: scale(0.995);
+    text-shadow: 0 0 15px #ffffff, 0 0 35px #97b4de;
+  }
+  15.5% {
+    color: #ffffff;
+    transform: scale(1.01);
+    text-shadow: 0 0 40px #ffffff, 0 0 80px #38bdf8, 0 0 130px #263a99;
+  }
+  17% {
+    color: #ffffff;
+    transform: scale(1);
+    text-shadow: 0 0 25px #ffffff, 0 0 45px #97b4de, 0 0 75px #263a99;
+  }
+
+  /* 9s: Soft Ambient Breathing Glow */
+  36% {
+    color: #f8fafc;
+    text-shadow: 0 0 30px rgba(255, 255, 255, 0.95), 0 0 60px rgba(151, 180, 222, 0.75), 0 0 95px rgba(38, 58, 153, 0.45);
+  }
+
+  /* 13s: Electric Power Surge #2 */
+  52% {
+    color: #ffffff;
+    text-shadow: 0 0 20px #ffffff, 0 0 40px #97b4de;
+  }
+  53% {
+    color: #38bdf8;
+    transform: scale(1.02);
+    text-shadow: 0 0 40px #38bdf8, 0 0 85px #38bdf8, 0 0 135px #263a99;
+  }
+  54% {
+    color: #ffffff;
+    transform: scale(0.99);
+    text-shadow: 0 0 20px #ffffff, 0 0 40px #97b4de;
+  }
+  55.5% {
+    color: #ffffff;
+    transform: scale(1.01);
+    text-shadow: 0 0 45px #ffffff, 0 0 90px #97b4de, 0 0 140px #263a99;
+  }
+  57% {
+    color: #ffffff;
+    transform: scale(1);
+    text-shadow: 0 0 25px #ffffff, 0 0 50px #97b4de, 0 0 80px #263a99;
+  }
+
+  /* 19s: Soft Ambient Breathing Glow */
+  76% {
+    color: #f8fafc;
+    text-shadow: 0 0 35px rgba(255, 255, 255, 0.9), 0 0 65px rgba(151, 180, 222, 0.7);
+  }
+
+  /* 22s: Electric Power Surge #3 */
+  88% {
+    color: #38bdf8;
+    transform: scale(1.015);
+    text-shadow: 0 0 35px #38bdf8, 0 0 80px #38bdf8, 0 0 125px #263a99;
+  }
+  89.5% {
+    color: #ffffff;
+    transform: scale(1);
+    text-shadow: 0 0 30px #ffffff, 0 0 60px #97b4de;
+  }
+
+  100% {
+    color: #ffffff;
+    transform: scale(1);
+    text-shadow: 0 0 20px #ffffff, 0 0 40px #97b4de, 0 0 70px #263a99, 0 0 100px rgba(38, 58, 153, 0.5);
+  }
+}
+
+@media (max-width: 640px) {
+  .hero-main-title {
+    white-space: normal;
+    letter-spacing: 0.08em;
+  }
+}
+
+@media (max-width: 640px) {
+  .hero-main-title {
+    white-space: normal;
+    letter-spacing: 0.08em;
+  }
 }
 
 /* BOTTOM BLOCK: POSITIONED NEAR THE BOTTOM OF THE HERO SECTION */
@@ -202,8 +293,8 @@ export default {
 }
 
 .role-static {
-  opacity: 0.75;
-  color: var(--paper-soft, #dcd0be);
+  opacity: 1;
+  color: #ffffff;
 }
 
 .role-dynamic-wrapper {

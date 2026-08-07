@@ -55,9 +55,8 @@ export default {
           { threshold: 0.12 }
         )
 
-        const targets = document.querySelectorAll('.section, main > section')
+        const targets = document.querySelectorAll('.section-reveal, .section, main > section')
         targets.forEach((el) => {
-          el.classList.add('section-reveal')
           observer.observe(el)
         })
       })

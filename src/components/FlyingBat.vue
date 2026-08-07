@@ -1,9 +1,8 @@
 <template>
   <div
-    v-if="$route.path === '/'"
+    v-if="$route.path === '/' || $route.path === '/projetos'"
     ref="batRef"
     class="flying-bat-wrapper"
-    :class="{ 'in-shadow': isInShadow }"
     :style="batStyle"
     aria-hidden="true"
   >
@@ -20,17 +19,15 @@ export default {
   name: 'FlyingBat',
   data() {
     return {
-      batX: window.innerWidth * 0.85,
-      batY: 100,
-      targetX: window.innerWidth * 0.85,
-      targetY: 100,
-      mouseX: window.innerWidth * 0.85,
-      mouseY: 100,
+      batX: window.innerWidth * 0.7,
+      batY: 120,
+      targetX: window.innerWidth * 0.5,
+      targetY: 160,
       batAngle: 0,
       batScale: 1,
-      isInShadow: false,
       animId: null,
-      shadowTimer: null,
+      wanderInterval: null,
+      wobbleTime: 0,
     }
   },
   computed: {
@@ -41,47 +38,46 @@ export default {
     },
   },
   mounted() {
-    this.batX = window.innerWidth * 0.85
-    this.batY = 100
-
-    this.onMouseMove = (e) => {
-      this.mouseX = e.clientX
-      this.mouseY = e.clientY
-    }
-
-    window.addEventListener('mousemove', this.onMouseMove, { passive: true })
+    this.batX = window.innerWidth * 0.7
+    this.batY = 120
+    this.pickNewDestination()
+    this.startWandering()
     this.loop()
   },
   beforeUnmount() {
     if (this.animId) cancelAnimationFrame(this.animId)
-    if (this.shadowTimer) clearTimeout(this.shadowTimer)
-    window.removeEventListener('mousemove', this.onMouseMove)
+    if (this.wanderInterval) clearInterval(this.wanderInterval)
   },
   methods: {
-    loop() {
-      const isHomePage = this.$route.path === '/'
-      const isHeroArea = isHomePage && window.scrollY < window.innerHeight * 0.85
+    pickNewDestination() {
+      const marginX = 80
+      const marginY = 80
+      const maxX = Math.max(200, window.innerWidth - marginX * 2)
+      const maxY = Math.max(200, window.innerHeight * 0.75 - marginY)
 
-      if (isHeroArea) {
-        // Follow cursor ONLY on the Home Hero section where the title is
-        this.targetX = this.mouseX - 45
-        this.targetY = this.mouseY - 45
-        this.batScale = 1
-      } else {
-        // Park statically in top-right margin without tracking cursor
-        this.targetX = window.innerWidth * 0.88
-        this.targetY = 90
-        this.batScale = 0.85
-      }
+      this.targetX = marginX + Math.random() * maxX
+      this.targetY = marginY + Math.random() * maxY
+    },
+    startWandering() {
+      // Pick a new random target destination every 2.5 to 4 seconds
+      this.wanderInterval = setInterval(() => {
+        this.pickNewDestination()
+      }, 3000 + Math.random() * 1500)
+    },
+    loop() {
+      this.wobbleTime += 0.04
+      const verticalWobble = Math.sin(this.wobbleTime) * 1.8
 
       const dx = this.targetX - this.batX
-      const dy = this.targetY - this.batY
+      const dy = (this.targetY + verticalWobble) - this.batY
 
-      this.batX += dx * 0.075
-      this.batY += dy * 0.075
+      // Smooth unguided lerp movement
+      this.batX += dx * 0.025
+      this.batY += dy * 0.025
 
-      const targetAngle = isHeroArea ? Math.max(-20, Math.min(20, dx * 0.15)) : 0
-      this.batAngle += (targetAngle - this.batAngle) * 0.1
+      // Natural flight tilt angle
+      const targetAngle = Math.max(-25, Math.min(25, dx * 0.12))
+      this.batAngle += (targetAngle - this.batAngle) * 0.08
 
       this.animId = requestAnimationFrame(this.loop)
     },
@@ -94,13 +90,13 @@ export default {
   position: fixed;
   top: 0;
   left: 0;
-  width: 105px;
-  height: 105px;
+  width: 95px;
+  height: 95px;
   pointer-events: none;
   z-index: 9999;
-  filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.4));
-  will-change: transform, opacity;
-  transition: opacity 0.6s ease, filter 0.4s ease;
+  filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.35));
+  will-change: transform;
+  transition: opacity 0.6s ease;
 }
 
 .bat-svg-img {

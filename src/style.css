@@ -10,17 +10,17 @@
   --charleston: #2a2829;
   --sky: #97b4de;
   --blue: #263a99;
-  --alabaster: #f0ebe5;
-  --pastel: #dcd0be;
+  --alabaster: #ffffff;
+  --pastel: #ffffff;
   --ink: #171516;
 
   /* Structural Dark Tokens */
   --bg: var(--charleston);
   --bg-secondary: #1f1d1e;
-  --paper: var(--alabaster);
-  --paper-soft: var(--pastel);
-  --text: var(--alabaster);
-  --muted: #d0c6b8;
+  --paper: #ffffff;
+  --paper-soft: #ffffff;
+  --text: #ffffff;
+  --muted: #ffffff;
   --accent: var(--sky);
   --accent-dark: var(--blue);
   --line: rgba(240, 235, 229, 0.12);

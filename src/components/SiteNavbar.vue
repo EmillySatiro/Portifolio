@@ -72,6 +72,11 @@ export default {
       scrollProgress: 0,
     }
   },
+  computed: {
+    isLightThemePage() {
+      return this.$route.path === '/projetos' || this.$route.path === '/designer'
+    },
+  },
   mounted() {
     this.onScroll()
     window.addEventListener('scroll', this.onScroll, { passive: true })
@@ -276,6 +281,50 @@ export default {
 
   .nav-link {
     font-size: 1rem;
+  }
+}
+
+/* Light theme navbar styling */
+.light-theme-nav {
+  background: rgba(255, 255, 255, 0.92) !important;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08) !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+}
+
+.light-theme-nav .nav-brand {
+  color: #171516 !important;
+}
+
+.light-theme-nav .nav-link {
+  color: #4a5568 !important;
+}
+
+.light-theme-nav .nav-link:hover,
+.light-theme-nav .nav-link.active {
+  color: #263a99 !important;
+}
+
+.light-theme-nav .nav-link.active::after {
+  background: #263a99 !important;
+  box-shadow: 0 0 8px rgba(38, 58, 153, 0.4) !important;
+}
+
+.light-theme-nav .menu-button {
+  background: rgba(0, 0, 0, 0.04) !important;
+  border-color: rgba(0, 0, 0, 0.12) !important;
+  color: #171516 !important;
+}
+
+.light-theme-nav .menu-button:hover {
+  background: rgba(38, 58, 153, 0.1) !important;
+  color: #263a99 !important;
+}
+
+@media (max-width: 868px) {
+  .light-theme-nav .nav-list {
+    background: #ffffff !important;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1) !important;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1) !important;
   }
 }
 </style>

@@ -67,6 +67,11 @@ export default {
     ArrowUp,
     BrandIcon,
   },
+  computed: {
+    isLightThemePage() {
+      return this.$route.path === '/projetos' || this.$route.path === '/designer'
+    },
+  },
   methods: {
     scrollToTop() {
       window.scrollTo({ top: 0, behavior: 'smooth' })
@@ -82,6 +87,37 @@ export default {
   border-top: 1px solid var(--line, rgba(240, 235, 229, 0.08));
   background: #151314;
   z-index: 1;
+}
+
+.light-theme-footer {
+  background: #ffffff !important;
+  border-top: 1px solid rgba(0, 0, 0, 0.08) !important;
+}
+
+.light-theme-footer .brand-name {
+  color: #171516 !important;
+}
+
+.light-theme-footer .footer-copy {
+  color: #64748b !important;
+}
+
+.light-theme-footer .footer-social-link {
+  background: rgba(0, 0, 0, 0.03) !important;
+  border-color: rgba(0, 0, 0, 0.12) !important;
+  color: #4a5568 !important;
+}
+
+.light-theme-footer .footer-social-link:hover {
+  background: rgba(38, 58, 153, 0.1) !important;
+  border-color: #263a99 !important;
+  color: #263a99 !important;
+}
+
+.light-theme-footer .scroll-top-btn {
+  background: #263a99 !important;
+  color: #ffffff !important;
+  border-color: #263a99 !important;
 }
 
 .footer-container {
