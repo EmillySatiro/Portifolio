@@ -1,7 +1,7 @@
 <template>
   <main class="designer-page-view">
     
-    <!-- Top Project Selector Tabs (Switch between Design Projects) -->
+    <!-- Top Project Selector Tabs (Switch between 6 Design Projects) -->
     <header class="project-selector-bar">
       <div class="selector-inner">
         <span class="selector-heading">
@@ -94,7 +94,7 @@
             {{ currentProject.description }}
           </p>
 
-          <!-- Action Buttons (Featuring Prominent Amplify Button) -->
+          <!-- Action Buttons (Amplify, Download .FIG, Website, Figma Prototype) -->
           <div class="showcase-actions-row">
             
             <!-- High-Impact Amplify Prototype Button -->
@@ -107,6 +107,18 @@
               <Maximize2 :size="17" class="btn-icon" />
               <span class="btn-text">Ampliar Protótipo</span>
             </button>
+
+            <!-- Download .FIG Project File -->
+            <a
+              v-if="currentProject.figFile"
+              :href="currentProject.figFile"
+              :download="`${currentProject.title}.fig`"
+              class="download-fig-btn"
+              title="Baixar arquivo de design .fig do Figma"
+            >
+              <Download :size="16" class="btn-icon" />
+              <span class="btn-text">Baixar .fig</span>
+            </a>
 
             <!-- Live Website Link (When available) -->
             <a
@@ -132,9 +144,9 @@
               <ArrowUpRight :size="16" class="btn-icon" />
             </a>
 
-            <!-- Figma Private Badge -->
+            <!-- Figma Private Badge (When no public link) -->
             <div
-              v-else-if="currentProject.figmaPrivate"
+              v-else-if="currentProject.figmaPrivate && !currentProject.figFile"
               class="private-badge"
               title="Acesso privado"
             >
@@ -261,7 +273,7 @@
 </template>
 
 <script>
-import { ArrowUpRight, ChevronLeft, ChevronRight, ExternalLink, Maximize2 } from '@lucide/vue'
+import { ArrowUpRight, ChevronLeft, ChevronRight, Download, ExternalLink, Maximize2 } from '@lucide/vue'
 
 export default {
   name: 'DesignerView',
@@ -269,6 +281,7 @@ export default {
     ArrowUpRight,
     ChevronLeft,
     ChevronRight,
+    Download,
     ExternalLink,
     Maximize2,
   },
@@ -285,6 +298,7 @@ export default {
             'Desenvolvimento da identidade visual do SINFO 2026, inspirada na estética da web e dos sistemas dos anos 1990 e 2000. O projeto combina elementos nostálgicos, como janelas, ícones, pixels e interfaces clássicas, com uma abordagem contemporânea voltada à tecnologia e à inovação.',
           liveUrl: 'https://sinfo-ufpi.com.br/',
           figmaUrl: '',
+          figFile: '/designer/sinfo/Sinfo%202026%20Site%20(Copy).fig',
           figmaPrivate: true,
           slides: [
             { image: '/designer/sinfo/inicio.png' },
@@ -300,6 +314,7 @@ export default {
             'O EcoMadeira é uma planilha feita para engenheiros, arquitetos e projetistas que desejam calcular e dimensionar elementos estruturais de madeira com total segurança e precisão, eliminando processos manuais demorados e gerando relatórios completos de maneira fácil e intuitiva.',
           liveUrl: '',
           figmaUrl: '',
+          figFile: '/designer/ecomadeira/EcoMadeira.fig',
           figmaPrivate: true,
           slides: [
             { image: '/designer/ecomadeira/page.png' },
@@ -313,6 +328,7 @@ export default {
             'Plataforma voltada à divulgação e organização de eventos esportivos, conectando atletas e organizadores em modalidades como corrida, triatlo e natação. O sistema permite que participantes encontrem e se inscrevam em competições, enquanto criadores podem cadastrar e gerenciar seus próprios eventos.',
           liveUrl: '',
           figmaUrl: '',
+          figFile: '/designer/cronometrai/Cronometra%20Ai.fig',
           figmaPrivate: true,
           slides: [
             { image: '/designer/cronometrai/Home%20(1).png' },
@@ -327,12 +343,60 @@ export default {
             'Minicurso introdutório sobre os principais fundamentos do Design Web, abordando conceitos essenciais para a criação de interfaces visuais mais funcionais, intuitivas e atrativas. A atividade combina teoria e demonstração prática, apresentando boas práticas de design e dicas para aprimorar projetos web.',
           liveUrl: '',
           figmaUrl: '',
+          figFile: '/designer/MIni%20curo%20Geek%20day/mini%20cursos%20geek.fig',
           figmaPrivate: true,
           slides: [
             { image: '/designer/MIni%20curo%20Geek%20day/Home.png' },
             { image: '/designer/MIni%20curo%20Geek%20day/Catalogo.png' },
             { image: '/designer/MIni%20curo%20Geek%20day/Po%C3%A7%C3%B5es.png' },
             { image: '/designer/MIni%20curo%20Geek%20day/Ingredientes.png' },
+          ],
+        },
+        {
+          id: 'premaut',
+          title: 'PREMAUT',
+          description:
+            'Sistema de telemetria e prontuário digital projetado para monitoramento de pacientes e gestão clínica especializada. Interface de alta precisão com visualização de métricas em tempo real, cadastros intuitivos e ergonomia de uso.',
+          liveUrl: 'https://premaut.ufpi.br/',
+          figmaUrl: '',
+          figFile: '/designer/PREMAUT/PREMAUT0.2.fig',
+          figmaPrivate: true,
+          slides: [
+            { image: '/designer/PREMAUT/Home%20-%20login.png' },
+            { image: '/designer/PREMAUT/login%20(1).png' },
+            { image: '/designer/PREMAUT/cadastro%20paciente.png' },
+          ],
+        },
+        {
+          id: 'jua',
+          title: 'JUÁ 2025',
+          description:
+            'Fiz o design da Juá com o objetivo de ajudar empresas e pessoas a se conectarem com a tecnologia de forma intuitiva. Para isso, desenvolvi uma interface moderna e responsiva, focada em transmitir inovação, facilitar a navegação do usuário e destacar nossas soluções de maneira clara e profissional.',
+          liveUrl: 'https://www.juasolucoes.com.br/',
+          figmaUrl: '',
+          figFile: '/designer/JUA/JU%C3%81%20-%20WEBSITE%20(Copy).fig',
+          figmaPrivate: true,
+          slides: [
+            { image: '/designer/JUA/TELA%20-%20IN%C3%8DCIO.png' },
+            { image: '/designer/JUA/TELA%20-%20PROJETOS%20(NOVA).png' },
+            { image: '/designer/JUA/TELA%20-%20Duvidas.png' },
+            { image: '/designer/JUA/TELA%20-%20PROJETOS%20(NOVA)%20(1).png' },
+          ],
+        },
+        {
+          id: 'plantando-ideias',
+          title: 'Plantando Ideias',
+          description:
+            'Plataforma colaborativa desenvolvida para trabalhadores rurais e produtores compartilharem ideias, conhecimentos práticos, cursos especializados e conteúdos técnicos sobre agricultura e sustentabilidade no campo.',
+          liveUrl: '',
+          figmaUrl: '',
+          figFile: '/designer/plantando%20ideias/Engenharia-II.fig',
+          figmaPrivate: true,
+          slides: [
+            { image: '/designer/plantando%20ideias/Tela%20Principal%20-%20Home.png' },
+            { image: '/designer/plantando%20ideias/Tela%20de%20Conte%C3%BAdos.png' },
+            { image: '/designer/plantando%20ideias/Tela%20de%20Cursos%20(Curso%20que%20o%20Especialista%20Postou).png' },
+            { image: '/designer/plantando%20ideias/Tela%20de%20Login.png' },
           ],
         },
       ],
@@ -851,6 +915,43 @@ export default {
 }
 
 .highlight-amplify-btn:hover .btn-icon {
+  color: #171516;
+  transform: scale(1.15);
+}
+
+/* Download .FIG File Button */
+.download-fig-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  background: rgba(151, 180, 222, 0.12);
+  color: #ffffff;
+  border: 1px solid rgba(151, 180, 222, 0.45);
+  padding: 0.85rem 1.55rem;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  backdrop-filter: blur(10px);
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.download-fig-btn:hover {
+  background: var(--sky, #97b4de);
+  border-color: var(--sky, #97b4de);
+  color: #171516;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 20px rgba(151, 180, 222, 0.45);
+}
+
+.download-fig-btn .btn-icon {
+  color: var(--sky, #97b4de);
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.download-fig-btn:hover .btn-icon {
   color: #171516;
   transform: scale(1.15);
 }
