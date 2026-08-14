@@ -1,7 +1,7 @@
 <template>
   <main class="designer-page-view">
     
-    <!-- Top Project Selector Tabs (Switch between 6 Design Projects) -->
+    <!-- Top Project Selector Tabs (Switch between 7 Design Projects) -->
     <header class="project-selector-bar">
       <div class="selector-inner">
         <span class="selector-heading">
@@ -38,7 +38,7 @@
       <div class="backdrop-gradient-left"></div>
     </div>
 
-    <!-- Editorial Vertical Side Labels -->
+    <!-- Editorial Vertical Side Labels (Desktop Only) -->
     <div class="side-editorial-label left">
       <span class="label-text">TREATMENT TITLE // {{ currentProject.title }}</span>
     </div>
@@ -50,7 +50,7 @@
     <!-- Main Layout Container (Grid: Timeline + Overlaid Info + Stacked Carousel) -->
     <div class="designer-main-container">
       
-      <!-- 1. LEFT: Vertical Step Timeline Tracker -->
+      <!-- 1. LEFT / MOBILE TOP: Step Timeline Tracker -->
       <aside class="vertical-timeline-tracker" aria-label="Navegação por protótipos do projeto">
         <div class="timeline-line">
           <div
@@ -80,7 +80,7 @@
         </div>
       </aside>
 
-      <!-- 2. CENTER-LEFT: Active Project Overlaid Information (Clean, Direct & Elegant) -->
+      <!-- 2. CENTER-LEFT: Active Project Overlaid Information -->
       <section class="active-project-showcase">
         <div class="showcase-content-box">
 
@@ -144,7 +144,7 @@
               <ArrowUpRight :size="16" class="btn-icon" />
             </a>
 
-            <!-- Figma Private Badge (When no public link) -->
+            <!-- Figma Private Badge (When no public link and no .fig) -->
             <div
               v-else-if="currentProject.figmaPrivate && !currentProject.figFile"
               class="private-badge"
@@ -194,7 +194,8 @@
                 :src="slide.image"
                 :alt="`${currentProject.title} - Protótipo ${sIdx + 1}`"
                 class="stacked-img"
-                loading="lazy"
+                :loading="activeSlideIndex === sIdx ? 'eager' : 'lazy'"
+                decoding="async"
               />
               <div class="stacked-gradient-overlay"></div>
 
@@ -258,6 +259,7 @@
             :src="currentSlide.image"
             :alt="`${currentProject.title} - Protótipo ${activeSlideIndex + 1}`"
             class="lightbox-main-img"
+            decoding="async"
           />
 
           <div class="lightbox-caption">
@@ -290,6 +292,7 @@ export default {
       currentProjectIndex: 0,
       activeSlideIndex: 0,
       lightboxOpen: false,
+      windowWidth: typeof window !== 'undefined' ? window.innerWidth : 1200,
       projects: [
         {
           id: 'sinfo',
@@ -298,13 +301,13 @@ export default {
             'Desenvolvimento da identidade visual do SINFO 2026, inspirada na estética da web e dos sistemas dos anos 1990 e 2000. O projeto combina elementos nostálgicos, como janelas, ícones, pixels e interfaces clássicas, com uma abordagem contemporânea voltada à tecnologia e à inovação.',
           liveUrl: 'https://sinfo-ufpi.com.br/',
           figmaUrl: '',
-          figFile: '/designer/sinfo/Sinfo%202026%20Site%20(Copy).fig',
+          figFile: '/designer/sinfo/sinfo_2026.fig',
           figmaPrivate: true,
           slides: [
             { image: '/designer/sinfo/inicio.png' },
-            { image: '/designer/sinfo/imagem%202_sinfo.png' },
-            { image: '/designer/sinfo/imagem3_sinfo.png' },
-            { image: '/designer/sinfo/Sobre%20picos.png' },
+            { image: '/designer/sinfo/imagem2.png' },
+            { image: '/designer/sinfo/imagem3.png' },
+            { image: '/designer/sinfo/sobre_picos.png' },
           ],
         },
         {
@@ -314,7 +317,7 @@ export default {
             'O EcoMadeira é uma planilha feita para engenheiros, arquitetos e projetistas que desejam calcular e dimensionar elementos estruturais de madeira com total segurança e precisão, eliminando processos manuais demorados e gerando relatórios completos de maneira fácil e intuitiva.',
           liveUrl: '',
           figmaUrl: '',
-          figFile: '/designer/ecomadeira/EcoMadeira.fig',
+          figFile: '/designer/ecomadeira/ecomadeira.fig',
           figmaPrivate: true,
           slides: [
             { image: '/designer/ecomadeira/page.png' },
@@ -328,12 +331,12 @@ export default {
             'Plataforma voltada à divulgação e organização de eventos esportivos, conectando atletas e organizadores em modalidades como corrida, triatlo e natação. O sistema permite que participantes encontrem e se inscrevam em competições, enquanto criadores podem cadastrar e gerenciar seus próprios eventos.',
           liveUrl: '',
           figmaUrl: '',
-          figFile: '/designer/cronometrai/Cronometra%20Ai.fig',
+          figFile: '/designer/cronometrai/cronometra_ai.fig',
           figmaPrivate: true,
           slides: [
-            { image: '/designer/cronometrai/Home%20(1).png' },
-            { image: '/designer/cronometrai/Login_Atleta.png' },
-            { image: '/designer/cronometrai/Cadastrar%20evento.png' },
+            { image: '/designer/cronometrai/home.png' },
+            { image: '/designer/cronometrai/login_atleta.png' },
+            { image: '/designer/cronometrai/cadastrar_evento.png' },
           ],
         },
         {
@@ -343,13 +346,13 @@ export default {
             'Minicurso introdutório sobre os principais fundamentos do Design Web, abordando conceitos essenciais para a criação de interfaces visuais mais funcionais, intuitivas e atrativas. A atividade combina teoria e demonstração prática, apresentando boas práticas de design e dicas para aprimorar projetos web.',
           liveUrl: '',
           figmaUrl: '',
-          figFile: '/designer/MIni%20curo%20Geek%20day/mini%20cursos%20geek.fig',
+          figFile: '/designer/geek-day/geek_day.fig',
           figmaPrivate: true,
           slides: [
-            { image: '/designer/MIni%20curo%20Geek%20day/Home.png' },
-            { image: '/designer/MIni%20curo%20Geek%20day/Catalogo.png' },
-            { image: '/designer/MIni%20curo%20Geek%20day/Po%C3%A7%C3%B5es.png' },
-            { image: '/designer/MIni%20curo%20Geek%20day/Ingredientes.png' },
+            { image: '/designer/geek-day/home.png' },
+            { image: '/designer/geek-day/catalogo.png' },
+            { image: '/designer/geek-day/pocoes.png' },
+            { image: '/designer/geek-day/ingredientes.png' },
           ],
         },
         {
@@ -359,12 +362,12 @@ export default {
             'Sistema de telemetria e prontuário digital projetado para monitoramento de pacientes e gestão clínica especializada. Interface de alta precisão com visualização de métricas em tempo real, cadastros intuitivos e ergonomia de uso.',
           liveUrl: 'https://premaut.ufpi.br/',
           figmaUrl: '',
-          figFile: '/designer/PREMAUT/PREMAUT0.2.fig',
+          figFile: '/designer/premaut/premaut.fig',
           figmaPrivate: true,
           slides: [
-            { image: '/designer/PREMAUT/Home%20-%20login.png' },
-            { image: '/designer/PREMAUT/login%20(1).png' },
-            { image: '/designer/PREMAUT/cadastro%20paciente.png' },
+            { image: '/designer/premaut/home_login.png' },
+            { image: '/designer/premaut/login.png' },
+            { image: '/designer/premaut/cadastro_paciente.png' },
           ],
         },
         {
@@ -374,13 +377,13 @@ export default {
             'Fiz o design da Juá com o objetivo de ajudar empresas e pessoas a se conectarem com a tecnologia de forma intuitiva. Para isso, desenvolvi uma interface moderna e responsiva, focada em transmitir inovação, facilitar a navegação do usuário e destacar nossas soluções de maneira clara e profissional.',
           liveUrl: 'https://www.juasolucoes.com.br/',
           figmaUrl: '',
-          figFile: '/designer/JUA/JU%C3%81%20-%20WEBSITE%20(Copy).fig',
+          figFile: '/designer/jua/jua_website.fig',
           figmaPrivate: true,
           slides: [
-            { image: '/designer/JUA/TELA%20-%20IN%C3%8DCIO.png' },
-            { image: '/designer/JUA/TELA%20-%20PROJETOS%20(NOVA).png' },
-            { image: '/designer/JUA/TELA%20-%20Duvidas.png' },
-            { image: '/designer/JUA/TELA%20-%20PROJETOS%20(NOVA)%20(1).png' },
+            { image: '/designer/jua/inicio.png' },
+            { image: '/designer/jua/projetos.png' },
+            { image: '/designer/jua/duvidas.png' },
+            { image: '/designer/jua/projetos_detalhe.png' },
           ],
         },
         {
@@ -390,13 +393,13 @@ export default {
             'Plataforma colaborativa desenvolvida para trabalhadores rurais e produtores compartilharem ideias, conhecimentos práticos, cursos especializados e conteúdos técnicos sobre agricultura e sustentabilidade no campo.',
           liveUrl: '',
           figmaUrl: '',
-          figFile: '/designer/plantando%20ideias/Engenharia-II.fig',
+          figFile: '/designer/plantando-ideias/plantando_ideias.fig',
           figmaPrivate: true,
           slides: [
-            { image: '/designer/plantando%20ideias/Tela%20Principal%20-%20Home.png' },
-            { image: '/designer/plantando%20ideias/Tela%20de%20Conte%C3%BAdos.png' },
-            { image: '/designer/plantando%20ideias/Tela%20de%20Cursos%20(Curso%20que%20o%20Especialista%20Postou).png' },
-            { image: '/designer/plantando%20ideias/Tela%20de%20Login.png' },
+            { image: '/designer/plantando-ideias/home.png' },
+            { image: '/designer/plantando-ideias/conteudos.png' },
+            { image: '/designer/plantando-ideias/cursos.png' },
+            { image: '/designer/plantando-ideias/login.png' },
           ],
         },
       ],
@@ -414,12 +417,20 @@ export default {
   },
   mounted() {
     window.scrollTo(0, 0)
+    this.handleResize()
+    window.addEventListener('resize', this.handleResize, { passive: true })
     window.addEventListener('keydown', this.handleKeyDown)
   },
   beforeUnmount() {
+    window.removeEventListener('resize', this.handleResize)
     window.removeEventListener('keydown', this.handleKeyDown)
   },
   methods: {
+    handleResize() {
+      if (typeof window !== 'undefined') {
+        this.windowWidth = window.innerWidth
+      }
+    },
     switchProject(projectIdx) {
       if (projectIdx >= 0 && projectIdx < this.projects.length) {
         this.currentProjectIndex = projectIdx
@@ -442,13 +453,53 @@ export default {
     /**
      * Calculates 3D cascading offset, scale, z-index and brightness
      * for cards stacked behind in sequence to the right.
+     * Fully responsive for both desktop widescreen and mobile viewports.
      */
     getCardStyle(sIdx) {
       const total = this.currentProject.slides.length
       if (total === 0) return {}
 
       const diff = (sIdx - this.activeSlideIndex + total) % total
+      const isMobile = this.windowWidth < 980
 
+      if (isMobile) {
+        // Compact stacking on mobile screens
+        if (diff === 0) {
+          return {
+            transform: 'translateX(0px) scale(1) translateY(0px)',
+            zIndex: 10,
+            opacity: 1,
+            filter: 'brightness(1)',
+            pointerEvents: 'auto',
+          }
+        } else if (diff === 1) {
+          return {
+            transform: 'translateX(22px) scale(0.94) translateY(6px)',
+            zIndex: 8,
+            opacity: 0.6,
+            filter: 'brightness(0.5)',
+            pointerEvents: 'auto',
+          }
+        } else if (diff === 2) {
+          return {
+            transform: 'translateX(38px) scale(0.88) translateY(12px)',
+            zIndex: 6,
+            opacity: 0.3,
+            filter: 'brightness(0.35)',
+            pointerEvents: 'auto',
+          }
+        } else {
+          return {
+            transform: 'translateX(50px) scale(0.82) translateY(16px)',
+            zIndex: 1,
+            opacity: 0,
+            filter: 'brightness(0.2)',
+            pointerEvents: 'none',
+          }
+        }
+      }
+
+      // Desktop ultra-wide cascading presentation
       if (diff === 0) {
         return {
           transform: 'translateX(0px) scale(1) translateY(0px)',
@@ -533,7 +584,7 @@ export default {
   flex-direction: column;
   justify-content: flex-start;
   padding-top: 72px;
-  padding-bottom: 2rem;
+  padding-bottom: 2.5rem;
   box-sizing: border-box;
   font-family: var(--font-body, 'Inter', sans-serif);
 }
@@ -555,12 +606,14 @@ export default {
   display: flex;
   align-items: center;
   gap: 1.5rem;
-  background: rgba(23, 21, 22, 0.4);
+  background: rgba(23, 21, 22, 0.45);
   border: 1px solid rgba(151, 180, 222, 0.2);
   padding: 0.6rem 1.25rem;
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
 }
 
 .selector-heading {
@@ -592,6 +645,7 @@ export default {
   cursor: pointer;
   white-space: nowrap;
   transition: all 0.25s ease;
+  flex-shrink: 0;
 }
 
 .project-tab-btn:hover {
@@ -1281,6 +1335,7 @@ export default {
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--sky, #97b4de);
+  text-align: center;
 }
 
 .fade-lightbox-enter-active,
@@ -1293,7 +1348,7 @@ export default {
 }
 
 /* --------------------------------------------------------------------------
-   RESPONSIVE BREAKPOINTS
+   RESPONSIVE BREAKPOINTS (Tablets & Mobile Optimization)
    -------------------------------------------------------------------------- */
 @media (max-width: 1280px) {
   .designer-main-container {
@@ -1315,50 +1370,169 @@ export default {
     display: none;
   }
   .project-selector-bar {
-    padding: 0.5rem 1.5rem;
+    padding: 0.5rem 1.25rem;
   }
   .designer-main-container {
-    grid-template-columns: 1fr;
-    gap: 2.5rem;
-    padding: 1rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    padding: 1rem 1.25rem 2rem 1.25rem;
   }
+
+  /* Horizontal timeline steps on mobile */
   .vertical-timeline-tracker {
+    height: auto;
+    width: 100%;
+    margin-bottom: 0.25rem;
+  }
+  .timeline-line {
     display: none;
   }
+  .timeline-steps {
+    flex-direction: row;
+    justify-content: center;
+    gap: 0.65rem;
+    height: auto;
+    width: 100%;
+  }
+  .step-hover-label {
+    display: none;
+  }
+  .step-number-circle {
+    width: 34px;
+    height: 34px;
+    font-size: 0.78rem;
+  }
+
   .active-project-showcase {
     max-width: 100%;
+    width: 100%;
+    padding: 0;
   }
+  .showcase-content-box {
+    max-width: 100%;
+    gap: 1rem;
+  }
+  .hero-project-title {
+    font-size: clamp(2rem, 7vw, 2.8rem);
+    text-align: left;
+  }
+  .project-description {
+    font-size: 0.92rem;
+    line-height: 1.65;
+    text-align: left;
+  }
+
+  .showcase-actions-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 0.65rem;
+    width: 100%;
+  }
+  .highlight-amplify-btn,
+  .download-fig-btn,
+  .primary-blue-btn,
+  .secondary-outline-btn,
+  .private-badge {
+    padding: 0.75rem 0.85rem;
+    font-size: 0.75rem;
+    justify-content: center;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
   .floating-carousel-deck {
     max-width: 100%;
+    width: 100%;
     justify-self: stretch;
   }
-  .stacked-card {
-    width: 100%;
-    max-width: 540px;
-    height: 380px;
-  }
   .stacked-carousel-stage {
-    height: 400px;
+    width: 100%;
+    height: 380px;
+    perspective: 800px;
+  }
+  .stacked-card {
+    width: calc(100% - 30px);
+    max-width: 100%;
+    height: 370px;
+  }
+
+  .backdrop-gradient-left {
+    background: linear-gradient(
+      180deg,
+      rgba(23, 21, 22, 0.94) 0%,
+      rgba(23, 21, 22, 0.88) 55%,
+      rgba(23, 21, 22, 0.75) 100%
+    );
   }
 }
 
 @media (max-width: 640px) {
   .designer-page-view {
-    padding-top: 60px;
+    padding-top: 64px;
+    padding-bottom: 2rem;
+  }
+  .project-selector-bar {
+    padding: 0.25rem 0.75rem;
+  }
+  .selector-inner {
+    padding: 0.45rem 0.65rem;
+    gap: 0.65rem;
+  }
+  .project-tab-btn {
+    font-size: 0.7rem;
+    padding: 0.3rem 0.65rem;
   }
   .hero-project-title {
-    font-size: 2.2rem;
+    font-size: 1.95rem;
   }
-  .stacked-card {
-    width: 100%;
-    height: 320px;
+  .project-description {
+    font-size: 0.88rem;
+    line-height: 1.6;
+  }
+  .showcase-actions-row {
+    grid-template-columns: 1fr;
+    gap: 0.55rem;
   }
   .stacked-carousel-stage {
-    height: 340px;
+    height: 290px;
+  }
+  .stacked-card {
+    width: calc(100% - 24px);
+    height: 280px;
   }
   .deck-controls-row {
+    gap: 0.5rem;
+  }
+  .deck-nav-arrow {
+    padding: 0.55rem 0.85rem;
+    font-size: 0.68rem;
+  }
+  .deck-counter-indicator {
+    font-size: 0.7rem;
+  }
+
+  .lightbox-overlay {
+    padding: 0.75rem;
+  }
+  .lightbox-dialog {
+    max-width: 95vw;
+    max-height: 90vh;
+    padding: 1rem 0.75rem;
+  }
+  .lightbox-main-img {
+    max-height: 65vh;
+  }
+  .lightbox-close-btn {
+    top: -12px;
+    right: -12px;
+    width: 32px;
+    height: 32px;
+    font-size: 0.85rem;
+  }
+  .lightbox-caption {
+    font-size: 0.75rem;
     flex-wrap: wrap;
-    gap: 0.75rem;
     justify-content: center;
   }
 }

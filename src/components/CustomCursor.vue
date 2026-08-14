@@ -41,6 +41,7 @@ export default {
     window.addEventListener('pointerup', this.onPointerUp, { passive: true })
     document.addEventListener('mouseover', this.onMouseOver, { passive: true })
     document.addEventListener('mouseout', this.onMouseOut, { passive: true })
+    document.addEventListener('visibilitychange', this.onVisibilityChange)
 
     this.render()
   },
@@ -51,8 +52,16 @@ export default {
     window.removeEventListener('pointerup', this.onPointerUp)
     document.removeEventListener('mouseover', this.onMouseOver)
     document.removeEventListener('mouseout', this.onMouseOut)
+    document.removeEventListener('visibilitychange', this.onVisibilityChange)
   },
   methods: {
+    onVisibilityChange() {
+      if (document.hidden) {
+        if (this.animId) cancelAnimationFrame(this.animId)
+      } else if (this.isEnabled) {
+        this.render()
+      }
+    },
     onPointerMove(e) {
       this.mouseX = e.clientX
       this.mouseY = e.clientY

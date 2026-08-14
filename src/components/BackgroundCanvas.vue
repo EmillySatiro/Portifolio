@@ -24,15 +24,24 @@ export default {
   },
   mounted() {
     this.initCanvas()
-    window.addEventListener('resize', this.handleResize)
+    window.addEventListener('resize', this.handleResize, { passive: true })
     window.addEventListener('pointermove', this.handlePointerMove, { passive: true })
+    document.addEventListener('visibilitychange', this.handleVisibilityChange)
   },
   beforeUnmount() {
     if (this.animFrameId) cancelAnimationFrame(this.animFrameId)
     window.removeEventListener('resize', this.handleResize)
     window.removeEventListener('pointermove', this.handlePointerMove)
+    document.removeEventListener('visibilitychange', this.handleVisibilityChange)
   },
   methods: {
+    handleVisibilityChange() {
+      if (document.hidden) {
+        if (this.animFrameId) cancelAnimationFrame(this.animFrameId)
+      } else {
+        this.animate()
+      }
+    },
     initCanvas() {
       const canvas = this.$refs.canvasRef
       if (!canvas) return

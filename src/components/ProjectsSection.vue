@@ -6,6 +6,10 @@
         src="/a8973100-1174-11ee-9e14-23aa8edbd820.svg"
         alt="Morcego Estático Design"
         class="static-bat-img"
+        loading="lazy"
+        decoding="async"
+        width="180"
+        height="150"
       />
     </div>
 

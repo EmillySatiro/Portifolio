@@ -31,6 +31,10 @@
             src="/a8973100-1174-11ee-9e14-23aa8edbd820.svg"
             alt="Mascote Morcego"
             class="large-bat-img"
+            loading="lazy"
+            decoding="async"
+            width="260"
+            height="200"
           />
         </div>
 

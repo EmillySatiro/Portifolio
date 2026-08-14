@@ -26,6 +26,10 @@
                   src="/foto perfil.png"
                   alt="Clara Emílly Sousa Sátiro"
                   class="about-photo-img"
+                  loading="lazy"
+                  decoding="async"
+                  width="480"
+                  height="600"
                 />
 
                 <!-- Floating Note Overlay Tag (Replacing bottom bar) -->
