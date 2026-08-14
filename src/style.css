@@ -3,6 +3,14 @@
    Sober Glassmorphism, Balanced Typography Scale & 100% Dark Mode
    ========================================================================== */
 
+@font-face {
+  font-family: 'Chomsky';
+  src: url('./assets/fonts/Chomsky.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
 :root {
   color-scheme: dark;
 
@@ -10,6 +18,8 @@
   --charleston: #2a2829;
   --sky: #97b4de;
   --blue: #263a99;
+  --gold: #d4af37;
+  --gold-light: #e5d5be;
   --alabaster: #ffffff;
   --pastel: #ffffff;
   --ink: #171516;
@@ -33,10 +43,12 @@
   --glass-border: rgba(240, 235, 229, 0.12);
   --glass-blur: blur(12px);
 
-  /* Preserved Typography Families */
+  /* Typography Families */
   --font-body: 'Inter', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   --font-title: 'Cinzel', Georgia, serif;
   --font-editorial: 'Cormorant Garamond', Georgia, serif;
+  --font-chomsky: 'Chomsky', 'Cinzel', serif;
+  --font-gothic: 'Chomsky', Georgia, serif;
 }
 
 /* Global Resets */

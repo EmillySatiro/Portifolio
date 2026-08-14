@@ -1,5 +1,11 @@
 <template>
-  <header class="site-header" :class="{ 'is-scrolled': isScrolled }">
+  <header
+    class="site-header"
+    :class="{
+      'is-scrolled': isScrolled,
+      'is-solid-black': $route.path === '/designer'
+    }"
+  >
     <!-- Top Blue Scroll Progress Bar -->
     <div
       class="scroll-progress-bar"
@@ -72,11 +78,6 @@ export default {
       scrollProgress: 0,
     }
   },
-  computed: {
-    isLightThemePage() {
-      return this.$route.path === '/projetos' || this.$route.path === '/designer'
-    },
-  },
   mounted() {
     this.onScroll()
     window.addEventListener('scroll', this.onScroll, { passive: true })
@@ -147,6 +148,15 @@ export default {
   -webkit-backdrop-filter: blur(12px);
   border-bottom: none;
   pointer-events: auto;
+}
+
+/* Designer Page Solid Black Top Bar (No Gradient) */
+.site-header.is-solid-black {
+  background: #000000 !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.14) !important;
+  padding: 1.05rem 0 !important;
 }
 
 .scroll-progress-bar {

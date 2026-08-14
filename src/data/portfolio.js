@@ -2,7 +2,7 @@ export const navItems = [
   { name: 'Início', to: { path: '/', hash: '#home' } },
   { name: 'Sobre', to: { path: '/', hash: '#about' } },
   { name: 'Currículo', to: { path: '/', hash: '#curriculum' } },
-  { name: 'Projetos de TI', to: '/projetos' },
+  { name: 'Projetos', to: '/projetos' },
   { name: 'Designer', to: '/designer' },
   { name: 'Pesquisa', to: '/pesquisa' },
   { name: 'Contato', to: { path: '/', hash: '#contact' } },

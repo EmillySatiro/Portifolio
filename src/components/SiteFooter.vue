@@ -67,11 +67,6 @@ export default {
     ArrowUp,
     BrandIcon,
   },
-  computed: {
-    isLightThemePage() {
-      return this.$route.path === '/projetos' || this.$route.path === '/designer'
-    },
-  },
   methods: {
     scrollToTop() {
       window.scrollTo({ top: 0, behavior: 'smooth' })

@@ -130,7 +130,7 @@
 
           <!-- Button Navigating to Projects Page -->
           <router-link to="/projetos" class="view-projects-secondary-btn">
-            <span>Ver Meus Projetos de TI</span>
+            <span>Ver Meus Projetos</span>
             <ArrowRight :size="18" />
           </router-link>
         </div>
@@ -606,7 +606,7 @@ export default {
   font-family: 'Inter', sans-serif;
   font-size: 0.88rem;
   font-weight: 700;
-  border-radius: 8px !important;
+  border-radius: 0 !important;
   cursor: pointer;
   transition: all 0.3s ease;
 }
@@ -629,7 +629,7 @@ export default {
   right: 0;
   background: #17151a;
   border: 1px solid rgba(240, 235, 229, 0.2);
-  border-radius: 8px !important;
+  border-radius: 0 !important;
   box-shadow: 0 15px 40px rgba(0, 0, 0, 0.8);
   padding: 0.5rem;
   display: flex;
@@ -649,7 +649,7 @@ export default {
   align-items: center;
   gap: 0.85rem;
   padding: 0.65rem 0.85rem;
-  border-radius: 6px !important;
+  border-radius: 0 !important;
   color: var(--alabaster, #f0ebe5);
   text-decoration: none;
   transition: background 0.25s ease;
@@ -693,7 +693,7 @@ export default {
   font-size: 0.88rem;
   font-weight: 700;
   text-decoration: none;
-  border-radius: 8px !important;
+  border-radius: 0 !important;
   box-shadow: 0 4px 18px rgba(38, 58, 153, 0.35);
   transition: all 0.3s ease;
 }
