@@ -39,8 +39,7 @@ export default function Hero() {
             <span className="hero__line hero__line--accent">{profile.lastName}</span>
           </h1>
 
-          <p className="hero__role">
-            <span className="hero__role-label">Atuação —</span>{' '}
+          <p className="hero__role" aria-live="polite">
             <span key={roleIndex} className="hero__role-text">
               {roles[roleIndex]}
             </span>

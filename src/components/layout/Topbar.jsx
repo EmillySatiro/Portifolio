@@ -3,6 +3,7 @@ import { Link, useLocation } from 'react-router-dom'
 import { navItems, profile } from '../../data/portfolio'
 import { useActiveSection } from '../../hooks/useActiveSection'
 import { useTheme } from '../../hooks/useTheme'
+import BatLogo from '../ui/BatLogo'
 import Icon from '../ui/Icon'
 import ThemeToggle from '../ui/ThemeToggle'
 import './Topbar.css'
@@ -43,7 +44,7 @@ export default function Topbar() {
     <header className={`topbar${scrolled || menuOpen ? ' is-scrolled' : ''}`}>
       <div className="container topbar__inner">
         <Link to="/#home" className="topbar__brand">
-          <span className="topbar__pixel" aria-hidden="true" />
+          <BatLogo size={34} className="topbar__logo" />
           {profile.name}
         </Link>
 

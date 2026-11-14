@@ -37,16 +37,24 @@
   white-space: nowrap;
 }
 
-.topbar__pixel {
-  width: 12px;
-  height: 12px;
-  background: var(--brand);
-  box-shadow: 6px 6px 0 var(--violet);
+.topbar__logo {
+  color: var(--brand);
   transition: transform 0.5s var(--ease-out);
 }
 
-.topbar__brand:hover .topbar__pixel {
-  transform: rotate(90deg);
+:root[data-theme='dark'] .topbar__logo {
+  color: var(--accent);
+}
+
+/* O morcego "bate as asas" no hover */
+.topbar__brand:hover .topbar__logo {
+  animation: bat-flap 0.5s steps(2, jump-none) 2;
+}
+
+@keyframes bat-flap {
+  50% {
+    transform: scaleY(0.6) translateY(-3px);
+  }
 }
 
 /* ---------- Links ---------- */

@@ -35,12 +35,26 @@ export const roles = [
   'UI/UX & Prototipação',
 ]
 
-export const focusAreas = ['Full Stack Development', 'Computer Vision', 'Machine Learning', 'Software Developer']
-
 export const aboutFacts = [
-  { icon: 'user', label: 'Nome', value: 'Clara Emílly Sousa Sátiro' },
-  { icon: 'graduation', label: 'Formação', value: 'Sistemas de Informação · UFPI' },
-  { icon: 'pin', label: 'Local', value: 'Picos · PI' },
+  {
+    icon: 'graduation',
+    label: 'Formação',
+    value: 'Sistemas de Informação',
+    detail: 'Universidade Federal do Piauí (UFPI)',
+  },
+  {
+    icon: 'book',
+    label: 'Mestrado · Aluna especial',
+    value: 'Ciência da Computação',
+    detail: 'Universidade Federal do Piauí (UFPI)',
+  },
+  {
+    icon: 'rocket',
+    label: 'Startup',
+    value: 'Membro da PathoVision',
+    detail: '@pathovision_',
+    url: 'https://www.instagram.com/pathovision_/',
+  },
 ]
 
 export const socials = [
@@ -79,30 +93,31 @@ export const techCategories = [
   { id: 'tools', name: 'Ferramentas & DevOps' },
 ]
 
-// Cada tecnologia vira um "elemento" da tabela: símbolo de 2 letras + categorias.
+// Cada tecnologia vira uma carta: logo(s) em src/components/ui/TechLogo.jsx + descrição.
 export const technologies = [
-  { name: 'React', symbol: 'Re', categories: ['front'] },
-  { name: 'Vue.js', symbol: 'Vu', categories: ['front'] },
-  { name: 'TypeScript', symbol: 'Ts', categories: ['front'] },
-  { name: 'JavaScript', symbol: 'Js', categories: ['front'] },
-  { name: 'TailwindCSS', symbol: 'Tw', categories: ['front'] },
-  { name: 'Quasar Framework', symbol: 'Qs', categories: ['front'] },
-  { name: 'HTML5 / CSS3', symbol: 'Hc', categories: ['front'] },
-  { name: 'Figma', symbol: 'Fg', categories: ['front', 'tools'] },
-  { name: 'Python', symbol: 'Py', categories: ['back'] },
-  { name: 'Node.js', symbol: 'No', categories: ['back'] },
-  { name: 'FastAPI', symbol: 'Fa', categories: ['back'] },
-  { name: 'Flask', symbol: 'Fl', categories: ['back'] },
-  { name: 'PostgreSQL', symbol: 'Pg', categories: ['back'] },
-  { name: 'Docker', symbol: 'Dk', categories: ['back', 'tools'] },
-  { name: 'OpenCV', symbol: 'Cv', categories: ['ai'] },
-  { name: 'PyTorch', symbol: 'Pt', categories: ['ai'] },
-  { name: 'Deep Learning (CNNs)', symbol: 'Dl', categories: ['ai'] },
-  { name: 'Processamento de Imagens', symbol: 'Pi', categories: ['ai'] },
-  { name: 'Git & GitHub', symbol: 'Gh', categories: ['tools'] },
+  { name: 'React', logos: ['react'], categories: ['front'], description: 'Biblioteca JavaScript para criar interfaces com componentes.' },
+  { name: 'Vue.js', logos: ['vue'], categories: ['front'], description: 'Framework progressivo para construir interfaces web reativas.' },
+  { name: 'TypeScript', logos: ['typescript'], categories: ['front'], description: 'JavaScript com tipagem estática para um código mais seguro.' },
+  { name: 'JavaScript', logos: ['javascript'], categories: ['front'], description: 'A linguagem da web: roda no navegador e no servidor.' },
+  { name: 'TailwindCSS', logos: ['tailwind'], categories: ['front'], description: 'Framework CSS de classes utilitárias para estilizar rápido.' },
+  { name: 'Quasar', logos: ['quasar'], categories: ['front'], description: 'Framework Vue para apps web, mobile e desktop.' },
+  { name: 'HTML5 / CSS3', logos: ['html', 'css'], categories: ['front'], description: 'A estrutura e o estilo de toda página da web.' },
+  { name: 'Figma', logos: ['figma'], categories: ['front', 'tools'], description: 'Design colaborativo de interfaces, protótipos e design systems.' },
+  { name: 'Python', logos: ['python'], categories: ['back'], description: 'Linguagem versátil para back-end, dados e inteligência artificial.' },
+  { name: 'Node.js', logos: ['node'], categories: ['back'], description: 'Ambiente para executar JavaScript no servidor.' },
+  { name: 'FastAPI', logos: ['fastapi'], categories: ['back'], description: 'Framework Python moderno e rápido para criar APIs.' },
+  { name: 'Flask', logos: ['flask'], categories: ['back'], description: 'Microframework Python leve para aplicações web e APIs.' },
+  { name: 'PostgreSQL', logos: ['postgres'], categories: ['back'], description: 'Banco de dados relacional robusto e open source.' },
+  { name: 'Docker', logos: ['docker'], categories: ['back', 'tools'], description: 'Empacota aplicações em contêineres que rodam em qualquer lugar.' },
+  { name: 'OpenCV', logos: ['opencv'], categories: ['ai'], description: 'Biblioteca de visão computacional e análise de imagens.' },
+  { name: 'PyTorch', logos: ['pytorch'], categories: ['ai'], description: 'Framework de deep learning para treinar redes neurais.' },
+  { name: 'Deep Learning', logos: ['neural'], categories: ['ai'], description: 'Redes neurais (CNNs) que aprendem padrões em imagens.' },
+  { name: 'Proc. de Imagens', logos: ['image'], categories: ['ai'], description: 'Técnicas para tratar, filtrar e analisar imagens digitais.' },
+  { name: 'Git & GitHub', logos: ['git', 'github'], categories: ['tools'], description: 'Controle de versão e colaboração em código.' },
 ]
 
 export const experiences = [
+  { title: 'Gerente de Projeto', company: 'IAtrain', period: 'out. 2026 — atual' },
   { title: 'Desenvolvedora Front-end', company: 'IAtrain · Estágio Remoto', period: 'mar. 2026 — jun. 2026' },
   { title: 'Coautora & Dev Full Stack', company: 'Sistema PREMAUT (UFPI)', period: 'mar. 2026 — atual' },
   { title: 'UI/UX Designer', company: 'Projeto SINFO 2026 (UFPI)', period: 'mar. 2026 — jun. 2026' },

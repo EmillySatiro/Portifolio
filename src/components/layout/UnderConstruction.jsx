@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import BatLogo from '../ui/BatLogo'
 import Icon from '../ui/Icon'
 import './UnderConstruction.css'
 
@@ -35,7 +36,7 @@ export default function UnderConstruction({ word, badge, description, links = []
           ))}
         </div>
 
-        <img src="/bat.svg" alt="" className="building__bat" width="200" height="150" loading="lazy" />
+        <BatLogo size={170} className="building__bat" />
       </div>
     </main>
   )

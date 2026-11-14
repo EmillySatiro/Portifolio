@@ -261,3 +261,7 @@
     flex: 1 1 100%;
   }
 }
+
+:root[data-theme='dark'] .cv-banner {
+  border: 1px solid rgba(255, 255, 255, 0.16);
+}

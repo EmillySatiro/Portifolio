@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 import { createPortal } from 'react-dom'
+import BatLogo from '../ui/BatLogo'
 import Icon from '../ui/Icon'
 import './SentModal.css'
 
@@ -20,7 +21,7 @@ export default function SentModal({ onClose }) {
         aria-labelledby="sent-title"
         onClick={(e) => e.stopPropagation()}
       >
-        <img src="/bat.svg" alt="" className="sent-modal__bat" width="160" height="120" />
+        <BatLogo size={120} className="sent-modal__bat" />
         <div className="sent-modal__head">
           <span className="eyebrow">Mensagem entregue</span>
           <button type="button" className="sent-modal__close" onClick={onClose} aria-label="Fechar">
