@@ -184,6 +184,7 @@
 }
 
 .ac-pub__year {
+  min-width: 3.2rem;
   font-family: var(--font-display);
   font-size: 1.6rem;
   line-height: 1;
@@ -204,6 +205,41 @@
 .ac-pub__meta {
   font-size: 0.88rem;
   color: var(--muted);
+}
+
+.ac-pub__type {
+  justify-self: start;
+  padding: 0.15rem 0.5rem;
+  border-radius: 6px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.ac-pub__meta strong {
+  color: var(--ink);
+}
+
+.ac-pub__venue {
+  font-size: 0.85rem;
+  font-style: normal;
+  color: var(--accent);
+}
+
+.ac-pub__cites {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--violet);
+}
+
+.ac-pubs__more {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-top: 1.5rem;
 }
 
 .ac-pub__arrow {

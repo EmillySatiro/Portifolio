@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom'
 import PageHero from '../components/layout/PageHero'
 import Icon from '../components/ui/Icon'
 import TechLogo from '../components/ui/TechLogo'
-import { academicLinks, certificates, education, publications, research, talks, teaching } from '../data/academic'
+import { academicLinks, authorHighlight, certificates, education, publications, research, talks, teaching } from '../data/academic'
 import './AcademicPage.css'
 
 function SectionTitle({ eyebrow, title }) {
@@ -15,6 +15,20 @@ function SectionTitle({ eyebrow, title }) {
         {title}
       </h2>
     </header>
+  )
+}
+
+// Destaca o meu nome na lista de autores
+function Authors({ text }) {
+  const match = text.match(authorHighlight)
+  if (!match) return text
+  const start = match.index
+  return (
+    <>
+      {text.slice(0, start)}
+      <strong>{match[0]}</strong>
+      {text.slice(start + match[0].length)}
+    </>
   )
 }
 
@@ -40,22 +54,38 @@ function Publications() {
   }
 
   return (
-    <ol className="ac-pubs">
-      {publications.map((pub, index) => (
-        <li key={pub.title} data-reveal style={{ '--delay': `${index * 0.05}s` }}>
-          <a href={pub.url} target="_blank" rel="noopener noreferrer" className="ac-pub">
-            <span className="ac-pub__year">{pub.year}</span>
-            <span className="ac-pub__body">
-              <span className="ac-pub__title">{pub.title}</span>
-              <span className="ac-pub__meta">
-                {pub.authors} · <em>{pub.venue}</em>
+    <>
+      <ol className="ac-pubs">
+        {publications.map((pub, index) => (
+          <li key={pub.title} data-reveal style={{ '--delay': `${index * 0.05}s` }}>
+            <a href={pub.url} target="_blank" rel="noopener noreferrer" className="ac-pub">
+              <span className="ac-pub__year">{pub.year ?? '—'}</span>
+              <span className="ac-pub__body">
+                {pub.type && <span className="ac-pub__type">{pub.type}</span>}
+                <span className="ac-pub__title">{pub.title}</span>
+                <span className="ac-pub__meta">
+                  <Authors text={pub.authors} />
+                </span>
+                {pub.venue && <em className="ac-pub__venue">{pub.venue}</em>}
+                {pub.citations > 0 && (
+                  <span className="ac-pub__cites">
+                    {pub.citations} {pub.citations === 1 ? 'citação' : 'citações'}
+                  </span>
+                )}
               </span>
-            </span>
-            <Icon name="external" size={16} className="ac-pub__arrow" />
+              <Icon name="external" size={16} className="ac-pub__arrow" />
+            </a>
+          </li>
+        ))}
+      </ol>
+      <div className="ac-pubs__more" data-reveal>
+        {academicLinks.map((link) => (
+          <a key={link.url} href={link.url} target="_blank" rel="noopener noreferrer" className="btn btn--outline">
+            <Icon name={link.icon} size={16} /> Ver no {link.name}
           </a>
-        </li>
-      ))}
-    </ol>
+        ))}
+      </div>
+    </>
   )
 }
 
