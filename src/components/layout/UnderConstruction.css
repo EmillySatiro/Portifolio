@@ -1,0 +1,90 @@
+.building {
+  position: relative;
+  overflow: hidden;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  padding: calc(var(--topbar-h) + 48px) 0 72px;
+}
+
+.building__inner {
+  position: relative;
+  display: grid;
+  justify-items: start;
+  gap: 1.5rem;
+}
+
+.building__blur {
+  position: absolute;
+  right: -4%;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: clamp(6rem, 24vw, 21rem);
+  opacity: 0.85;
+}
+
+.building__badge,
+.building__heading,
+.building__text,
+.building__actions {
+  position: relative;
+}
+
+.building__title {
+  font-size: clamp(3.6rem, 11vw, 9.5rem);
+  animation: building-rise 1s var(--ease-out) both;
+}
+
+.building__heading {
+  display: inline-block;
+}
+
+.building__x {
+  width: clamp(54px, 8vw, 110px);
+  right: clamp(-90px, -7vw, -40px);
+  top: -14%;
+}
+
+.building__text {
+  max-width: 48ch;
+  font-size: 1.05rem;
+}
+
+.building__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1.25rem 2.5rem;
+  margin-top: 1rem;
+}
+
+.building__bat {
+  position: absolute;
+  right: 8%;
+  bottom: -40px;
+  width: clamp(110px, 14vw, 190px);
+  opacity: 0.9;
+  animation: building-float 4s ease-in-out infinite alternate;
+}
+
+@keyframes building-rise {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+}
+
+@keyframes building-float {
+  to {
+    transform: translateY(-16px) rotate(-4deg);
+  }
+}
+
+@media (max-width: 720px) {
+  .building__bat {
+    position: relative;
+    right: auto;
+    bottom: auto;
+    justify-self: end;
+  }
+}

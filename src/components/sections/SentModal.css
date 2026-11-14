@@ -1,0 +1,70 @@
+.sent-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  display: grid;
+  place-items: center;
+  padding: var(--gutter);
+  background: color-mix(in srgb, var(--ink) 45%, transparent);
+  animation: sent-fade 0.4s ease both;
+}
+
+.sent-modal__card {
+  position: relative;
+  width: min(460px, 100%);
+  padding: 2.2rem 2rem 1.6rem;
+  background: var(--paper);
+  border: 1px solid var(--ink);
+  box-shadow: 10px 10px 0 var(--blue);
+  display: grid;
+  gap: 1rem;
+  animation: sent-drop 0.9s var(--ease-out) 0.35s both;
+}
+
+.sent-modal__bat {
+  position: absolute;
+  left: 50%;
+  top: -96px;
+  width: 150px;
+  transform: translateX(-50%);
+  animation: sent-fly 1s var(--ease-out) both;
+}
+
+.sent-modal__head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.sent-modal__close {
+  font-size: 1rem;
+}
+
+.sent-modal__title {
+  font-size: clamp(1.8rem, 5vw, 2.4rem);
+  line-height: 0.95;
+}
+
+.sent-modal__hint {
+  font-size: 0.75rem;
+  color: var(--muted);
+}
+
+@keyframes sent-fade {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes sent-fly {
+  from {
+    transform: translate(-50%, -60vh) rotate(-12deg);
+  }
+}
+
+@keyframes sent-drop {
+  from {
+    opacity: 0;
+    transform: translateY(-40px) rotate(-3deg);
+  }
+}

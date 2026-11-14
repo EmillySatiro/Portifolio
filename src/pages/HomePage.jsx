@@ -1,15 +1,15 @@
-import AboutSection from '../components/AboutSection'
-import ContactSection from '../components/ContactSection'
-import CurriculumSection from '../components/CurriculumSection'
-import HeroSection from '../components/HeroSection'
+import About from '../components/sections/About'
+import Contact from '../components/sections/Contact'
+import Curriculum from '../components/sections/Curriculum'
+import Hero from '../components/sections/Hero'
 
 export default function HomePage() {
   return (
-    <main className="home-view-page" style={{ position: 'relative', width: '100%' }}>
-      <HeroSection />
-      <AboutSection />
-      <CurriculumSection />
-      <ContactSection />
+    <main>
+      <Hero />
+      <About />
+      <Curriculum />
+      <Contact />
     </main>
   )
 }

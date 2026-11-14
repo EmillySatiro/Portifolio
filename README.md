@@ -1,45 +1,32 @@
 # Portfólio Premium | Emílly Sátiro
 
-Portfólio profissional de alta performance e experiência visual imersiva, desenvolvido com **React**, **Vite** e **Lucide Icons**. Apresenta a trajetória, projetos de engenharia de software, estudos de caso de UI/UX, pesquisas em Inteligência Artificial (CNPq/FAPEPI) e canais de contato de Emílly Sátiro.
+Portfólio profissional de alta performance e experiência visual imersiva, desenvolvido com **React** e **Vite**, em estilo editorial de revista. Apresenta a trajetória, projetos de engenharia de software, estudos de caso de UI/UX, pesquisas em Inteligência Artificial (CNPq/FAPEPI) e canais de contato de Emílly Sátiro.
 
 ---
 
-## 🌟 Destaques da Interface
+## 🌟 Visual
 
-- **Hero Section:** iluminação ambiente com efeito radial glow e ticker animado de atuação profissional.
-- **Background Animado (`BackgroundCanvas.jsx`):** canvas interativo com partículas flutuantes reativas ao movimento do cursor e textura de ruído sutil.
-- **Cursor Customizado (`CustomCursor.jsx`):** anel seguidor fluido e expansão do cursor em elementos clicáveis.
-- **Mascote Animado (`FlyingBat.jsx`):** morcego em SVG voando pela tela.
-- **Sobre (`AboutSection.jsx`):** foto, apresentação e letreiro de tecnologias com filtros por categoria.
-- **Currículo (`CurriculumSection.jsx`):** baralho de cartas com as experiências e download do currículo em PT/EN.
-- **Contato (`ContactSection.jsx`):** formulário integrado ao Formspree e botões para copiar os contatos.
-- **Projetos, Designer e Pesquisa:** páginas próprias, por enquanto no modo "Página em construção" (`UnderConstruction.jsx`).
+Estilo editorial inspirado em revistas: papel texturizado, títulos condensados enormes,
+palavras gigantes desfocadas em azul, colagens de fotos e rabiscos "à mão" que se desenham na tela.
 
----
+- **Temas claro e escuro**, com o tema salvo no navegador (ou o do sistema na primeira visita).
+- **Masthead** no topo da home com o nome, as áreas e a navegação por seções.
+- **Barra mínima** que aparece ao rolar (monograma, seção atual, tema e botão MENU) e se esconde ao descer.
+- **Menu em tela cheia** com os links grandes.
+- **Animações leves**, só com CSS e um IntersectionObserver (sem bibliotecas de animação). Respeitam `prefers-reduced-motion`.
 
-## 🎨 Identidade Visual Preservada
+## 🎨 Identidade
 
-### Tipografia
-- **Títulos e Destaques Elegantes:** `Cinzel` (`font-family: 'Cinzel', serif`)
-- **Títulos Editoriais e Citações:** `Cormorant Garamond` (`font-family: 'Cormorant Garamond', serif`)
-- **Corpo de Texto e Controles:** `Inter` (`font-family: 'Inter', sans-serif`)
+- **Fontes:** `Anton` (títulos condensados) e `Inter` (textos), via Google Fonts.
+- **Cores:** papel `#efede8` / tinta `#0c0c0e` e azul `#1f3dff` no tema claro; `#0e0e11` / `#f1efe9` e azul `#4d6bff` no escuro.
+  Todas definidas em `src/styles/tokens.css`.
 
-### Paleta de Cores Oficial
-- **Charleston (`#2a2829`):** Fundo principal escuro e cards glassmorphic.
-- **Sky Blue (`#97b4de`):** Destaques visuais, ícones, badges e iluminação suave.
-- **Deep Blue (`#263a99`):** Botões principais de CTA, gradientes e sombras.
-- **Alabaster (`#f0ebe5`):** Textos principais e títulos de alto contraste.
-- **Pastel Beige (`#dcd0be`):** Subtítulos editoriais e destaques secundários.
-- **Ink (`#171516`):** Molduras internas e contrastes.
+## ⚡ Desempenho
 
----
-
-## 🛠️ Tecnologias e Dependências
-
-- **`react` / `react-dom`:** biblioteca para a construção da interface.
-- **`react-router-dom`:** navegação SPA entre Início, Projetos, Designer e Pesquisa.
-- **`lucide-react`:** ícones vetoriais usados nos botões e formulários.
-- **`vite` + `@vitejs/plugin-react`:** servidor de desenvolvimento e build.
+- Dependências só `react`, `react-dom` e `react-router-dom`.
+- Foto em WebP com duas larguras (640 px e 1200 px); os recortes do layout reutilizam o mesmo arquivo.
+- Páginas Projetos, Designer e Pesquisa carregam sob demanda (`React.lazy`).
+- Textura de papel feita com um SVG minúsculo embutido no CSS.
 
 ---
 
@@ -98,40 +85,29 @@ docker-compose down
 ```text
 .
 ├── public/
-│   ├── bat.svg                      # Mascote morcego (também usado como favicon)
-│   ├── foto perfil.png              # Foto de perfil
-│   ├── Curriculo_formatado_PT.pdf   # Currículo em português
-│   └── Curriculo_formatado_ingles.pdf # Currículo em inglês
+│   ├── bat.svg                        # Mascote morcego (favicon, confirmação de envio, páginas em construção)
+│   ├── images/foto-640.webp           # Foto de perfil (celular)
+│   ├── images/foto-1200.webp          # Foto de perfil (desktop)
+│   ├── images/foto-og.jpg             # Imagem de compartilhamento (WhatsApp, LinkedIn…)
+│   └── Curriculo_formatado_*.pdf      # Currículos PT e EN
 ├── src/
-│   ├── components/                  # Componentes (cada um com seu .css)
-│   │   ├── AboutSection.jsx         # Seção Sobre com foto e tecnologias
-│   │   ├── BackgroundCanvas.jsx     # Canvas de partículas e iluminação
-│   │   ├── BrandIcon.jsx            # Ícones das tecnologias e redes sociais
-│   │   ├── ContactSection.jsx       # Formulário Formspree e contatos com cópia
-│   │   ├── CurriculumSection.jsx    # Experiências e download do currículo
-│   │   ├── CustomCursor.jsx         # Cursor customizado
-│   │   ├── FlyingBat.jsx            # Mascote morcego animado
-│   │   ├── HeroSection.jsx          # Hero com ticker de atuação
-│   │   ├── SiteFooter.jsx           # Rodapé com redes sociais e botão de topo
-│   │   ├── SiteNavbar.jsx           # Navbar com barra de progresso
-│   │   └── UnderConstruction.jsx    # Layout de "Página em construção"
-│   ├── data/
-│   │   └── portfolio.js             # Links de navegação e contatos
-│   ├── pages/                       # Páginas (rotas)
-│   │   ├── DesignerPage.jsx         # /designer
-│   │   ├── HomePage.jsx             # /
-│   │   ├── ProjectsPage.jsx         # /projetos
-│   │   └── ResearchPage.jsx         # /pesquisa
-│   ├── App.jsx                      # Layout raiz e rotas
-│   ├── main.jsx                     # Ponto de entrada do React
-│   └── style.css                    # Design system e estilos globais
-├── Dockerfile                       # Build Docker multi-stage
-├── docker-compose.yml               # Orquestração de containers Docker
-├── index.html                       # HTML base com fontes Cinzel, Cormorant e Inter
-├── package.json                     # Dependências e scripts npm
-├── vercel.json                      # Configuração para deploy na Vercel
-└── vite.config.js                   # Configuração do Vite
+│   ├── components/
+│   │   ├── layout/                    # Topbar, MenuOverlay, Footer, UnderConstruction
+│   │   ├── sections/                  # Hero, About, TechMarquee, Curriculum, Contact, SentModal
+│   │   └── ui/                        # Scribble (rabiscos), ThemeToggle, Photo
+│   ├── data/portfolio.js              # Todo o conteúdo: textos, links, experiências, tecnologias
+│   ├── hooks/                         # useTheme, useReveal, useActiveSection, useScrollState, useScrollOnNavigate
+│   ├── pages/                         # HomePage, ProjectsPage, DesignerPage, ResearchPage
+│   ├── styles/                        # tokens.css (temas), base.css, utilities.css
+│   ├── App.jsx                        # Layout raiz e rotas
+│   └── main.jsx                       # Ponto de entrada
+├── index.html                         # HTML base, fontes e script que aplica o tema sem piscar
+├── Dockerfile / docker-compose.yml    # Build e servidor Nginx
+├── vercel.json                        # Deploy na Vercel
+└── vite.config.js                     # Configuração do Vite
 ```
+
+Cada componente tem o seu `.css` ao lado do `.jsx`.
 
 ---
 
