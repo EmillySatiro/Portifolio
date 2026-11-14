@@ -6,17 +6,11 @@ export default defineConfig({
   plugins: [react()],
   build: {
     target: 'es2020',
-    cssCodeSplit: true,
-    chunkSizeWarningLimit: 800,
     rollupOptions: {
       output: {
+        // React em um arquivo separado: muda pouco, então fica em cache entre deploys.
         manualChunks(id) {
-          if (id.includes('node_modules')) {
-            if (id.includes('lucide-react')) {
-              return 'vendor-icons'
-            }
-            return 'vendor-react'
-          }
+          if (id.includes('node_modules')) return 'vendor'
         },
       },
     },

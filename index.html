@@ -2,43 +2,43 @@
 <html lang="pt-BR">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
-    <meta name="theme-color" content="#171516" />
-    <meta name="color-scheme" content="dark" />
-    
-    <title>Emílly Sátiro | Portfolio — UI/UX Designer & Desenvolvedora</title>
-    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#efede8" />
+
+    <title>Emílly Sátiro | Portfólio — UI/UX Designer & Desenvolvedora</title>
     <meta
       name="description"
-      content="Portfólio de Emílly Sátiro — UI/UX Designer e Desenvolvedora Fullstack especializada em interfaces modernas, design systems, prototipagem no Figma e engenharia web."
+      content="Portfólio de Emílly Sátiro — UI/UX Designer, Desenvolvedora Full Stack e pesquisadora em Visão Computacional."
     />
-    <meta name="keywords" content="Emílly Sátiro, UI/UX Designer, Desenvolvedora Fullstack, Figma, Design System, Portfólio, React, Web Design" />
+    <meta name="keywords" content="Emílly Sátiro, UI/UX Designer, Desenvolvedora Full Stack, Visão Computacional, Figma, React, Portfólio" />
     <meta name="author" content="Emílly Sátiro" />
 
-    <!-- Open Graph / Facebook / WhatsApp -->
+    <!-- Open Graph / WhatsApp -->
     <meta property="og:type" content="website" />
     <meta property="og:title" content="Emílly Sátiro | UI/UX Designer & Desenvolvedora" />
-    <meta property="og:description" content="Portfólio de interfaces modernas, design systems, protótipos de alta fidelidade e engenharia web." />
-    <meta property="og:image" content="/foto perfil.png" />
+    <meta property="og:description" content="Design, código e pesquisa em visão computacional." />
+    <meta property="og:image" content="/images/foto-og.jpg" />
     <meta property="og:locale" content="pt_BR" />
-
-    <!-- Twitter Cards -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Emílly Sátiro | UI/UX Designer & Desenvolvedora" />
-    <meta name="twitter:description" content="Portfólio de interfaces modernas, design systems, protótipos de alta fidelidade e engenharia web." />
-    <meta name="twitter:image" content="/foto perfil.png" />
+    <meta name="twitter:image" content="/images/foto-og.jpg" />
 
-    <!-- Performance & Font Optimization -->
+    <!-- Aplica o tema salvo (ou o do sistema) antes de pintar, sem piscar -->
+    <script>
+      try {
+        var t = localStorage.getItem('theme')
+        if (!t) t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+        document.documentElement.dataset.theme = t
+      } catch (e) {
+        document.documentElement.dataset.theme = 'light'
+      }
+    </script>
+
+    <!-- Fontes: só Anton (títulos) e Inter (texto) -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
-    <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
-    
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,400;1,600&family=Inter:wght@400;500;600;700&display=swap"
-    />
-    
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700&display=swap" />
+    <link rel="preload" as="image" href="/images/foto-1200.webp" imagesrcset="/images/foto-640.webp 640w, /images/foto-1200.webp 1200w" imagesizes="(max-width: 768px) 100vw, 50vw" />
+
     <link rel="icon" type="image/svg+xml" href="/bat.svg" />
   </head>
   <body>

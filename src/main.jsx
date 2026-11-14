@@ -1,5 +1,7 @@
-// Estilos globais primeiro, para que os estilos de cada componente tenham prioridade.
-import './style.css'
+// Estilos globais primeiro; os de cada componente vêm depois e têm prioridade.
+import './styles/tokens.css'
+import './styles/base.css'
+import './styles/utilities.css'
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { BrowserRouter } from 'react-router-dom'

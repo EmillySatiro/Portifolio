@@ -1,0 +1,167 @@
+/* Utilitários de layout, tipografia editorial e animações reutilizáveis. */
+
+.container {
+  width: 100%;
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+}
+
+.section {
+  position: relative;
+  padding: clamp(72px, 10vw, 140px) 0;
+  scroll-margin-top: var(--topbar-h);
+}
+
+/* Títulos condensados pesados */
+.display {
+  font-family: var(--font-display);
+  font-weight: 400;
+  line-height: 0.95;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+}
+
+/* Texto pequeno com letras bem espaçadas (R E A D  M O R E) */
+.spaced {
+  font-family: var(--font-display);
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.55em;
+  font-size: clamp(0.95rem, 1.4vw, 1.25rem);
+}
+
+.eyebrow {
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.32em;
+  color: var(--muted);
+}
+
+/* Link de ação azul com letras espaçadas e seta que avança no hover */
+.cta-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6em;
+  color: var(--blue);
+  transition: letter-spacing 0.5s var(--ease-out), color 0.3s ease;
+}
+
+.cta-link:hover {
+  letter-spacing: 0.7em;
+}
+
+.cta-link .arrow {
+  letter-spacing: 0;
+  transition: transform 0.4s var(--ease-out);
+}
+
+.cta-link:hover .arrow {
+  transform: translateX(6px);
+}
+
+/* Link de texto pequeno com sublinhado que cresce */
+.text-link {
+  position: relative;
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+}
+
+.text-link::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  width: 100%;
+  height: 1.5px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.45s var(--ease-out);
+}
+
+.text-link:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+/* Palavra gigante desfocada em azul (efeito "DAZED" borrado) */
+.blur-word {
+  font-family: var(--font-display);
+  font-weight: 400;
+  text-transform: uppercase;
+  line-height: 0.8;
+  color: var(--blue);
+  filter: blur(clamp(8px, 1.4vw, 18px));
+  opacity: 0.92;
+  user-select: none;
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* ---------- Entrada ao rolar (ativada por useReveal) ---------- */
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity 0.9s var(--ease-out), transform 0.9s var(--ease-out);
+  transition-delay: var(--delay, 0s);
+}
+
+[data-reveal].is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+[data-reveal='fade'] {
+  transform: none;
+}
+
+/* O recorte vai no filho: o próprio elemento precisa continuar "visível" para o observer */
+[data-reveal='clip'] {
+  opacity: 1;
+  transform: none;
+}
+
+[data-reveal='clip'] > * {
+  clip-path: inset(0 0 100% 0);
+  transition: clip-path 1.1s var(--ease-out);
+  transition-delay: var(--delay, 0s);
+}
+
+[data-reveal='clip'].is-visible > * {
+  clip-path: inset(0 0 0 0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    transition-delay: 0s !important;
+  }
+
+  [data-reveal],
+  [data-reveal] > * {
+    opacity: 1;
+    transform: none;
+    clip-path: none !important;
+  }
+}

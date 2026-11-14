@@ -1,0 +1,159 @@
+.curriculum {
+  border-top: 1px solid var(--line);
+}
+
+.curriculum__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.6fr);
+  gap: clamp(36px, 6vw, 96px);
+  align-items: start;
+}
+
+/* ---------- Coluna lateral ---------- */
+.curriculum__side {
+  position: sticky;
+  top: calc(var(--topbar-h) + 32px);
+  display: grid;
+  gap: 1.6rem;
+}
+
+.curriculum__title {
+  font-size: clamp(3rem, 6.5vw, 5.6rem);
+}
+
+.curriculum__subtitle {
+  font-family: var(--font-display);
+  font-size: clamp(1.1rem, 1.8vw, 1.5rem);
+  line-height: 1.15;
+  text-transform: uppercase;
+  color: var(--muted);
+  max-width: 22ch;
+}
+
+.curriculum__downloads {
+  display: grid;
+  gap: 0.25rem;
+}
+
+.curriculum__downloads .eyebrow {
+  margin-bottom: 0.5rem;
+}
+
+.curriculum__file {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid var(--line);
+  transition: color 0.3s ease, padding 0.4s var(--ease-out);
+}
+
+.curriculum__file:hover {
+  color: var(--blue);
+  padding-left: 0.5rem;
+}
+
+.curriculum__file-label {
+  font-weight: 600;
+}
+
+.curriculum__file-detail {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* ---------- Lista de experiências ---------- */
+.curriculum__list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--ink);
+}
+
+.curriculum__item {
+  position: relative;
+  display: grid;
+  grid-template-columns: 3.2rem 1fr auto;
+  gap: 1rem 1.5rem;
+  align-items: baseline;
+  padding: 1.35rem 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.curriculum__num {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  color: var(--muted);
+}
+
+.curriculum__role {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(1.6rem, 3.2vw, 2.6rem);
+  line-height: 1;
+  text-transform: uppercase;
+  transition: color 0.3s ease, transform 0.5s var(--ease-out);
+}
+
+.curriculum__item:hover .curriculum__role {
+  color: var(--blue);
+  transform: translateX(10px);
+}
+
+.curriculum__company {
+  margin-top: 0.35rem;
+  font-size: 0.92rem;
+  color: var(--muted);
+}
+
+.curriculum__period {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.curriculum__item--hire .curriculum__role {
+  color: var(--blue);
+}
+
+.curriculum__hire-msg {
+  margin-top: 0.6rem;
+  font-size: 0.95rem;
+}
+
+.curriculum__heart {
+  width: 70px;
+  right: 4%;
+  top: 50%;
+}
+
+@media (max-width: 860px) {
+  .curriculum__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .curriculum__side {
+    position: static;
+  }
+
+  .curriculum__item {
+    grid-template-columns: 2.4rem 1fr;
+  }
+
+  .curriculum__period {
+    grid-column: 2;
+  }
+
+  .curriculum__heart {
+    width: 48px;
+    top: auto;
+    bottom: 1.2rem;
+    right: 0;
+  }
+}
