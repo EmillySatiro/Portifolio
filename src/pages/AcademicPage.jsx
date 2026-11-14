@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom'
 import PageHero from '../components/layout/PageHero'
 import Icon from '../components/ui/Icon'
 import TechLogo from '../components/ui/TechLogo'
-import { academicLinks, authorHighlight, certificates, education, publications, research, talks, teaching } from '../data/academic'
+import { academicLinks, authorHighlight, publications, research, startup } from '../data/academic'
 import './AcademicPage.css'
 
 function SectionTitle({ eyebrow, title }) {
@@ -100,49 +100,54 @@ export default function AcademicPage() {
         ))}
       </PageHero>
 
-      {/* ---------- Pesquisa ---------- */}
+      {/* ---------- Iniciação científica ---------- */}
       <section className="section ac-research pixel-edge">
-        <div className="container ac-research__grid">
-          <article className="ac-research__card" data-reveal>
-            <span className="chip ac-research__badge">{research.badge}</span>
-            <h2 className="ac-research__title display">{research.title}</h2>
-            <p className="ac-research__meta">
-              <strong>{research.group}</strong> · {research.period}
-            </p>
-            <ul className="ac-research__list">
-              {research.highlights.map((item) => (
-                <li key={item}>{item}</li>
-              ))}
-            </ul>
-            <div className="ac-research__footer">
-              <span className="ac-research__logos">
-                {research.logos.map((logo) => (
-                  <TechLogo key={logo} name={logo} size={20} />
-                ))}
-              </span>
-              <Link to="/projetos" className="btn btn--light">
-                Ver nos projetos <Icon name="arrowRight" className="icon-arrow" />
-              </Link>
-            </div>
-          </article>
+        <div className="container">
+          <SectionTitle eyebrow={research.badge} title="Iniciação Científica" />
 
-          <aside className="ac-education">
-            <p className="eyebrow" data-reveal>
-              Formação
-            </p>
-            {education.map((item, index) => (
-              <div key={item.title} className="ac-education__item" data-reveal style={{ '--delay': `${0.1 + index * 0.08}s` }}>
-                <span className="ac-education__icon">
-                  <Icon name={index === 0 ? 'graduation' : 'book'} size={20} />
+          <div className="ac-research__grid">
+            <article className="ac-research__card" data-reveal>
+              <h3 className="ac-research__title display">{research.title}</h3>
+              <p className="ac-research__meta">
+                <strong>{research.group}</strong> · {research.period}
+              </p>
+              <ul className="ac-research__list">
+                {research.highlights.map((item) => (
+                  <li key={item}>{item}</li>
+                ))}
+              </ul>
+              <div className="ac-research__footer">
+                <span className="ac-research__logos">
+                  {research.logos.map((logo) => (
+                    <TechLogo key={logo} name={logo} size={20} />
+                  ))}
                 </span>
-                <span>
-                  <strong>{item.title}</strong>
-                  <span>{item.place}</span>
-                  <em>{item.period}</em>
-                </span>
+                <Link to="/projetos" className="btn btn--light">
+                  Ver nos projetos <Icon name="arrowRight" className="icon-arrow" />
+                </Link>
               </div>
-            ))}
-          </aside>
+            </article>
+
+            {/* Startup que surgiu da pesquisa */}
+            <a
+              href={startup.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="ac-startup"
+              data-reveal
+              style={{ '--delay': '0.12s' }}
+            >
+              <span className="ac-startup__icon">
+                <Icon name="rocket" size={26} />
+              </span>
+              <span className="ac-startup__label">Da pesquisa para uma startup</span>
+              <span className="ac-startup__name display">{startup.name}</span>
+              <span className="ac-startup__desc">{startup.description}</span>
+              <span className="ac-startup__link">
+                {startup.handle} <Icon name="external" size={15} />
+              </span>
+            </a>
+          </div>
         </div>
       </section>
 
@@ -151,58 +156,6 @@ export default function AcademicPage() {
         <div className="container">
           <SectionTitle eyebrow="Produção científica" title="Publicações" />
           <Publications />
-        </div>
-      </section>
-
-      {/* ---------- Palestras e minicursos ---------- */}
-      <section className="section ac-talks pixel-edge">
-        <div className="container">
-          <SectionTitle eyebrow="Eventos" title="Palestras e minicursos" />
-          <ol className="ac-talks__list">
-            {talks.map((talk, index) => (
-              <li key={`${talk.title}-${talk.date}`} className="ac-talk" data-reveal style={{ '--delay': `${index * 0.07}s` }}>
-                {talk.image && (
-                  <img className="ac-talk__img" src={talk.image} alt={talk.title} loading="lazy" decoding="async" />
-                )}
-                <span className="ac-talk__date">{talk.date}</span>
-                <h3 className="ac-talk__title">{talk.title}</h3>
-                <p className="ac-talk__event">{talk.event}</p>
-                {talk.description && <p className="ac-talk__desc">{talk.description}</p>}
-                <span className="ac-talk__role">{talk.role}</span>
-              </li>
-            ))}
-          </ol>
-        </div>
-      </section>
-
-      {/* ---------- Ensino e certificados ---------- */}
-      <section className="section ac-section pixel-edge">
-        <div className="container ac-split">
-          <div>
-            <SectionTitle eyebrow="Ensino" title="Ensino e liderança" />
-            <ul className="ac-cards">
-              {teaching.map((item) => (
-                <li key={item.title} className="ac-card" data-reveal>
-                  <span className="ac-card__period">{item.period}</span>
-                  <h3>{item.title}</h3>
-                  <p className="ac-card__place">{item.place}</p>
-                  <p>{item.description}</p>
-                </li>
-              ))}
-            </ul>
-          </div>
-          <div>
-            <SectionTitle eyebrow="Cursos" title="Certificados" />
-            <ul className="ac-cards">
-              {certificates.map((item) => (
-                <li key={item.title} className="ac-card ac-card--cert" data-reveal>
-                  <span className="ac-card__period">{item.date}</span>
-                  <h3>{item.title}</h3>
-                  <p className="ac-card__place">Emitido por {item.issuer}</p>
-                </li>
-              ))}
-            </ul>
-          </div>
         </div>
       </section>
     </main>
