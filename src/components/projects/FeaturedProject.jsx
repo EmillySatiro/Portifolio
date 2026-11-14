@@ -24,7 +24,7 @@ export default function FeaturedProject({ project }) {
             src={image.src}
             alt={image.alt}
             width="1100"
-            height="614"
+            height="593"
             loading="lazy"
             decoding="async"
           />
@@ -40,7 +40,7 @@ export default function FeaturedProject({ project }) {
               className={`featured__tab${index === current ? ' is-active' : ''}`}
               onClick={() => setCurrent(index)}
             >
-              <img src={img.src} alt="" width="110" height="61" loading="lazy" decoding="async" />
+              <img src={img.src} alt="" width="110" height="60" loading="lazy" decoding="async" />
               <span>{img.label}</span>
             </button>
           ))}

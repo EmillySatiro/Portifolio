@@ -27,8 +27,8 @@ export const featuredProject = {
     'Usuários, participantes, relatórios, feedbacks, publicações, eventos, documentos e vínculo de monitores.',
   ],
   images: [
-    { src: '/images/projects/premaut-site.webp', label: 'Site', alt: 'Página inicial do site do PREMAUT' },
-    { src: '/images/projects/premaut-painel.webp', label: 'Painel', alt: 'Painel de gestão de participantes do PREMAUT' },
+    { src: '/images/projects/premaut-inicio.webp', label: 'Início', alt: 'Página inicial do site do PREMAUT' },
+    { src: '/images/projects/premaut-sobre.webp', label: 'O que fazemos', alt: 'Seção "O que fazemos no PREMAUT?" do site' },
   ],
   phases: [
     {

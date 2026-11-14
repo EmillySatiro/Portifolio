@@ -53,8 +53,9 @@
 
 .featured__img {
   width: 100%;
-  aspect-ratio: 1100 / 614;
+  aspect-ratio: 1100 / 593;
   object-fit: cover;
+  object-position: top;
   animation: featured-in 0.6s var(--ease-out);
 }
 
