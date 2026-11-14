@@ -1,6 +1,11 @@
 import {
+  siAndroid,
+  siAxios,
+  siC,
+  siChartdotjs,
   siCss,
   siDocker,
+  siExpress,
   siFastapi,
   siFigma,
   siFlask,
@@ -8,16 +13,35 @@ import {
   siGithub,
   siHtml5,
   siJavascript,
+  siJest,
+  siJsonwebtokens,
+  siJupyter,
+  siKotlin,
+  siLocust,
+  siNextdotjs,
   siNodedotjs,
+  siNumpy,
   siOpencv,
+  siPandas,
   siPostgresql,
+  siPytest,
   siPython,
   siPytorch,
+  siQt,
   siQuasar,
+  siRadixui,
   siReact,
+  siReactquery,
+  siSass,
+  siScikitlearn,
+  siSqlalchemy,
+  siSupabase,
   siTailwindcss,
   siTypescript,
+  siVite,
+  siVitest,
   siVuedotjs,
+  siZod,
 } from 'simple-icons'
 
 // Logos oficiais (Simple Icons, CC0). Só os importados aqui entram no site.
@@ -41,6 +65,30 @@ const BRANDS = {
   pytorch: siPytorch,
   git: siGit,
   github: siGithub,
+  next: siNextdotjs,
+  sass: siSass,
+  radix: siRadixui,
+  reactquery: siReactquery,
+  axios: siAxios,
+  chartjs: siChartdotjs,
+  express: siExpress,
+  supabase: siSupabase,
+  sqlalchemy: siSqlalchemy,
+  jwt: siJsonwebtokens,
+  zod: siZod,
+  c: siC,
+  sklearn: siScikitlearn,
+  pandas: siPandas,
+  numpy: siNumpy,
+  jupyter: siJupyter,
+  kotlin: siKotlin,
+  android: siAndroid,
+  qt: siQt,
+  vite: siVite,
+  jest: siJest,
+  vitest: siVitest,
+  pytest: siPytest,
+  locust: siLocust,
 }
 
 // Ícones próprios para o que não tem logo de marca.
@@ -57,6 +105,15 @@ const CUSTOM = {
         <circle cx="19" cy="9" r="2" />
         <circle cx="19" cy="15" r="2" />
       </g>
+    </g>
+  ),
+  charts: (
+    <g fill="none" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M3 3v18h18" stroke="#1f4e79" strokeWidth="1.8" />
+      <rect x="6.5" y="12" width="3" height="6" rx=".6" fill="#11557c" />
+      <rect x="11.5" y="8" width="3" height="10" rx=".6" fill="#4c72b0" />
+      <rect x="16.5" y="10.5" width="3" height="7.5" rx=".6" fill="#55a868" />
+      <path d="M6 9.5 10.5 6l4 2.5L20 4" stroke="#c44e52" strokeWidth="1.6" />
     </g>
   ),
   image: (
