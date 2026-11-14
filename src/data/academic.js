@@ -5,18 +5,15 @@ export const academicLinks = [
   { name: 'Currículo Lattes', icon: 'file', url: 'http://lattes.cnpq.br/7487358511532218' },
 ]
 
+// Iniciação científica, em texto corrido (fatos do currículo em PDF)
 export const research = {
   title: 'Pesquisa Aplicada em Visão Computacional e Deep Learning',
-  group: 'PAVIV · UFPI',
-  period: 'out. 2024 — atual',
-  badge: 'Iniciação Científica · PIBIC',
-  highlights: [
-    'Pesquisa em Inteligência Artificial e Deep Learning aplicada a problemas de saúde pública e agronegócio, com Python, PyTorch, TensorFlow e processamento de imagens.',
-    'Treinamento e validação de modelos em infraestrutura de alto desempenho com servidores NVIDIA, contribuindo para a produção de trabalhos científicos.',
-    'No diagnóstico biomédico, investigação de Redes Neurais Convolucionais e pipelines de pré-processamento para classificar macrófagos infectados e não infectados por Leishmania Visceral Canina em imagens de medula óssea.',
-    'Pesquisa voltada ao apoio de análises parasitológicas e ao suporte de especialistas, sem substituir a avaliação profissional ou constituir um produto comercial de diagnóstico.',
+  meta: ['PIBIC', 'PAVIV · UFPI', 'out. 2024 — atual'],
+  paragraphs: [
+    'Desde outubro de 2024 faço Iniciação Científica (PIBIC) no PAVIV, o grupo de Pesquisa Aplicada em Visão Computacional e Deep Learning da UFPI. A pesquisa aplica Inteligência Artificial e Deep Learning a problemas de saúde pública e do agronegócio, com Python, PyTorch, TensorFlow e processamento de imagens.',
+    'No diagnóstico biomédico, investigo Redes Neurais Convolucionais e pipelines de pré-processamento para classificar macrófagos infectados e não infectados por Leishmania Visceral Canina em imagens de medula óssea. Os modelos são treinados e validados em infraestrutura de alto desempenho, com servidores NVIDIA, e contribuem para a produção de trabalhos científicos.',
+    'O objetivo é apoiar as análises parasitológicas e o trabalho dos especialistas, sem substituir a avaliação profissional nem constituir um produto comercial de diagnóstico.',
   ],
-  logos: ['python', 'pytorch', 'opencv'],
 }
 
 // Startup que nasceu da pesquisa
@@ -24,8 +21,19 @@ export const startup = {
   name: 'PathoVision',
   handle: '@pathovision_',
   url: 'https://www.instagram.com/pathovision_/',
-  description:
-    'Startup que surgiu a partir desta pesquisa em visão computacional aplicada ao diagnóstico de Leishmaniose. Faço parte da equipe.',
+  text: 'Dessa pesquisa surgiu a startup PathoVision, da qual faço parte.',
+}
+
+// "Notícia" da pesquisa (fatos do SIUPI, das publicações e da startup)
+export const news = {
+  kicker: 'Notícia',
+  date: 'nov. 2026',
+  headline: 'Pesquisa sobre leishmaniose visceral canina encerra ciclo de dois anos na UFPI',
+  lead: 'No SIUPI 2026, Emilly Sátiro apresentou os resultados da sua pesquisa de Iniciação Científica sobre classificação e contagem automática de leishmaniose visceral canina com aprendizado profundo. Foi a última apresentação de banner da sua graduação, encerrando dois anos de trabalho no PAVIV.',
+  paragraphs: [
+    'Ao longo do projeto, a equipe publicou trabalhos no Simpósio Brasileiro de Computação Aplicada à Saúde (SBCAS 2025) e na Revista de Sistemas e Computação, sobre a detecção de amastigotas e de macrófagos em imagens microscópicas e sobre o uso de machine learning no diagnóstico parasitológico.',
+    'A pesquisa também deu origem à startup PathoVision, da qual Emilly faz parte.',
+  ],
 }
 
 // Publicações do Google Acadêmico (autores como aparecem lá; "et al." onde a lista é cortada).

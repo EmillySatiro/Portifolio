@@ -1,122 +1,25 @@
-import { Link } from 'react-router-dom'
 import PageHero from '../components/layout/PageHero'
 import Icon from '../components/ui/Icon'
-import TechLogo from '../components/ui/TechLogo'
-import { academicLinks, authorHighlight, events, publications, research, startup } from '../data/academic'
+import { academicLinks, authorHighlight, events, news, publications, research, startup } from '../data/academic'
 import './AcademicPage.css'
 
-function SectionTitle({ eyebrow, title }) {
-  return (
-    <header className="section-head">
-      <p className="eyebrow" data-reveal>
-        {eyebrow}
-      </p>
-      <h2 className="section-title display" data-reveal style={{ '--delay': '0.08s' }}>
-        {title}
-      </h2>
-    </header>
-  )
-}
+const SECTIONS = [
+  { id: 'iniciacao', label: 'Iniciação Científica' },
+  { id: 'eventos', label: 'Eventos' },
+  { id: 'noticia', label: 'Notícia da pesquisa' },
+  { id: 'publicacoes', label: 'Publicações' },
+]
 
 // Destaca o meu nome na lista de autores
 function Authors({ text }) {
   const match = text.match(authorHighlight)
   if (!match) return text
-  const start = match.index
   return (
     <>
-      {text.slice(0, start)}
+      {text.slice(0, match.index)}
       <strong>{match[0]}</strong>
-      {text.slice(start + match[0].length)}
+      {text.slice(match.index + match[0].length)}
     </>
-  )
-}
-
-function Publications() {
-  if (!publications.length) {
-    // Enquanto a lista não é preenchida, aponta para os perfis acadêmicos
-    return (
-      <div className="ac-empty" data-reveal>
-        <Icon name="book" size={28} />
-        <div>
-          <h3>Publicações e produção científica</h3>
-          <p>A lista completa de artigos e trabalhos está no Google Acadêmico e no Currículo Lattes.</p>
-        </div>
-        <div className="ac-empty__links">
-          {academicLinks.map((link) => (
-            <a key={link.url} href={link.url} target="_blank" rel="noopener noreferrer" className="btn btn--outline">
-              {link.name} <Icon name="external" size={16} />
-            </a>
-          ))}
-        </div>
-      </div>
-    )
-  }
-
-  return (
-    <>
-      <ol className="ac-pubs">
-        {publications.map((pub, index) => (
-          <li key={pub.title} data-reveal style={{ '--delay': `${index * 0.05}s` }}>
-            <a href={pub.url} target="_blank" rel="noopener noreferrer" className="ac-pub">
-              <span className="ac-pub__year">{pub.year ?? '—'}</span>
-              <span className="ac-pub__body">
-                {pub.type && <span className="ac-pub__type">{pub.type}</span>}
-                <span className="ac-pub__title">{pub.title}</span>
-                <span className="ac-pub__meta">
-                  <Authors text={pub.authors} />
-                </span>
-                {pub.venue && <em className="ac-pub__venue">{pub.venue}</em>}
-                {pub.citations > 0 && (
-                  <span className="ac-pub__cites">
-                    {pub.citations} {pub.citations === 1 ? 'citação' : 'citações'}
-                  </span>
-                )}
-              </span>
-              <Icon name="external" size={16} className="ac-pub__arrow" />
-            </a>
-          </li>
-        ))}
-      </ol>
-      <div className="ac-pubs__more" data-reveal>
-        {academicLinks.map((link) => (
-          <a key={link.url} href={link.url} target="_blank" rel="noopener noreferrer" className="btn btn--outline">
-            <Icon name={link.icon} size={16} /> Ver no {link.name}
-          </a>
-        ))}
-      </div>
-    </>
-  )
-}
-
-function Events() {
-  return (
-    <div className="ac-events">
-      {events.map((event, index) => (
-        <article key={event.title} className="ac-event" data-reveal style={{ '--delay': `${index * 0.06}s` }}>
-          <div className="ac-event__top">
-            <span className="ac-event__date">{event.date}</span>
-            <span className="ac-event__role">
-              <Icon name="graduation" size={14} /> {event.role}
-            </span>
-          </div>
-          <h3 className="ac-event__title">{event.title}</h3>
-          {event.location && (
-            <p className="ac-event__place">
-              <Icon name="pin" size={15} /> {event.location}
-            </p>
-          )}
-          <p className="ac-event__desc">{event.description}</p>
-          {event.photos.length > 0 && (
-            <div className="ac-event__photos">
-              {event.photos.map((photo) => (
-                <img key={photo.src} src={photo.src} alt={photo.alt} loading="lazy" decoding="async" />
-              ))}
-            </div>
-          )}
-        </article>
-      ))}
-    </div>
   )
 }
 
@@ -131,72 +34,119 @@ export default function AcademicPage() {
         ))}
       </PageHero>
 
-      {/* ---------- Iniciação científica ---------- */}
-      <section className="section ac-research pixel-edge">
-        <div className="container">
-          <SectionTitle eyebrow={research.badge} title="Iniciação Científica" />
+      <div className="container ac-layout">
+        {/* Sumário fixo ao lado do texto */}
+        <nav className="ac-toc" aria-label="Nesta página">
+          <p className="ac-toc__title">Nesta página</p>
+          <ol>
+            {SECTIONS.map((section) => (
+              <li key={section.id}>
+                <a href={`#${section.id}`}>{section.label}</a>
+              </li>
+            ))}
+          </ol>
+        </nav>
 
-          <div className="ac-research__grid">
-            <article className="ac-research__card" data-reveal>
-              <h3 className="ac-research__title display">{research.title}</h3>
-              <p className="ac-research__meta">
-                <strong>{research.group}</strong> · {research.period}
+        <article className="ac-article">
+          {/* ---------- Iniciação científica ---------- */}
+          <section id="iniciacao" className="ac-block">
+            <h2 className="ac-h2 display" data-reveal>
+              Iniciação Científica
+            </h2>
+            <h3 className="ac-h3" data-reveal>
+              {research.title}
+            </h3>
+            <p className="ac-meta" data-reveal>
+              {research.meta.join(' · ')}
+            </p>
+            {research.paragraphs.map((text) => (
+              <p key={text} className="ac-p" data-reveal>
+                {text}
               </p>
-              <ul className="ac-research__list">
-                {research.highlights.map((item) => (
-                  <li key={item}>{item}</li>
-                ))}
-              </ul>
-              <div className="ac-research__footer">
-                <span className="ac-research__logos">
-                  {research.logos.map((logo) => (
-                    <TechLogo key={logo} name={logo} size={20} />
-                  ))}
-                </span>
-                <Link to="/projetos" className="btn btn--light">
-                  Ver nos projetos <Icon name="arrowRight" className="icon-arrow" />
-                </Link>
+            ))}
+
+            <h3 className="ac-h3" data-reveal>
+              Da pesquisa para uma startup
+            </h3>
+            <p className="ac-p" data-reveal>
+              {startup.text}{' '}
+              <a href={startup.url} target="_blank" rel="noopener noreferrer" className="ac-link">
+                {startup.handle}
+              </a>
+            </p>
+          </section>
+
+          {/* ---------- Eventos ---------- */}
+          <section id="eventos" className="ac-block">
+            <h2 className="ac-h2 display" data-reveal>
+              Eventos
+            </h2>
+            {events.map((event) => (
+              <div key={event.title} className="ac-event" data-reveal>
+                <h3 className="ac-h3">{event.title}</h3>
+                <p className="ac-meta">{[event.date, event.location, event.role].filter(Boolean).join(' · ')}</p>
+                <p className="ac-p">{event.description}</p>
+                {event.photos?.length > 0 && (
+                  <div className="ac-photos">
+                    {event.photos.map((photo) => (
+                      <img key={photo.src} src={photo.src} alt={photo.alt} loading="lazy" decoding="async" />
+                    ))}
+                  </div>
+                )}
               </div>
-            </article>
+            ))}
+          </section>
 
-            {/* Startup que surgiu da pesquisa */}
-            <a
-              href={startup.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="ac-startup"
-              data-reveal
-              style={{ '--delay': '0.12s' }}
-            >
-              <span className="ac-startup__icon">
-                <Icon name="rocket" size={26} />
-              </span>
-              <span className="ac-startup__label">Da pesquisa para uma startup</span>
-              <span className="ac-startup__name display">{startup.name}</span>
-              <span className="ac-startup__desc">{startup.description}</span>
-              <span className="ac-startup__link">
-                {startup.handle} <Icon name="external" size={15} />
-              </span>
-            </a>
-          </div>
-        </div>
-      </section>
+          {/* ---------- Notícia da pesquisa ---------- */}
+          <section id="noticia" className="ac-block ac-news" data-reveal>
+            <p className="ac-news__kicker">
+              {news.kicker} · {news.date}
+            </p>
+            <h2 className="ac-news__headline display">{news.headline}</h2>
+            <p className="ac-news__lead">{news.lead}</p>
+            {news.paragraphs.map((text) => (
+              <p key={text} className="ac-p">
+                {text}
+              </p>
+            ))}
+          </section>
 
-      {/* ---------- Publicações ---------- */}
-      <section className="section ac-section pixel-edge">
-        <div className="container">
-          <SectionTitle eyebrow="Produção científica" title="Publicações" />
-          <Publications />
-        </div>
-      </section>
-
-      {/* ---------- Eventos ---------- */}
-      <section className="section ac-events-section pixel-edge">
-        <div className="container">
-          <SectionTitle eyebrow="Palestras, congressos e minicursos" title="Eventos" />
-          <Events />
-        </div>
-      </section>
+          {/* ---------- Publicações ---------- */}
+          <section id="publicacoes" className="ac-block">
+            <h2 className="ac-h2 display" data-reveal>
+              Publicações
+            </h2>
+            <ol className="ac-pubs">
+              {publications.map((pub) => (
+                <li key={pub.title} className="ac-pub" data-reveal>
+                  <a href={pub.url} target="_blank" rel="noopener noreferrer" className="ac-pub__title">
+                    {pub.title}
+                  </a>
+                  <p className="ac-pub__authors">
+                    <Authors text={pub.authors} />
+                  </p>
+                  <p className="ac-meta">
+                    {[pub.venue, pub.year, pub.citations ? `${pub.citations} ${pub.citations === 1 ? 'citação' : 'citações'}` : null]
+                      .filter(Boolean)
+                      .join(' · ')}
+                  </p>
+                </li>
+              ))}
+            </ol>
+            <p className="ac-p ac-pubs__more" data-reveal>
+              Lista completa no{' '}
+              <a href={academicLinks[0].url} target="_blank" rel="noopener noreferrer" className="ac-link">
+                Google Acadêmico
+              </a>{' '}
+              e no{' '}
+              <a href={academicLinks[1].url} target="_blank" rel="noopener noreferrer" className="ac-link">
+                Currículo Lattes
+              </a>
+              .
+            </p>
+          </section>
+        </article>
+      </div>
     </main>
   )
 }
