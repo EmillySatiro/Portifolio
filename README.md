@@ -1,115 +1,143 @@
-# Portfólio | Emilly Sátiro
+# Portfólio Premium | Emílly Sátiro
 
-Portfólio profissional desenvolvido com React e Vite para apresentar perfil, habilidades técnicas, projetos e canais de contato de Emilly Sátiro.
+Portfólio profissional de alta performance e experiência visual imersiva, desenvolvido com **Vue 3**, **Vite**, **GSAP** e **Lucide Icons**. Apresenta a trajetória, projetos de engenharia de software, estudos de caso de UI/UX, pesquisas em Inteligência Artificial (CNPq/FAPEPI) e canais de contato de Emílly Sátiro.
 
-## Visão geral
+---
 
-Este projeto é uma aplicação web responsiva com React Router, organizada em páginas e seções:
+## 🌟 Destaques da Refatoração de Interface
 
-- **Início:** apresentação profissional e principais áreas de atuação.
-- **Sobre:** resumo de formação, experiência e indicadores do perfil.
-- **Designer** (`/designer`), **Pesquisa** (`/pesquisa`) e **Projetos de TI** (`/projetos`): páginas próprias, ainda sem conteúdo.
-- **Contato:** links profissionais e formulário integrado ao Formspree.
+- **Experiência Visual de Alto Impacto (Hero Section):** iluminação ambiente com efeito radial glow, status badge de disponibilidade em tempo real, ticker animado de atuação profissional e cards com estatísticas de impacto.
+- **Background Animado & Texturas (`BackgroundCanvas.vue`):** canvas interativo com partículas flutuantes reativas ao movimento do cursor, mesh gradient em tons da paleta de cores e textura de ruído sutil.
+- **Microinterações e Cursor Customizado (`CustomCursor.vue`):** anel seguidor fluido e expansão de cursor em elementos clicáveis.
+- **Mascote Animado Preservado (`FlyingBat.vue`):** morcego animado em vetor/SVG integrado com física fluida GSAP e acompanhamento de navegação.
+- **Bento Grid de Tecnologias (`TechStackSection.vue`):** ecossistema técnico categorizado (Front-end, Back-end, IA & Visão Computacional, DevOps & UI/UX) com filtros dinâmicos.
+- **Showcase de Projetos com Modal Interativo (`ProjectsSection.vue` & `ProjectModal.vue`):** cards de projetos com filtros por categoria, badges, tags técnicas e janela modal completa para detalhes, links do GitHub, Figma e demonstrações.
+- **Página Dedicada a Design (`DesignerView.vue`):** vitrine para estudos de caso de UI/UX, protótipos navegáveis no Figma, wireframes e guias de estilo.
+- **Página de Pesquisa Científica (`ResearchView.vue`):** layout de bento grid acadêmico destacando pesquisas de IA na saúde (Leishmaniose Canina) e agronegócio, com links diretos para o Google Acadêmico e Currículo Lattes.
 
-## Tecnologias
+---
 
-- React 19
-- React Router
-- GSAP
-- Vite
-- JavaScript
-- CSS responsivo
-- Formspree
-- Vercel
+## 🎨 Identidade Visual Preservada
 
-## Estrutura do projeto
+### Tipografia
+- **Títulos e Destaques Elegantes:** `Cinzel` (`font-family: 'Cinzel', serif`)
+- **Títulos Editoriais e Citações:** `Cormorant Garamond` (`font-family: 'Cormorant Garamond', serif`)
+- **Corpo de Texto e Controles:** `Inter` (`font-family: 'Inter', sans-serif`)
 
-```text
-.
-├── public/                  # Imagens e arquivos públicos
-├── src/
-│   ├── components/          # Seções e componentes da interface
-│   ├── pages/               # Páginas (rotas)
-│   ├── data/                # Conteúdo centralizado do portfólio
-│   ├── App.jsx              # Layout e rotas
-│   ├── main.jsx             # Inicialização do React
-│   └── style.css            # Estilos globais
-├── index.html               # HTML base da aplicação
-├── package.json             # Scripts e dependências
-├── vite.config.js           # Configuração do Vite
-└── vercel.json              # Configuração de deploy
-```
+### Paleta de Cores Oficial
+- **Charleston (`#2a2829`):** Fundo principal escuro e cards glassmorphic.
+- **Sky Blue (`#97b4de`):** Destaques visuais, ícones, badges e iluminação suave.
+- **Deep Blue (`#263a99`):** Botões principais de CTA, gradientes e sombras.
+- **Alabaster (`#f0ebe5`):** Textos principais e títulos de alto contraste.
+- **Pastel Beige (`#dcd0be`):** Subtítulos editoriais e destaques secundários.
+- **Ink (`#171516`):** Molduras internas e contrastes.
 
-## Como executar localmente
+---
 
-Pré-requisitos:
+## 🛠️ Tecnologias e Dependências
 
-- Node.js instalado
-- npm instalado
+### Dependências Principais
+- **`vue` (`^3.5.18`):** Framework reativo progressivo para a construção da interface do usuário.
+- **`vue-router` (`^4.6.4`):** Roteador oficial para a navegação SPA entre Início, Designer e Pesquisa.
+- **`gsap` (`^3.15.0`):** Biblioteca de animação profissional utilizada para física de movimento, flutuação e interações.
+- **`@lucide/vue` (`^1.0.0`):** Conjunto moderno de ícones vetoriais em alta resolução utilizados em toda a interface (código, figma, github, contatos, etc.).
 
-Instale as dependências:
+#### Por que `@lucide/vue` foi adicionado?
+Adicionado para fornecer ícones vetoriais consistentes, elegantes e acessíveis para categorias de tecnologias, botões de ação do GitHub, Figma, Google Acadêmico e formulários de contato.
 
+---
+
+## 🚀 Como Executar o Projeto Localmente
+
+### Pré-requisitos
+- **Node.js** (versão 18 ou superior recomendada)
+- **npm** (instalado com o Node.js)
+
+### Passo 1: Clonar e instalar dependências
 ```bash
 npm install
 ```
 
-Inicie o ambiente de desenvolvimento:
-
+### Passo 2: Iniciar o servidor de desenvolvimento
 ```bash
 npm run dev
 ```
+O projeto estará acessível no navegador em `http://localhost:5173`.
 
-Gere a versão de produção:
-
+### Passo 3: Gerar build de produção
 ```bash
 npm run build
 ```
 
-Visualize a build localmente:
-
+### Passo 4: Visualizar build localmente
 ```bash
 npm run preview
 ```
 
-## Personalização de conteúdo
+---
 
-O conteúdo principal do portfólio fica centralizado em:
+## 🐳 Containerização com Docker
+
+O repositório conta com configurações Docker otimizadas para deploy ou execução isolada.
+
+### Arquivos Incluídos:
+- **`Dockerfile`:** Build multi-stage que compila o projeto com Node.js/Vite e serve os arquivos estáticos via servidor Web Nginx Alpine.
+- **`docker-compose.yml`:** Orquestrador para subir a aplicação em ambiente isolado na porta 8080.
+
+### Como Buildar e Executar com Docker Compose:
+```bash
+docker-compose up -d --build
+```
+Acesse a aplicação em `http://localhost:8080`.
+
+### Como Parar o Container:
+```bash
+docker-compose down
+```
+
+---
+
+## 📁 Estrutura de Pastas
 
 ```text
-src/data/portfolio.js
+.
+├── public/                          # Imagens públicos e mascot SVG animado
+│   ├── a8973100-1174-11ee-9e14-23aa8edbd820.svg # Morcego animado em vetor
+│   ├── foto.jpg                     # Foto de perfil de Emílly Sátiro
+│   └── logo_emilly_sátiro.png       # Favicon e logo oficial
+├── src/
+│   ├── components/                  # Componentes reutilizáveis
+│   │   ├── AboutSection.vue         # Seção Sobre com pilares e foto
+│   │   ├── BackgroundCanvas.vue     # Canvas de partículas e iluminação
+│   │   ├── ContactSection.vue       # Formulário Formspree e contatos com cópia
+│   │   ├── CustomCursor.vue         # Cursor customizado e microinterações
+│   │   ├── FlyingBat.vue            # Mascote morcego com animação GSAP
+│   │   ├── HeroSection.vue          # Hero de alto impacto visual e ticker
+│   │   ├── ProjectModal.vue         # Modal interativo para detalhes dos projetos
+│   │   ├── ProjectsSection.vue      # Showcase de projetos de TI com filtros
+│   │   ├── SiteFooter.vue           # Rodapé com redes sociais e botão de topo
+│   │   ├── SiteNavbar.vue           # Navbar flutuante em glassmorphism
+│   │   └── TechStackSection.vue     # Bento grid de habilidades por área
+│   ├── data/
+│   │   └── portfolio.js             # Fonte centralizada de dados e projetos
+│   ├── views/                       # Páginas da aplicação
+│   │   ├── DesignerView.vue         # Vitrine de UI/UX e estudos no Figma
+│   │   ├── HomeView.vue             # Página principal do portfólio
+│   │   └── ResearchView.vue         # Página de pesquisa científica e IC
+│   ├── App.vue                      # Layout raiz da aplicação
+│   ├── main.js                      # Ponto de entrada do Vue
+│   ├── router.js                    # Configuração de rotas da aplicação
+│   └── style.css                    # Design system e estilos globais
+├── Dockerfile                       # Instruções de build Docker multi-stage
+├── docker-compose.yml               # Orquestração de containers Docker
+├── index.html                       # HTML base com fontes Cinzel, Cormorant e Inter
+├── package.json                     # Dependências e scripts npm
+├── vercel.json                      # Configuração para deploy na Vercel
+└── vite.config.js                   # Configuração do bundler Vite
 ```
 
-Nesse arquivo é possível atualizar:
+---
 
-- Links de navegação
-- Estatísticas
-- Contatos profissionais
+## 📄 Licença e Direitos
 
-As imagens públicas ficam em:
-
-```text
-public/
-```
-
-Para trocar foto, logo ou imagens de projetos, adicione os arquivos nessa pasta e atualize os caminhos em `src/data/portfolio.js` ou nos componentes correspondentes (`src/components` e `src/pages`).
-
-## Deploy
-
-O projeto está preparado para deploy na Vercel. A configuração atual usa:
-
-```json
-{
-  "buildCommand": "npm run build",
-  "outputDirectory": "dist",
-  "framework": "vite"
-}
-```
-
-Após conectar o repositório na Vercel, o build será gerado com Vite e publicado a partir da pasta `dist`.
-
-## Contato
-
-- Email: <sousasatiroclaraemilly@gmail.com>
-- LinkedIn: <https://www.linkedin.com/in/emilly-s%C3%A1tiro-94912a369/>
-- GitHub: <https://github.com/EmillySatiro>
-- Instagram: <https://www.instagram.com/__urano___/>
+© {{ year }} Emílly Sátiro. Todos os direitos reservados.
