@@ -6,27 +6,26 @@ Portfólio profissional de alta performance e experiência visual imersiva, dese
 
 ## 🌟 Visual
 
-Estilo editorial inspirado em revistas: papel texturizado, títulos condensados enormes,
-palavras gigantes desfocadas em azul, colagens de fotos e rabiscos "à mão" que se desenham na tela.
-
-- **Temas claro e escuro**, com o tema salvo no navegador (ou o do sistema na primeira visita).
-- **Masthead** no topo da home com o nome, as áreas e a navegação por seções.
-- **Barra mínima** que aparece ao rolar (monograma, seção atual, tema e botão MENU) e se esconde ao descer.
-- **Menu em tela cheia** com os links grandes.
-- **Animações leves**, só com CSS e um IntersectionObserver (sem bibliotecas de animação). Respeitam `prefers-reduced-motion`.
+- **Ilustração em pixel art** no topo, com efeitos: aparece "pixelando" ao carregar (e de novo ao passar o mouse),
+  inclina em 3D seguindo o ponteiro, flutua e tem brilhos em pixel piscando.
+- **Barra superior fixa** com o nome, os links (com indicador da seção atual) e o botão de tema; no celular vira um menu.
+- **Temas claro e escuro**, salvos no navegador (na primeira visita segue o tema do sistema).
+- **Seções com fundos diferentes** e bordas "pixeladas" entre elas; palavras gigantes desfocadas ao fundo com parallax na rolagem.
+- **Tecnologias** como uma tabela periódica filtrável, **currículo** com destaque para download e linha do tempo,
+  e **contato** com canais copiáveis e formulário (Formspree).
+- Animações feitas com CSS e IntersectionObserver, sem bibliotecas. Respeitam `prefers-reduced-motion`.
 
 ## 🎨 Identidade
 
-- **Fontes:** `Anton` (títulos condensados) e `Inter` (textos), via Google Fonts.
-- **Cores:** papel `#efede8` / tinta `#0c0c0e` e azul `#1f3dff` no tema claro; `#0e0e11` / `#f1efe9` e azul `#4d6bff` no escuro.
-  Todas definidas em `src/styles/tokens.css`.
+- **Fontes:** `Anton` (títulos) e `Inter` (textos), via Google Fonts.
+- **Cores:** azul índigo do cabelo da ilustração (`#414575`), violeta (`#7b3fc4`) e azul-claro (`#8ad7eb`) como apoio.
+  Todas em `src/styles/tokens.css`.
 
 ## ⚡ Desempenho
 
-- Dependências só `react`, `react-dom` e `react-router-dom`.
-- Foto em WebP com duas larguras (640 px e 1200 px); os recortes do layout reutilizam o mesmo arquivo.
+- Dependências só `react`, `react-dom` e `react-router-dom`; ícones em SVG embutido.
+- Ilustração em WebP com fundo transparente, em duas larguras (480 px e 900 px).
 - Páginas Projetos, Designer e Pesquisa carregam sob demanda (`React.lazy`).
-- Textura de papel feita com um SVG minúsculo embutido no CSS.
 
 ---
 
@@ -86,19 +85,19 @@ docker-compose down
 .
 ├── public/
 │   ├── bat.svg                        # Mascote morcego (favicon, confirmação de envio, páginas em construção)
-│   ├── images/foto-640.webp           # Foto de perfil (celular)
-│   ├── images/foto-1200.webp          # Foto de perfil (desktop)
-│   ├── images/foto-og.jpg             # Imagem de compartilhamento (WhatsApp, LinkedIn…)
+│   ├── images/avatar-480.webp         # Ilustração (celular)
+│   ├── images/avatar-900.webp         # Ilustração (desktop)
+│   ├── images/og.jpg                  # Imagem de compartilhamento (WhatsApp, LinkedIn…)
 │   └── Curriculo_formatado_*.pdf      # Currículos PT e EN
 ├── src/
 │   ├── components/
-│   │   ├── layout/                    # Topbar, MenuOverlay, Footer, UnderConstruction
-│   │   ├── sections/                  # Hero, About, TechMarquee, Curriculum, Contact, SentModal
-│   │   └── ui/                        # Scribble (rabiscos), ThemeToggle, Photo
+│   │   ├── layout/                    # Topbar, Footer, UnderConstruction
+│   │   ├── sections/                  # Hero, About, Skills, Curriculum, Contact, SentModal
+│   │   └── ui/                        # PixelAvatar, Icon, ThemeToggle
 │   ├── data/portfolio.js              # Todo o conteúdo: textos, links, experiências, tecnologias
-│   ├── hooks/                         # useTheme, useReveal, useActiveSection, useScrollState, useScrollOnNavigate
+│   ├── hooks/                         # useTheme, useReveal, useActiveSection, useScrollOnNavigate
 │   ├── pages/                         # HomePage, ProjectsPage, DesignerPage, ResearchPage
-│   ├── styles/                        # tokens.css (temas), base.css, utilities.css
+│   ├── styles/                        # tokens.css (cores/temas), base.css, utilities.css
 │   ├── App.jsx                        # Layout raiz e rotas
 │   └── main.jsx                       # Ponto de entrada
 ├── index.html                         # HTML base, fontes e script que aplica o tema sem piscar
@@ -106,6 +105,8 @@ docker-compose down
 ├── vercel.json                        # Deploy na Vercel
 └── vite.config.js                     # Configuração do Vite
 ```
+
+Cada componente tem o seu `.css` ao lado do `.jsx`.
 
 Cada componente tem o seu `.css` ao lado do `.jsx`.
 

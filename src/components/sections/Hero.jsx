@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { navItems, profile, roles, socials } from '../../data/portfolio'
-import Photo from '../ui/Photo'
-import Scribble from '../ui/Scribble'
+import { openForHire, profile, roles, socials } from '../../data/portfolio'
+import Icon from '../ui/Icon'
+import PixelAvatar from '../ui/PixelAvatar'
 import './Hero.css'
 
-const ROLE_INTERVAL = 3600
+const ROLE_INTERVAL = 3200
 
-// Troca o texto de atuação em loop; a animação de entrada fica no CSS (key nova = anima de novo).
+// Troca o texto de atuação em loop; a key nova faz a animação de entrada rodar de novo.
 function useRotatingIndex(length, interval) {
   const [index, setIndex] = useState(0)
   useEffect(() => {
@@ -23,77 +23,60 @@ export default function Hero() {
 
   return (
     <section id="home" className="hero">
-      <div className="container">
-        {/* Linha fina do topo, como a de uma revista */}
-        <div className="hero__meta">
-          <span>Portfólio</span>
-          <span>Nº 01 — {profile.year}</span>
-          <span>UFPI · {profile.location}</span>
-        </div>
+      <span className="blur-word hero__blur parallax" aria-hidden="true">
+        Portfólio
+      </span>
 
-        {/* Masthead: nome em tinta preta sobre o sobrenome gigante borrado em azul */}
-        <div className="hero__masthead">
-          <span className="blur-word hero__blur" aria-hidden="true">
-            {profile.lastName}
-          </span>
-          <h1 className="hero__name">
-            <span className="hero__first">{profile.firstName.toLowerCase()}</span>
-            <span className="hero__last">{profile.lastName.toLowerCase()}</span>
-          </h1>
-          <ul className="hero__tags" aria-label="Áreas">
-            <li>designer</li>
-            <li>full stack</li>
-            <li>pesquisa em IA</li>
-          </ul>
-          <Scribble shape="scrawl" className="hero__scrawl is-drawn" strokeWidth={3} />
-        </div>
-
-        {/* Navegação no estilo das seções de revista */}
-        <nav className="hero__nav" aria-label="Seções">
-          {navItems.map((item) => (
-            <Link key={item.id} to={item.to} className={`hero__nav-link${item.id === 'home' ? ' is-current' : ''}`}>
-              {item.name}
-              <Scribble shape="circle" className="hero__nav-circle" strokeWidth={2.5} />
-            </Link>
-          ))}
-        </nav>
-
-        {/* Destaque: recorte do olhar + palavra gigante */}
-        <div className="hero__feature">
-          <div className="hero__crop" data-reveal="clip">
-            <Photo className="hero__crop-img" alt="Recorte do rosto de Emílly Sátiro" priority sizes="(max-width: 768px) 100vw, 50vw" />
-          </div>
-          <p className="hero__word display" data-reveal style={{ '--delay': '0.15s' }}>
-            Portfólio
+      <div className="container hero__grid">
+        <div className="hero__copy">
+          <p className="chip hero__status">
+            <span className="hero__dot" aria-hidden="true" />
+            {openForHire.status}
           </p>
-          <Scribble shape="loop" className="hero__loop is-drawn" strokeWidth={2} />
-        </div>
 
-        <div className="hero__bottom">
+          <h1 className="hero__name display">
+            <span className="hero__line">{profile.firstName}</span>
+            <span className="hero__line hero__line--accent">{profile.lastName}</span>
+          </h1>
+
           <p className="hero__role">
-            <span className="hero__role-static">Atuação —</span>{' '}
+            <span className="hero__role-label">Atuação —</span>{' '}
             <span key={roleIndex} className="hero__role-text">
               {roles[roleIndex]}
             </span>
           </p>
 
           <div className="hero__actions">
-            <Link to="/projetos" className="cta-link spaced">
-              Ver projetos <span className="arrow">→</span>
+            <Link to="/projetos" className="btn btn--primary">
+              Ver projetos <Icon name="arrowRight" className="icon-arrow" />
             </Link>
-            <div className="hero__links">
-              <a href="#contact" className="text-link">
-                Contato
+            <a href="#contact" className="btn btn--outline">
+              Contato <Icon name="mail" />
+            </a>
+            {socials.map((social) => (
+              <a
+                key={social.name}
+                href={social.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn btn--icon"
+                aria-label={social.name}
+                title={social.name}
+              >
+                <Icon name={social.icon} />
               </a>
-              {socials.map((social) => (
-                <a key={social.name} href={social.url} target="_blank" rel="noopener noreferrer" className="text-link">
-                  {social.name} ↗
-                </a>
-              ))}
-            </div>
+            ))}
           </div>
         </div>
+
+        <div className="hero__art">
+          <PixelAvatar />
+        </div>
       </div>
+
+      <a href="#about" className="hero__scroll" aria-label="Rolar para Sobre">
+        <span />
+      </a>
     </section>
   )
 }

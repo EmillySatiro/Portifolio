@@ -1,0 +1,242 @@
+.skills {
+  --skills-bg: var(--brand-deep);
+  --edge-color: var(--skills-bg);
+  background: var(--skills-bg);
+  color: #f1f0fa;
+  /* clip só na horizontal: a borda pixelada no topo precisa ficar visível */
+  overflow-x: clip;
+}
+
+:root[data-theme='dark'] .skills {
+  --skills-bg: #181a3a;
+}
+
+/* Cores de cada categoria */
+.skills [data-cat='front'] {
+  --cat: var(--sky);
+}
+.skills [data-cat='back'] {
+  --cat: #b583f2;
+}
+.skills [data-cat='ai'] {
+  --cat: #f28bc4;
+}
+.skills [data-cat='tools'] {
+  --cat: #f4c06a;
+}
+.skills [data-cat='all'] {
+  --cat: #ffffff;
+}
+
+.skills__blur {
+  right: -4%;
+  top: 6%;
+  font-size: clamp(8rem, 26vw, 24rem);
+  color: #6b72d6;
+  opacity: 0.35;
+}
+
+.skills__eyebrow {
+  color: var(--sky);
+}
+
+.skills__head .section-title {
+  max-width: 14ch;
+}
+
+/* ---------- Filtros ---------- */
+.skills__toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem 2rem;
+  margin-bottom: 1.75rem;
+}
+
+.skills__filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.skills__filter {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.6rem 1rem;
+  border-radius: 999px;
+  border: 1.5px solid rgba(255, 255, 255, 0.2);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.8);
+  transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+}
+
+.skills__filter::before {
+  content: '';
+  width: 8px;
+  height: 8px;
+  background: var(--cat);
+}
+
+.skills__filter:hover {
+  border-color: var(--cat);
+  color: #fff;
+}
+
+.skills__filter.is-active {
+  background: #fff;
+  border-color: #fff;
+  color: var(--brand-deep);
+}
+
+.skills__filter.is-active::before {
+  background: var(--brand);
+}
+
+.skills__filter[data-cat='all'].is-active::before {
+  background: var(--violet);
+}
+
+.skills__count {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.skills__count strong {
+  display: inline-block;
+  margin-right: 0.3rem;
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 400;
+  color: #fff;
+  vertical-align: -0.2em;
+  animation: skills-count 0.5s var(--ease-out);
+}
+
+/* ---------- Tabela ---------- */
+.skills__table {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(124px, 1fr));
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.tile {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  aspect-ratio: 1;
+  padding: 0.7rem 0.75rem;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1.5px solid rgba(255, 255, 255, 0.12);
+  border-top: 4px solid var(--cat);
+  opacity: 0;
+  transform: translateY(18px) scale(0.96);
+  transition: opacity 0.5s var(--ease-out), transform 0.5s var(--ease-out), background-color 0.3s ease,
+    color 0.3s ease, box-shadow 0.4s var(--ease-out), filter 0.4s ease;
+  transition-delay: calc(var(--i) * 0.03s), calc(var(--i) * 0.03s), 0s, 0s, 0s, 0s;
+}
+
+.is-visible .tile {
+  opacity: 1;
+  transform: none;
+}
+
+.tile:hover {
+  background: #fff;
+  color: var(--brand-deep);
+  transform: translateY(-6px);
+  box-shadow: 6px 6px 0 var(--cat);
+  transition-delay: 0s;
+}
+
+.is-visible .tile.is-dim {
+  opacity: 0.22;
+  transform: scale(0.94);
+  filter: grayscale(1);
+}
+
+.tile__num {
+  font-size: 0.7rem;
+  font-weight: 600;
+  opacity: 0.6;
+}
+
+.tile__symbol {
+  font-family: var(--font-display);
+  font-size: clamp(2.2rem, 3.4vw, 2.9rem);
+  line-height: 1;
+}
+
+.tile__name {
+  font-size: 0.74rem;
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+.tile__cats {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.7rem;
+  display: flex;
+  gap: 3px;
+}
+
+.tile__cats i {
+  width: 7px;
+  height: 7px;
+  background: var(--cat);
+}
+
+/* ---------- Legenda ---------- */
+.skills__legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.5rem;
+  margin: 1.5rem 0 0;
+  padding: 0;
+  list-style: none;
+  font-size: 0.78rem;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.skills__legend li {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.skills__legend li::before {
+  content: '';
+  width: 10px;
+  height: 10px;
+  background: var(--cat);
+}
+
+@keyframes skills-count {
+  from {
+    transform: translateY(-0.4em);
+    opacity: 0;
+  }
+}
+
+@media (max-width: 520px) {
+  .skills__table {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+  }
+
+  .tile {
+    padding: 0.55rem;
+  }
+
+  .tile__name {
+    font-size: 0.66rem;
+  }
+}

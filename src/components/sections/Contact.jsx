@@ -1,17 +1,12 @@
 import { useState } from 'react'
 import { contactMethods, formspreeEndpoint } from '../../data/portfolio'
-import Scribble from '../ui/Scribble'
+import Icon from '../ui/Icon'
 import SentModal from './SentModal'
 import './Contact.css'
 
 const EMPTY_FORM = { name: '', email: '', message: '' }
 
-const FIELDS = [
-  { name: 'name', label: 'Seu nome', type: 'text', placeholder: 'Ex: Maria Silva' },
-  { name: 'email', label: 'Endereço de e-mail', type: 'email', placeholder: 'seu@email.com' },
-]
-
-// Copia sem o "mailto:" no caso do e-mail.
+// Copia o endereço sem o "mailto:" no caso do e-mail.
 const copyValue = (link) => link.replace(/^mailto:/, '')
 
 export default function Contact() {
@@ -28,7 +23,7 @@ export default function Contact() {
       setCopied(method.title)
       setTimeout(() => setCopied((current) => (current === method.title ? '' : current)), 2500)
     } catch {
-      /* sem permissão de área de transferência: ignora */
+      /* sem permissão para a área de transferência: ignora */
     }
   }
 
@@ -43,7 +38,6 @@ export default function Contact() {
         headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
         body: JSON.stringify(form),
       })
-
       if (!response.ok) throw new Error('send-failed')
       setForm(EMPTY_FORM)
       setStatus('sent')
@@ -58,78 +52,110 @@ export default function Contact() {
   }
 
   return (
-    <section id="contact" className="section contact">
+    <section id="contact" className="section contact pixel-edge">
+      <span className="blur-word contact__blur parallax" aria-hidden="true">
+        Contato
+      </span>
+
       <div className="container">
-        <header className="contact__head" data-reveal="fade">
-          <span className="blur-word contact__blur" aria-hidden="true">
+        <header className="section-head contact__head">
+          <p className="eyebrow" data-reveal>
             Contato
-          </span>
-          <h2 className="contact__title display" data-reveal>
-            contato
-          </h2>
-          <p className="contact__subtitle" data-reveal style={{ '--delay': '0.1s' }}>
-            Vamos conversar sobre o seu próximo projeto?
           </p>
-          <Scribble shape="underline" className="contact__underline" strokeWidth={3} />
+          <h2 className="section-title display" data-reveal style={{ '--delay': '0.08s' }}>
+            Vamos conversar?
+          </h2>
+          <p className="section-lead" data-reveal style={{ '--delay': '0.12s' }}>
+            Vamos conversar sobre o seu próximo projeto? Envie uma mensagem pelo formulário ou use um dos canais.
+          </p>
         </header>
 
-        <div className="contact__grid">
-          <ul className="contact__channels" data-reveal>
-            {contactMethods.map((method) => (
-              <li key={method.title} className="contact__channel">
-                <span className="contact__channel-name">{method.title}</span>
-                <a href={method.link} target="_blank" rel="noopener noreferrer" className="contact__channel-detail">
-                  {method.detail}
-                </a>
-                <button
-                  type="button"
-                  className="contact__copy"
-                  onClick={() => copy(method)}
-                  aria-label={`Copiar ${method.title}`}
-                >
-                  {copied === method.title ? 'Copiado ✓' : 'Copiar'}
-                </button>
-              </li>
-            ))}
-          </ul>
+        <div className="contact__card" data-reveal style={{ '--delay': '0.16s' }}>
+          {/* Canais */}
+          <aside className="contact__panel">
+            <h3 className="contact__panel-title display">Fale comigo</h3>
+            <ul className="contact__channels">
+              {contactMethods.map((method) => (
+                <li key={method.title} className="contact__channel">
+                  <a href={method.link} target="_blank" rel="noopener noreferrer" className="contact__channel-link">
+                    <span className="contact__channel-icon">
+                      <Icon name={method.icon} size={20} />
+                    </span>
+                    <span className="contact__channel-text">
+                      <span className="contact__channel-name">{method.title}</span>
+                      <span className="contact__channel-detail">{method.detail}</span>
+                    </span>
+                  </a>
+                  <button
+                    type="button"
+                    className={`contact__copy${copied === method.title ? ' is-copied' : ''}`}
+                    onClick={() => copy(method)}
+                    aria-label={`Copiar ${method.title}`}
+                    title={copied === method.title ? 'Copiado!' : 'Copiar'}
+                  >
+                    <Icon name={copied === method.title ? 'check' : 'copy'} size={16} />
+                  </button>
+                </li>
+              ))}
+            </ul>
+            <span className="contact__pixels" aria-hidden="true" />
+          </aside>
 
-          <form className="contact__form" onSubmit={handleSubmit} data-reveal style={{ '--delay': '0.15s' }}>
+          {/* Formulário */}
+          <form className="contact__form" onSubmit={handleSubmit}>
+            <h3 className="contact__form-title">Envie uma mensagem</h3>
+
             {status === 'error' && (
               <p className="contact__error" role="alert">
-                {errorMessage}
+                <Icon name="alert" size={18} /> {errorMessage}
               </p>
             )}
 
             <div className="contact__row">
-              {FIELDS.map((field) => (
-                <label key={field.name} className="contact__field">
-                  <span>{field.label}</span>
-                  <input
-                    type={field.type}
-                    name={field.name}
-                    value={form[field.name]}
-                    onChange={updateField}
-                    placeholder={field.placeholder}
-                    required
-                  />
-                </label>
-              ))}
+              <div className="field">
+                <label htmlFor="contact-name">Seu nome</label>
+                <input
+                  id="contact-name"
+                  name="name"
+                  type="text"
+                  autoComplete="name"
+                  placeholder="Ex: Maria Silva"
+                  value={form.name}
+                  onChange={updateField}
+                  required
+                />
+              </div>
+              <div className="field">
+                <label htmlFor="contact-email">Seu e-mail</label>
+                <input
+                  id="contact-email"
+                  name="email"
+                  type="email"
+                  autoComplete="email"
+                  placeholder="seu@email.com"
+                  value={form.email}
+                  onChange={updateField}
+                  required
+                />
+              </div>
             </div>
 
-            <label className="contact__field">
-              <span>Sua mensagem</span>
+            <div className="field">
+              <label htmlFor="contact-message">Sua mensagem</label>
               <textarea
+                id="contact-message"
                 name="message"
-                rows={4}
+                rows={5}
+                placeholder="Descreva a sua ideia, projeto ou dúvida..."
                 value={form.message}
                 onChange={updateField}
-                placeholder="Descreva a sua ideia, projeto ou dúvida..."
                 required
               />
-            </label>
+            </div>
 
-            <button type="submit" className="cta-link spaced contact__submit" disabled={status === 'sending'}>
-              {status === 'sending' ? 'Enviando...' : 'Enviar mensagem'} <span className="arrow">→</span>
+            <button type="submit" className="btn btn--primary contact__submit" disabled={status === 'sending'}>
+              {status === 'sending' ? 'Enviando mensagem...' : 'Enviar mensagem'}
+              <Icon name="send" className="icon-arrow" />
             </button>
           </form>
         </div>

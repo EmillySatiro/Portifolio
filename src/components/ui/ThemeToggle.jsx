@@ -1,3 +1,4 @@
+import Icon from './Icon'
 import './ThemeToggle.css'
 
 export default function ThemeToggle({ theme, onToggle }) {
@@ -10,10 +11,9 @@ export default function ThemeToggle({ theme, onToggle }) {
       aria-label={isDark ? 'Ativar tema claro' : 'Ativar tema escuro'}
       title={isDark ? 'Tema claro' : 'Tema escuro'}
     >
-      <span className="theme-toggle__track" aria-hidden="true">
-        <span className="theme-toggle__dot" />
+      <span className="theme-toggle__icon" key={theme}>
+        <Icon name={isDark ? 'sun' : 'moon'} size={18} />
       </span>
-      <span className="theme-toggle__label">{isDark ? 'Escuro' : 'Claro'}</span>
     </button>
   )
 }

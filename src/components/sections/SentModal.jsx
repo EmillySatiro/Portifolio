@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 import { createPortal } from 'react-dom'
+import Icon from '../ui/Icon'
 import './SentModal.css'
 
 // Confirmação de envio: o morcego "entrega" o cartão. Fecha ao clicar fora ou com Esc.
@@ -23,11 +24,11 @@ export default function SentModal({ onClose }) {
         <div className="sent-modal__head">
           <span className="eyebrow">Mensagem entregue</span>
           <button type="button" className="sent-modal__close" onClick={onClose} aria-label="Fechar">
-            ✕
+            <Icon name="close" />
           </button>
         </div>
         <h3 id="sent-title" className="sent-modal__title display">
-          O morcego entregou seu e-mail! 🦇
+          O Morcego Entregou Seu E-mail! 🦇
         </h3>
         <p>
           Sua mensagem foi entregue com sucesso na caixa de entrada de <strong>Emilly Sátiro</strong>. Muito
