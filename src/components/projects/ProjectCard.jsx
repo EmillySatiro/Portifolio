@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import Icon from '../ui/Icon'
 import TechLogo from '../ui/TechLogo'
+import RepoPreview from './RepoPreview'
 import './ProjectCard.css'
 
 const LINK_TYPES = {
@@ -44,8 +45,10 @@ export default function ProjectCard({ project, categoryName, order = 0 }) {
             loading="lazy"
             decoding="async"
           />
+        ) : project.repoPreview ? (
+          <RepoPreview {...project.repoPreview} />
         ) : (
-          // Sem imagem: capa gerada com os logos da stack sobre uma grade de pixels
+          // Sem imagem nem repositório público: capa gerada com os logos da stack sobre uma grade de pixels
           <div className="pcard__generated" aria-hidden="true">
             {project.logos.slice(0, 3).map((logo) => (
               <span key={logo} className="pcard__bubble">
