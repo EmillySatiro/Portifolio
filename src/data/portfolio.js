@@ -23,7 +23,7 @@ export const navItems = [
   { id: 'curriculum', name: 'Currículo', to: '/#curriculum' },
   { id: 'projects', name: 'Projetos', to: '/projetos' },
   { id: 'designer', name: 'Designer', to: '/designer' },
-  { id: 'research', name: 'Pesquisa', to: '/pesquisa' },
+  { id: 'academic', name: 'Acadêmico', to: '/academico' },
   { id: 'contact', name: 'Contato', to: '/#contact' },
 ]
 
@@ -157,7 +157,7 @@ export const experiences = [
   {
     title: 'Coautora & Dev Full Stack',
     company: 'Sistema PREMAUT (UFPI)',
-    period: 'mar. 2026 — atual',
+    period: 'mar. 2026 — jun. 2026',
     description:
       'Liderança do desenvolvimento da plataforma de gestão do Projeto PREMAUT (produto patenteado): front-end em React e TypeScript, API com FastAPI, PostgreSQL e Docker, do levantamento de requisitos à implantação.',
   },
@@ -221,9 +221,4 @@ export const cvFiles = [
     href: '/Curriculo_formatado_ingles.pdf',
     download: 'Resume_Emilly_Satiro_EN.pdf',
   },
-]
-
-export const researchLinks = [
-  { name: 'Google Acadêmico', url: 'https://scholar.google.com/citations?user=e_URIYQAAAAJ' },
-  { name: 'Currículo Lattes (CNPq)', url: 'http://lattes.cnpq.br' },
 ]

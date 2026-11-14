@@ -1,0 +1,363 @@
+.ac-section {
+  --edge-color: var(--bg);
+  background: var(--bg);
+}
+
+/* ---------- Pesquisa ---------- */
+.ac-research {
+  --edge-color: var(--bg-alt);
+  background: var(--bg-alt);
+}
+
+.ac-research__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+  gap: clamp(24px, 4vw, 48px);
+  align-items: start;
+}
+
+.ac-research__card {
+  position: relative;
+  display: grid;
+  gap: 1rem;
+  padding: clamp(24px, 4vw, 40px);
+  border-radius: 22px;
+  background: linear-gradient(150deg, var(--brand) 0%, var(--brand-deep) 100%);
+  color: #fff;
+  box-shadow: 12px 12px 0 var(--violet);
+}
+
+.ac-research__badge {
+  justify-self: start;
+  background: rgba(255, 255, 255, 0.16);
+  color: #fff;
+}
+
+.ac-research__title {
+  font-size: clamp(2.2rem, 4.4vw, 3.6rem);
+}
+
+.ac-research__meta {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.ac-research__list {
+  display: grid;
+  gap: 0.7rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.88);
+}
+
+.ac-research__list li {
+  position: relative;
+  padding-left: 1.3rem;
+}
+
+.ac-research__list li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.55em;
+  width: 7px;
+  height: 7px;
+  background: var(--sky);
+}
+
+.ac-research__footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 0.5rem;
+}
+
+.ac-research__logos {
+  display: flex;
+  gap: 0.4rem;
+}
+
+.ac-research__logos svg {
+  box-sizing: content-box;
+  padding: 7px;
+  border-radius: 8px;
+  background: #fff;
+}
+
+/* ---------- Formação ---------- */
+.ac-education {
+  display: grid;
+  gap: 0.9rem;
+}
+
+.ac-education__item {
+  display: flex;
+  gap: 1rem;
+  padding: 1.1rem;
+  border-radius: var(--radius);
+  border: 1px solid var(--line);
+  background: var(--surface);
+}
+
+.ac-education__item > span:last-child {
+  display: grid;
+  gap: 0.15rem;
+}
+
+.ac-education__item span span {
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+.ac-education__item em {
+  font-style: normal;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.ac-education__icon {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-sm);
+  background: var(--brand);
+  color: #fff;
+}
+
+/* ---------- Publicações ---------- */
+.ac-empty {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1.25rem 1.5rem;
+  padding: clamp(20px, 3vw, 32px);
+  border: 2px dashed var(--line);
+  border-radius: 20px;
+  color: var(--accent);
+}
+
+.ac-empty > div:first-of-type {
+  flex: 1;
+  min-width: 240px;
+  color: var(--ink);
+}
+
+.ac-empty h3 {
+  font-size: 1.2rem;
+}
+
+.ac-empty p {
+  color: var(--muted);
+}
+
+.ac-empty__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+.ac-pubs {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: 2px solid var(--ink);
+}
+
+.ac-pub {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.25rem;
+  padding: 1.25rem 0.25rem;
+  border-bottom: 1px solid var(--line);
+  transition: padding 0.4s var(--ease-out), background-color 0.25s ease;
+}
+
+.ac-pub:hover {
+  padding-left: 0.75rem;
+  background: var(--accent-soft);
+}
+
+.ac-pub__year {
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  line-height: 1;
+  color: var(--accent);
+}
+
+.ac-pub__body {
+  display: grid;
+  flex: 1;
+  gap: 0.3rem;
+}
+
+.ac-pub__title {
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+.ac-pub__meta {
+  font-size: 0.88rem;
+  color: var(--muted);
+}
+
+.ac-pub__arrow {
+  flex-shrink: 0;
+  color: var(--muted);
+}
+
+/* ---------- Palestras ---------- */
+.ac-talks {
+  --edge-color: var(--brand-deep);
+  background: var(--brand-deep);
+  color: #f1f0fa;
+}
+
+:root[data-theme='dark'] .ac-talks {
+  --edge-color: #262a66;
+  background: #262a66;
+}
+
+.ac-talks .eyebrow {
+  color: var(--sky);
+}
+
+.ac-talks__list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 250px), 1fr));
+  gap: 1rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.ac-talk {
+  position: relative;
+  display: grid;
+  align-content: start;
+  gap: 0.5rem;
+  padding: 1.4rem 1.3rem 1.3rem;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  transition: transform 0.4s var(--ease-out), background-color 0.3s ease, box-shadow 0.4s var(--ease-out);
+}
+
+.ac-talk:hover {
+  transform: translateY(-5px);
+  background: rgba(255, 255, 255, 0.12);
+  box-shadow: 6px 6px 0 var(--violet);
+}
+
+.ac-talk__date {
+  justify-self: start;
+  padding: 0.2rem 0.55rem;
+  border-radius: 6px;
+  background: var(--sky);
+  color: var(--brand-deep);
+  font-size: 0.72rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.ac-talk__title {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 1.6rem;
+  line-height: 1.05;
+}
+
+.ac-talk__event {
+  color: rgba(255, 255, 255, 0.78);
+}
+
+.ac-talk__img {
+  width: calc(100% + 2.6rem);
+  margin: -1.4rem -1.3rem 0.4rem;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  border-radius: 16px 16px 0 0;
+}
+
+.ac-talk__desc {
+  font-size: 0.88rem;
+  line-height: 1.55;
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.ac-talk__role {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--sky);
+}
+
+/* ---------- Ensino e certificados ---------- */
+.ac-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(32px, 5vw, 64px);
+}
+
+.ac-cards {
+  display: grid;
+  gap: 0.9rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.ac-card {
+  display: grid;
+  gap: 0.35rem;
+  padding: 1.2rem 1.3rem;
+  border-radius: var(--radius);
+  border: 1px solid var(--line);
+  background: var(--surface);
+  color: var(--muted);
+  transition: transform 0.4s var(--ease-out), border-color 0.3s ease;
+}
+
+.ac-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--accent);
+}
+
+.ac-card h3 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 1.5rem;
+  line-height: 1.05;
+  color: var(--ink);
+}
+
+.ac-card__period {
+  justify-self: start;
+  padding: 0.2rem 0.55rem;
+  border-radius: 6px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.ac-card__place {
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.ac-card--cert {
+  border-left: 4px solid var(--violet);
+}
+
+@media (max-width: 900px) {
+  .ac-research__grid,
+  .ac-split {
+    grid-template-columns: 1fr;
+  }
+}

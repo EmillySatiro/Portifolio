@@ -2,6 +2,7 @@ import { useState } from 'react'
 import FeaturedProject from '../components/projects/FeaturedProject'
 import ProjectArchive from '../components/projects/ProjectArchive'
 import ProjectCard from '../components/projects/ProjectCard'
+import PageHero from '../components/layout/PageHero'
 import Icon from '../components/ui/Icon'
 import { archive, featuredProject, githubProfile, projectCategories, projects } from '../data/projects'
 import './ProjectsPage.css'
@@ -17,15 +18,7 @@ export default function ProjectsPage() {
 
   return (
     <main className="projects-page">
-      {/* ---------- Topo ---------- */}
-      <section className="pj-hero">
-        <span className="blur-word pj-hero__blur parallax" aria-hidden="true">
-          Projetos
-        </span>
-        <div className="container pj-hero__inner">
-          <h1 className="pj-hero__title display">Projetos</h1>
-        </div>
-      </section>
+      <PageHero title="Projetos" />
 
       {/* ---------- Destaque ---------- */}
       <section className="section pj-featured pixel-edge">
