@@ -17,6 +17,7 @@ export const featuredProject = {
   badges: ['Produto patenteado', 'Coautora'],
   role: 'Líder de Projeto, Desenvolvedora Full Stack e UI/UX Designer',
   period: 'mar. 2026 — atual',
+  site: 'https://premaut.ufpi.br/',
   description:
     'Plataforma que informatiza a gestão do projeto: organiza os dados dos alunos, centraliza relatórios e facilita a comunicação entre monitores, professores e familiares.',
   highlights: [
@@ -28,20 +29,17 @@ export const featuredProject = {
   images: [
     { src: '/images/projects/premaut-site.webp', label: 'Site', alt: 'Página inicial do site do PREMAUT' },
     { src: '/images/projects/premaut-painel.webp', label: 'Painel', alt: 'Painel de gestão de participantes do PREMAUT' },
-    { src: '/images/projects/premaut-figma.webp', label: 'Figma', alt: 'Protótipo do PREMAUT no Figma' },
   ],
   phases: [
     {
-      name: 'Gestão do projeto',
-      detail: 'Primeira versão em Next.js, Express e Supabase, com o backlog organizado em issues.',
+      name: 'Primeira versão',
+      detail: 'Next.js no front-end, Express e Supabase no back-end.',
       logos: ['next', 'express', 'supabase'],
-      link: { label: 'JonasCGN/Premaut', url: gh('JonasCGN/Premaut') },
     },
     {
       name: 'Versão atual',
       detail: 'React + Vite no front-end, FastAPI no back-end, PostgreSQL e Docker.',
       logos: ['react', 'typescript', 'fastapi', 'postgres', 'docker'],
-      link: { label: 'KauaHenSilva/PREMAUT-DEVOPS', url: gh('KauaHenSilva/PREMAUT-DEVOPS') },
     },
   ],
 }
@@ -81,6 +79,8 @@ export const projects = [
     description:
       'Automação das vendas de um restaurante em Python orientado a objetos, com sincronização cliente–servidor, envio de e-mails e PostgreSQL. Projeto final de POO II.',
     logos: ['python', 'postgres', 'docker'],
+    image: '/images/projects/beiramar.webp',
+    imagePosition: 'left top',
     links: [{ type: 'github', url: gh('JonasCGN/Projeto-Final-POO-II') }],
   },
   {
@@ -118,6 +118,12 @@ export const projects = [
     description:
       'Sistema distribuído em containers: um gerador de mensagens publica no RabbitMQ e dois consumidores com IA (Smile) analisam rostos e brasões de times.',
     logos: ['java', 'rabbitmq', 'docker'],
+    // Sem imagens no repositório: mostra uma "foto" do próprio repositório (arquivos reais)
+    repoPreview: {
+      repo: 'Malujoro/IASys',
+      files: ['Dataset_aliens/', 'Dataset_times/', 'consumerFace/', 'consumerTeam/', 'messageGenerator/', 'docker-compose.yml', 'README.md'],
+      language: { name: 'Java', color: '#b07219' },
+    },
     links: [
       { type: 'github', url: gh('Malujoro/IASys') },
       { type: 'video', url: 'https://youtu.be/6OCJDhu0gUk' },
@@ -197,6 +203,11 @@ export const projects = [
     description:
       'Random Forest e técnicas de ensemble no dataset Madelon: 500 atributos, dos quais só 20 são informativos.',
     logos: ['python', 'sklearn', 'pandas', 'jupyter'],
+    repoPreview: {
+      repo: 'EmillySatiro/Madelon-RandomForest-Classification',
+      files: ['dataset/', 'madelon.zip', 'main.ipynb', 'README.md'],
+      language: { name: 'Jupyter Notebook', color: '#DA5B0B' },
+    },
     links: [{ type: 'github', url: gh('EmillySatiro/Madelon-RandomForest-Classification') }],
   },
 ]

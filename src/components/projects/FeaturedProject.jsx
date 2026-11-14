@@ -16,7 +16,7 @@ export default function FeaturedProject({ project }) {
             <i />
             <i />
             <i />
-            <span>{project.name.toLowerCase()} · {image.label.toLowerCase()}</span>
+            <span>{project.site.replace(/^https?:\/\//, '').replace(/\/$/, '')}</span>
           </div>
           <img
             key={image.src}
@@ -76,17 +76,20 @@ export default function FeaturedProject({ project }) {
           ))}
         </ul>
 
+        <a
+          href={project.site}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="btn btn--primary featured__site"
+          data-reveal
+          style={{ '--delay': '0.2s' }}
+        >
+          Acessar o site <Icon name="external" size={16} />
+        </a>
+
         <div className="featured__phases">
           {project.phases.map((phase, index) => (
-            <a
-              key={phase.name}
-              href={phase.link.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="phase"
-              data-reveal
-              style={{ '--delay': `${0.2 + index * 0.08}s` }}
-            >
+            <div key={phase.name} className="phase" data-reveal style={{ '--delay': `${0.24 + index * 0.08}s` }}>
               <span className="phase__step">0{index + 1}</span>
               <span className="phase__body">
                 <span className="phase__name">{phase.name}</span>
@@ -96,12 +99,8 @@ export default function FeaturedProject({ project }) {
                     <TechLogo key={logo} name={logo} size={18} />
                   ))}
                 </span>
-                <span className="phase__repo">
-                  <Icon name="github" size={14} /> {phase.link.label}
-                </span>
               </span>
-              <Icon name="external" size={16} className="phase__arrow" />
-            </a>
+            </div>
           ))}
         </div>
       </div>
