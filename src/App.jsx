@@ -17,11 +17,19 @@ export default function App() {
 
   return (
     <>
-      <a href="#conteudo" className="sr-only">
+      <a
+        href="#conteudo"
+        className="sr-only"
+        onClick={(e) => {
+          // Rola sem mexer na URL (a âncora confundiria o roteador)
+          e.preventDefault()
+          document.getElementById('conteudo')?.focus()
+        }}
+      >
         Pular para o conteúdo
       </a>
       <Topbar />
-      <div id="conteudo">
+      <div id="conteudo" tabIndex={-1}>
         <Suspense fallback={<main className="building" />}>
           <Routes>
             <Route path="/" element={<HomePage />} />

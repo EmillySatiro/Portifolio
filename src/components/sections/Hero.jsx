@@ -49,9 +49,9 @@ export default function Hero() {
             <Link to="/projetos" className="btn btn--primary">
               Ver projetos <Icon name="arrowRight" className="icon-arrow" />
             </Link>
-            <a href="#contact" className="btn btn--outline">
+            <Link to="/#contact" className="btn btn--outline">
               Contato <Icon name="mail" />
-            </a>
+            </Link>
             {socials.map((social) => (
               <a
                 key={social.name}
@@ -73,9 +73,9 @@ export default function Hero() {
         </div>
       </div>
 
-      <a href="#about" className="hero__scroll" aria-label="Rolar para Sobre">
+      <Link to="/#about" className="hero__scroll" aria-label="Rolar para Sobre">
         <span />
-      </a>
+      </Link>
     </section>
   )
 }
