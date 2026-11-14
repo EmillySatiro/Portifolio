@@ -1,0 +1,205 @@
+/* Cores por categoria */
+[data-cat='web'] {
+  --cat: #5cc6e3;
+}
+[data-cat='ai'] {
+  --cat: #e0559c;
+}
+[data-cat='systems'] {
+  --cat: #9a5be6;
+}
+[data-cat='mobile'] {
+  --cat: #3fbf7f;
+}
+[data-cat='all'] {
+  --cat: var(--violet);
+}
+
+.pcard {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border-radius: 18px;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  transition: transform 0.45s var(--ease-out), box-shadow 0.45s var(--ease-out), border-color 0.3s ease;
+  animation: pcard-in 0.6s var(--ease-out) both;
+  animation-delay: calc(var(--i) * 0.06s);
+}
+
+.pcard:hover {
+  transform: translateY(-6px);
+  border-color: var(--cat);
+  box-shadow: 8px 8px 0 var(--cat);
+}
+
+/* ---------- Capa ---------- */
+.pcard__cover {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  background: var(--bg-alt);
+  border-bottom: 4px solid var(--cat);
+}
+
+.pcard__cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  transition: transform 0.9s var(--ease-out);
+}
+
+.pcard:hover .pcard__cover img {
+  transform: scale(1.06);
+}
+
+.pcard__generated {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.9rem;
+  height: 100%;
+  background: radial-gradient(circle at 30% 20%, color-mix(in srgb, var(--cat) 35%, transparent), transparent 60%),
+    linear-gradient(150deg, var(--brand) 0%, var(--brand-deep) 100%);
+  position: relative;
+}
+
+.pcard__generated::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: linear-gradient(rgba(255, 255, 255, 0.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.07) 1px, transparent 1px);
+  background-size: 22px 22px;
+}
+
+.pcard__bubble {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 64px;
+  height: 64px;
+  border-radius: 14px;
+  background: #fff;
+  box-shadow: 4px 4px 0 var(--cat);
+  transition: transform 0.5s var(--ease-out);
+}
+
+.pcard__bubble:nth-child(2) {
+  transform: translateY(-10px) rotate(4deg);
+}
+
+.pcard__bubble:nth-child(3) {
+  transform: rotate(-5deg);
+}
+
+.pcard:hover .pcard__bubble {
+  transform: translateY(-6px) rotate(0deg);
+}
+
+.pcard__cat,
+.pcard__year {
+  position: absolute;
+  top: 0.75rem;
+  padding: 0.25rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.7rem;
+  font-weight: 700;
+}
+
+.pcard__cat {
+  left: 0.75rem;
+  background: var(--cat);
+  color: #15162e;
+}
+
+.pcard__year {
+  right: 0.75rem;
+  background: rgba(15, 16, 32, 0.75);
+  color: #fff;
+}
+
+/* ---------- Corpo ---------- */
+.pcard__body {
+  display: grid;
+  align-content: start;
+  gap: 0.55rem;
+  flex: 1;
+  padding: 1.2rem 1.25rem 0.6rem;
+}
+
+.pcard__role {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--muted);
+}
+
+.pcard__role.is-collab {
+  color: var(--accent);
+}
+
+.pcard__title {
+  font-size: 1.9rem;
+}
+
+.pcard__desc {
+  font-size: 0.92rem;
+  line-height: 1.6;
+  color: var(--muted);
+}
+
+.pcard__stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin: 0.4rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.pcard__stack li {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: #fff;
+  border: 1px solid var(--line);
+}
+
+/* ---------- Links ---------- */
+.pcard__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  padding: 0.8rem 1.25rem 1.2rem;
+}
+
+.pcard__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.45rem 0.8rem;
+  border-radius: 999px;
+  border: 1.5px solid var(--line);
+  font-size: 0.8rem;
+  font-weight: 600;
+  transition: background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease;
+}
+
+.pcard__link:hover {
+  border-color: var(--ink);
+  background: var(--ink);
+  color: var(--bg);
+}
+
+/* usa "translate" (e não "transform") para não travar o efeito de hover */
+@keyframes pcard-in {
+  from {
+    opacity: 0;
+    translate: 0 24px;
+  }
+}
