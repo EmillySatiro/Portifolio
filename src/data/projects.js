@@ -16,7 +16,7 @@ export const featuredProject = {
   subtitle: 'Projeto de Extensão de Atividades Motoras para Pessoas com Autismo · UFPI',
   badges: ['Produto patenteado', 'Coautora'],
   role: 'Líder de Projeto, Desenvolvedora Full Stack e UI/UX Designer',
-  period: 'mar. 2026 — atual',
+  period: 'mar. 2026 — jun. 2026 · encerrado',
   site: 'https://premaut.ufpi.br/',
   description:
     'Plataforma que informatiza a gestão do projeto: organiza os dados dos alunos, centraliza relatórios e facilita a comunicação entre monitores, professores e familiares.',
@@ -172,7 +172,7 @@ export const projects = [
     description:
       'Redes Neurais Convolucionais e pipelines de pré-processamento para classificar macrófagos infectados por Leishmania Visceral Canina em imagens de medula óssea.',
     logos: ['python', 'pytorch', 'opencv'],
-    links: [{ type: 'research', url: '/pesquisa' }],
+    links: [{ type: 'research', url: '/academico' }],
   },
   {
     name: 'ID3 · Câncer de mama',

@@ -9,7 +9,7 @@ import HomePage from './pages/HomePage'
 // Páginas secundárias carregam só quando acessadas.
 const ProjectsPage = lazy(() => import('./pages/ProjectsPage'))
 const DesignerPage = lazy(() => import('./pages/DesignerPage'))
-const ResearchPage = lazy(() => import('./pages/ResearchPage'))
+const AcademicPage = lazy(() => import('./pages/AcademicPage'))
 
 export default function App() {
   useScrollOnNavigate()
@@ -27,7 +27,8 @@ export default function App() {
             <Route path="/" element={<HomePage />} />
             <Route path="/projetos" element={<ProjectsPage />} />
             <Route path="/designer" element={<DesignerPage />} />
-            <Route path="/pesquisa" element={<ResearchPage />} />
+            <Route path="/academico" element={<AcademicPage />} />
+            <Route path="/pesquisa" element={<Navigate to="/academico" replace />} />
             <Route path="/programacao" element={<Navigate to="/projetos" replace />} />
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>

@@ -1,31 +1,3 @@
-/* ---------- Topo ---------- */
-.pj-hero {
-  position: relative;
-  overflow: hidden;
-  padding: calc(var(--topbar-h) + clamp(48px, 7vw, 90px)) 0 clamp(56px, 7vw, 90px);
-  background: radial-gradient(55% 60% at 85% 20%, rgba(123, 63, 196, 0.16), transparent 70%),
-    radial-gradient(50% 50% at 5% 100%, rgba(65, 69, 117, 0.18), transparent 70%);
-}
-
-.pj-hero__blur {
-  right: -3%;
-  top: 46%;
-  translate: 0 -50%;
-  font-size: clamp(7rem, 23vw, 21rem);
-  opacity: 0.38;
-}
-
-.pj-hero__inner {
-  position: relative;
-  display: grid;
-  gap: 1.4rem;
-}
-
-.pj-hero__title {
-  font-size: clamp(3.8rem, 10vw, 8.5rem);
-  animation: pj-rise 0.9s var(--ease-out) both;
-}
-
 /* ---------- Seções ---------- */
 .pj-featured {
   --edge-color: var(--bg-alt);
@@ -106,11 +78,4 @@
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr));
   gap: 1.5rem;
-}
-
-@keyframes pj-rise {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
 }

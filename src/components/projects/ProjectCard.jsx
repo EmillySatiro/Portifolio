@@ -18,7 +18,7 @@ function ProjectLink({ link }) {
       <Icon name={type.icon} size={15} /> {type.label}
     </>
   )
-  // Links internos (ex.: /pesquisa) usam o roteador
+  // Links internos (ex.: /academico) usam o roteador
   if (link.url.startsWith('/')) {
     return (
       <Link to={link.url} className="pcard__link">
