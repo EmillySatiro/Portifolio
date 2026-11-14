@@ -24,6 +24,10 @@
   --cat: #e0559c;
   --cat-soft: #fbe3ef;
 }
+.skills [data-cat='mobile'] {
+  --cat: #3fbf7f;
+  --cat-soft: #ddf5e8;
+}
 .skills [data-cat='tools'] {
   --cat: #e9a73b;
   --cat-soft: #fcf0d9;

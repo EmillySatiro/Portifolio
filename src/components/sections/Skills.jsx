@@ -4,7 +4,8 @@ import TechLogo from '../ui/TechLogo'
 import './Skills.css'
 
 const ALL = 'all'
-const SHORT_NAMES = { front: 'Front-end', back: 'Back-end', ai: 'IA', tools: 'Ferramentas' }
+const SHORT_NAMES = { front: 'Front-end', back: 'Back-end', ai: 'IA & Dados', mobile: 'Mobile', tools: 'Ferramentas' }
+const LOGO_SIZES = { 1: 46, 2: 34, 3: 28 }
 const TOTAL = String(technologies.length).padStart(2, '0')
 
 // Inclinação + brilho holográfico seguindo o ponteiro (escreve direto no estilo, sem re-render).
@@ -46,7 +47,7 @@ function TechCard({ tech, index, dim }) {
 
         <div className="tcard__art">
           {tech.logos.map((logo) => (
-            <TechLogo key={logo} name={logo} size={tech.logos.length > 1 ? 34 : 46} />
+            <TechLogo key={logo} name={logo} size={LOGO_SIZES[tech.logos.length] ?? 26} />
           ))}
         </div>
 
