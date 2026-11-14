@@ -1,4 +1,4 @@
-# Stage 1: Build the Vite Vue 3 application
+# Stage 1: Build the Vite React application
 FROM node:20-alpine AS build-stage
 
 WORKDIR /app

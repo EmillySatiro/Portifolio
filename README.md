@@ -1,19 +1,19 @@
 # Portfólio Premium | Emílly Sátiro
 
-Portfólio profissional de alta performance e experiência visual imersiva, desenvolvido com **Vue 3**, **Vite**, **GSAP** e **Lucide Icons**. Apresenta a trajetória, projetos de engenharia de software, estudos de caso de UI/UX, pesquisas em Inteligência Artificial (CNPq/FAPEPI) e canais de contato de Emílly Sátiro.
+Portfólio profissional de alta performance e experiência visual imersiva, desenvolvido com **React**, **Vite** e **Lucide Icons**. Apresenta a trajetória, projetos de engenharia de software, estudos de caso de UI/UX, pesquisas em Inteligência Artificial (CNPq/FAPEPI) e canais de contato de Emílly Sátiro.
 
 ---
 
-## 🌟 Destaques da Refatoração de Interface
+## 🌟 Destaques da Interface
 
-- **Experiência Visual de Alto Impacto (Hero Section):** iluminação ambiente com efeito radial glow, status badge de disponibilidade em tempo real, ticker animado de atuação profissional e cards com estatísticas de impacto.
-- **Background Animado & Texturas (`BackgroundCanvas.vue`):** canvas interativo com partículas flutuantes reativas ao movimento do cursor, mesh gradient em tons da paleta de cores e textura de ruído sutil.
-- **Microinterações e Cursor Customizado (`CustomCursor.vue`):** anel seguidor fluido e expansão de cursor em elementos clicáveis.
-- **Mascote Animado Preservado (`FlyingBat.vue`):** morcego animado em vetor/SVG integrado com física fluida GSAP e acompanhamento de navegação.
-- **Bento Grid de Tecnologias (`TechStackSection.vue`):** ecossistema técnico categorizado (Front-end, Back-end, IA & Visão Computacional, DevOps & UI/UX) com filtros dinâmicos.
-- **Showcase de Projetos com Modal Interativo (`ProjectsSection.vue` & `ProjectModal.vue`):** cards de projetos com filtros por categoria, badges, tags técnicas e janela modal completa para detalhes, links do GitHub, Figma e demonstrações.
-- **Página Dedicada a Design (`DesignerView.vue`):** vitrine para estudos de caso de UI/UX, protótipos navegáveis no Figma, wireframes e guias de estilo.
-- **Página de Pesquisa Científica (`ResearchView.vue`):** layout de bento grid acadêmico destacando pesquisas de IA na saúde (Leishmaniose Canina) e agronegócio, com links diretos para o Google Acadêmico e Currículo Lattes.
+- **Hero Section:** iluminação ambiente com efeito radial glow e ticker animado de atuação profissional.
+- **Background Animado (`BackgroundCanvas.jsx`):** canvas interativo com partículas flutuantes reativas ao movimento do cursor e textura de ruído sutil.
+- **Cursor Customizado (`CustomCursor.jsx`):** anel seguidor fluido e expansão do cursor em elementos clicáveis.
+- **Mascote Animado (`FlyingBat.jsx`):** morcego em SVG voando pela tela.
+- **Sobre (`AboutSection.jsx`):** foto, apresentação e letreiro de tecnologias com filtros por categoria.
+- **Currículo (`CurriculumSection.jsx`):** baralho de cartas com as experiências e download do currículo em PT/EN.
+- **Contato (`ContactSection.jsx`):** formulário integrado ao Formspree e botões para copiar os contatos.
+- **Projetos, Designer e Pesquisa:** páginas próprias, por enquanto no modo "Página em construção" (`UnderConstruction.jsx`).
 
 ---
 
@@ -36,14 +36,10 @@ Portfólio profissional de alta performance e experiência visual imersiva, dese
 
 ## 🛠️ Tecnologias e Dependências
 
-### Dependências Principais
-- **`vue` (`^3.5.18`):** Framework reativo progressivo para a construção da interface do usuário.
-- **`vue-router` (`^4.6.4`):** Roteador oficial para a navegação SPA entre Início, Designer e Pesquisa.
-- **`gsap` (`^3.15.0`):** Biblioteca de animação profissional utilizada para física de movimento, flutuação e interações.
-- **`@lucide/vue` (`^1.0.0`):** Conjunto moderno de ícones vetoriais em alta resolução utilizados em toda a interface (código, figma, github, contatos, etc.).
-
-#### Por que `@lucide/vue` foi adicionado?
-Adicionado para fornecer ícones vetoriais consistentes, elegantes e acessíveis para categorias de tecnologias, botões de ação do GitHub, Figma, Google Acadêmico e formulários de contato.
+- **`react` / `react-dom`:** biblioteca para a construção da interface.
+- **`react-router-dom`:** navegação SPA entre Início, Projetos, Designer e Pesquisa.
+- **`lucide-react`:** ícones vetoriais usados nos botões e formulários.
+- **`vite` + `@vitejs/plugin-react`:** servidor de desenvolvimento e build.
 
 ---
 
@@ -101,43 +97,44 @@ docker-compose down
 
 ```text
 .
-├── public/                          # Imagens públicos e mascot SVG animado
-│   ├── a8973100-1174-11ee-9e14-23aa8edbd820.svg # Morcego animado em vetor
-│   ├── foto.jpg                     # Foto de perfil de Emílly Sátiro
-│   └── logo_emilly_sátiro.png       # Favicon e logo oficial
+├── public/
+│   ├── bat.svg                      # Mascote morcego (também usado como favicon)
+│   ├── foto perfil.png              # Foto de perfil
+│   ├── Curriculo_formatado_PT.pdf   # Currículo em português
+│   └── Curriculo_formatado_ingles.pdf # Currículo em inglês
 ├── src/
-│   ├── components/                  # Componentes reutilizáveis
-│   │   ├── AboutSection.vue         # Seção Sobre com pilares e foto
-│   │   ├── BackgroundCanvas.vue     # Canvas de partículas e iluminação
-│   │   ├── ContactSection.vue       # Formulário Formspree e contatos com cópia
-│   │   ├── CustomCursor.vue         # Cursor customizado e microinterações
-│   │   ├── FlyingBat.vue            # Mascote morcego com animação GSAP
-│   │   ├── HeroSection.vue          # Hero de alto impacto visual e ticker
-│   │   ├── ProjectModal.vue         # Modal interativo para detalhes dos projetos
-│   │   ├── ProjectsSection.vue      # Showcase de projetos de TI com filtros
-│   │   ├── SiteFooter.vue           # Rodapé com redes sociais e botão de topo
-│   │   ├── SiteNavbar.vue           # Navbar flutuante em glassmorphism
-│   │   └── TechStackSection.vue     # Bento grid de habilidades por área
+│   ├── components/                  # Componentes (cada um com seu .css)
+│   │   ├── AboutSection.jsx         # Seção Sobre com foto e tecnologias
+│   │   ├── BackgroundCanvas.jsx     # Canvas de partículas e iluminação
+│   │   ├── BrandIcon.jsx            # Ícones das tecnologias e redes sociais
+│   │   ├── ContactSection.jsx       # Formulário Formspree e contatos com cópia
+│   │   ├── CurriculumSection.jsx    # Experiências e download do currículo
+│   │   ├── CustomCursor.jsx         # Cursor customizado
+│   │   ├── FlyingBat.jsx            # Mascote morcego animado
+│   │   ├── HeroSection.jsx          # Hero com ticker de atuação
+│   │   ├── SiteFooter.jsx           # Rodapé com redes sociais e botão de topo
+│   │   ├── SiteNavbar.jsx           # Navbar com barra de progresso
+│   │   └── UnderConstruction.jsx    # Layout de "Página em construção"
 │   ├── data/
-│   │   └── portfolio.js             # Fonte centralizada de dados e projetos
-│   ├── views/                       # Páginas da aplicação
-│   │   ├── DesignerView.vue         # Vitrine de UI/UX e estudos no Figma
-│   │   ├── HomeView.vue             # Página principal do portfólio
-│   │   └── ResearchView.vue         # Página de pesquisa científica e IC
-│   ├── App.vue                      # Layout raiz da aplicação
-│   ├── main.js                      # Ponto de entrada do Vue
-│   ├── router.js                    # Configuração de rotas da aplicação
+│   │   └── portfolio.js             # Links de navegação e contatos
+│   ├── pages/                       # Páginas (rotas)
+│   │   ├── DesignerPage.jsx         # /designer
+│   │   ├── HomePage.jsx             # /
+│   │   ├── ProjectsPage.jsx         # /projetos
+│   │   └── ResearchPage.jsx         # /pesquisa
+│   ├── App.jsx                      # Layout raiz e rotas
+│   ├── main.jsx                     # Ponto de entrada do React
 │   └── style.css                    # Design system e estilos globais
-├── Dockerfile                       # Instruções de build Docker multi-stage
+├── Dockerfile                       # Build Docker multi-stage
 ├── docker-compose.yml               # Orquestração de containers Docker
 ├── index.html                       # HTML base com fontes Cinzel, Cormorant e Inter
 ├── package.json                     # Dependências e scripts npm
 ├── vercel.json                      # Configuração para deploy na Vercel
-└── vite.config.js                   # Configuração do bundler Vite
+└── vite.config.js                   # Configuração do Vite
 ```
 
 ---
 
 ## 📄 Licença e Direitos
 
-© {{ year }} Emílly Sátiro. Todos os direitos reservados.
+© 2026 Emílly Sátiro. Todos os direitos reservados.
