@@ -1,20 +1,21 @@
 # Portfólio | Emilly Sátiro
 
-Portfólio profissional desenvolvido com Vue 3 e Vite para apresentar perfil, habilidades técnicas, projetos e canais de contato de Emilly Sátiro.
+Portfólio profissional desenvolvido com React e Vite para apresentar perfil, habilidades técnicas, projetos e canais de contato de Emilly Sátiro.
 
 ## Visão geral
 
-Este projeto é uma aplicação web responsiva de página única, organizada por seções:
+Este projeto é uma aplicação web responsiva com React Router, organizada em páginas e seções:
 
 - **Início:** apresentação profissional e principais áreas de atuação.
 - **Sobre:** resumo de formação, experiência e indicadores do perfil.
-- **Projetos:** cards com trabalhos em destaque, tecnologias e links.
-- **Habilidades:** competências separadas por áreas técnicas.
+- **Designer** (`/designer`), **Pesquisa** (`/pesquisa`) e **Projetos de TI** (`/projetos`): páginas próprias, ainda sem conteúdo.
 - **Contato:** links profissionais e formulário integrado ao Formspree.
 
 ## Tecnologias
 
-- Vue 3
+- React 19
+- React Router
+- GSAP
 - Vite
 - JavaScript
 - CSS responsivo
@@ -28,9 +29,10 @@ Este projeto é uma aplicação web responsiva de página única, organizada por
 ├── public/                  # Imagens e arquivos públicos
 ├── src/
 │   ├── components/          # Seções e componentes da interface
+│   ├── pages/               # Páginas (rotas)
 │   ├── data/                # Conteúdo centralizado do portfólio
-│   ├── App.vue              # Composição principal da página
-│   ├── main.js              # Inicialização do Vue
+│   ├── App.jsx              # Layout e rotas
+│   ├── main.jsx             # Inicialização do React
 │   └── style.css            # Estilos globais
 ├── index.html               # HTML base da aplicação
 ├── package.json             # Scripts e dependências
@@ -80,10 +82,7 @@ src/data/portfolio.js
 Nesse arquivo é possível atualizar:
 
 - Links de navegação
-- Tecnologias
 - Estatísticas
-- Projetos
-- Categorias de habilidades
 - Contatos profissionais
 
 As imagens públicas ficam em:
@@ -92,7 +91,7 @@ As imagens públicas ficam em:
 public/
 ```
 
-Para trocar foto, logo ou imagens de projetos, adicione os arquivos nessa pasta e atualize os caminhos em `src/data/portfolio.js` ou nos componentes correspondentes.
+Para trocar foto, logo ou imagens de projetos, adicione os arquivos nessa pasta e atualize os caminhos em `src/data/portfolio.js` ou nos componentes correspondentes (`src/components` e `src/pages`).
 
 ## Deploy
 
@@ -102,7 +101,7 @@ O projeto está preparado para deploy na Vercel. A configuração atual usa:
 {
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
-  "framework": "vue"
+  "framework": "vite"
 }
 ```
 
