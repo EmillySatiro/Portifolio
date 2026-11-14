@@ -56,10 +56,14 @@ export default function Curriculum() {
               style={{ '--delay': `${(index % 2) * 0.08}s` }}
             >
               <span className="timeline__dot" aria-hidden="true" />
-              <article className="timeline__card">
+              {/* tabIndex: no celular/teclado, tocar ou focar também mostra a descrição */}
+              <article className="timeline__card is-expandable" tabIndex={0}>
                 <span className="timeline__period">{item.period}</span>
                 <h3 className="timeline__role">{item.title}</h3>
                 <p className="timeline__company">{item.company}</p>
+                <div className="timeline__more">
+                  <p>{item.description}</p>
+                </div>
               </article>
             </li>
           ))}

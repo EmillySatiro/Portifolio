@@ -115,6 +115,7 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 1rem 2.5rem;
+  align-items: start;
   margin: 0;
   padding: 0 0 0 28px;
   list-style: none;
@@ -160,9 +161,85 @@
 }
 
 .timeline__card:hover {
-  transform: translateY(-4px);
   border-color: var(--accent);
-  box-shadow: 6px 6px 0 var(--accent-soft);
+}
+
+/* ---------- Descrição que aparece no hover/foco ---------- */
+.timeline__card.is-expandable {
+  position: relative;
+  cursor: default;
+  outline: none;
+  transition: transform 0.45s var(--ease-out), border-color 0.3s ease, box-shadow 0.45s var(--ease-out),
+    border-radius 0.3s ease;
+}
+
+.timeline__card.is-expandable:hover,
+.timeline__card.is-expandable:focus-visible,
+.timeline__card.is-expandable:focus-within {
+  z-index: 5;
+  transform: scale(1.03);
+  border-color: var(--accent);
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  box-shadow: 0 24px 40px -22px rgba(0, 0, 0, 0.45);
+}
+
+.timeline__more {
+  position: absolute;
+  left: -1px;
+  right: -1px;
+  top: 100%;
+  padding: 0 1.3rem 1.2rem;
+  border: 1px solid var(--accent);
+  border-top: 0;
+  border-radius: 0 0 var(--radius) var(--radius);
+  background: var(--surface);
+  box-shadow: 0 24px 40px -22px rgba(0, 0, 0, 0.45);
+  font-size: 0.92rem;
+  line-height: 1.6;
+  color: var(--muted);
+  clip-path: inset(0 -40px 100% -40px);
+  opacity: 0;
+  transition: clip-path 0.45s var(--ease-out), opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.timeline__more::before {
+  content: '';
+  display: block;
+  height: 1px;
+  margin-bottom: 0.9rem;
+  background: var(--line);
+}
+
+.timeline__card.is-expandable:hover .timeline__more,
+.timeline__card.is-expandable:focus-visible .timeline__more,
+.timeline__card.is-expandable:focus-within .timeline__more {
+  clip-path: inset(0 -40px -40px -40px);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Dica visual de que há mais conteúdo */
+.timeline__card.is-expandable::after {
+  content: '+';
+  position: absolute;
+  top: 1rem;
+  right: 1.1rem;
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-weight: 700;
+  transition: transform 0.4s var(--ease-out);
+}
+
+.timeline__card.is-expandable:hover::after,
+.timeline__card.is-expandable:focus-within::after {
+  transform: rotate(45deg);
 }
 
 .timeline__period {

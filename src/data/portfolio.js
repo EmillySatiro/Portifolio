@@ -139,15 +139,63 @@ export const technologies = [
   { name: 'Locust', logos: ['locust'], categories: ['tools'], description: 'Testes de carga para medir o desempenho de sistemas.' },
 ]
 
+// Experiências (resumos tirados do currículo em PDF). A descrição aparece ao passar o mouse.
 export const experiences = [
-  { title: 'Gerente de Projeto', company: 'IAtrain', period: 'out. 2026 — atual' },
-  { title: 'Desenvolvedora Front-end', company: 'IAtrain · Estágio Remoto', period: 'mar. 2026 — jun. 2026' },
-  { title: 'Coautora & Dev Full Stack', company: 'Sistema PREMAUT (UFPI)', period: 'mar. 2026 — atual' },
-  { title: 'UI/UX Designer', company: 'Projeto SINFO 2026 (UFPI)', period: 'mar. 2026 — jun. 2026' },
-  { title: 'Diretora de Marketing & Front-end', company: 'Juá Soluções em Tecnologia', period: 'mai. 2025 — atual' },
-  { title: 'UI/UX Designer', company: 'Site Institucional Juá', period: 'mar. 2025 — ago. 2025' },
-  { title: 'Diretora de Ensino', company: 'Liga Acadêmica de SI (LADS)', period: 'abr. 2025 — mai. 2026' },
-  { title: 'Desenvolvedora Full Stack', company: 'Projeto Patocast (UFPI)', period: 'jun. 2024' },
+  {
+    title: 'Gerente de Projeto',
+    company: 'IAtrain',
+    period: 'out. 2026 — atual',
+    description: 'Gerenciamento de projetos na IAtrain.',
+  },
+  {
+    title: 'Desenvolvedora Front-end',
+    company: 'IAtrain · Estágio Remoto',
+    period: 'mar. 2026 — jun. 2026',
+    description:
+      'Desenvolvimento e manutenção de interfaces web com React, TypeScript e Tailwind CSS, componentes reutilizáveis, telas responsivas e protótipos no Figma.',
+  },
+  {
+    title: 'Coautora & Dev Full Stack',
+    company: 'Sistema PREMAUT (UFPI)',
+    period: 'mar. 2026 — atual',
+    description:
+      'Liderança do desenvolvimento da plataforma de gestão do Projeto PREMAUT (produto patenteado): front-end em React e TypeScript, API com FastAPI, PostgreSQL e Docker, do levantamento de requisitos à implantação.',
+  },
+  {
+    title: 'UI/UX Designer',
+    company: 'Projeto SINFO 2026 (UFPI)',
+    period: 'mar. 2026 — jun. 2026',
+    description:
+      'Design de interface do site oficial do Simpósio de Sistemas de Informação da UFPI: wireframes, layouts e protótipos de alta fidelidade no Figma.',
+  },
+  {
+    title: 'Diretora de Marketing & Front-end',
+    company: 'Juá Soluções em Tecnologia',
+    period: 'mai. 2025 — atual',
+    description:
+      'Liderança de marketing e comunicação da empresa júnior, com identidade visual e conteúdos no Figma e Canva, além de interfaces e desenvolvimento front-end com React e TypeScript.',
+  },
+  {
+    title: 'UI/UX Designer',
+    company: 'Site Institucional Juá',
+    period: 'mar. 2025 — ago. 2025',
+    description:
+      'Interface do site institucional, da arquitetura de informação e fluxos de navegação aos wireframes e protótipos de alta fidelidade no Figma.',
+  },
+  {
+    title: 'Diretora de Ensino',
+    company: 'Liga Acadêmica de SI (LADS)',
+    period: 'abr. 2025 — mai. 2026',
+    description:
+      'Coordenação das atividades de ensino da liga: palestras, minicursos, oficinas e encontros voltados ao desenvolvimento técnico dos membros.',
+  },
+  {
+    title: 'Desenvolvedora Full Stack',
+    company: 'Projeto Patocast (UFPI)',
+    period: 'jun. 2024',
+    description:
+      'Aplicação web de gestão financeira pessoal com Node.js, Express e Chart.js no front-end e API em Flask com PostgreSQL, tudo em Docker.',
+  },
 ]
 
 export const openForHire = {
