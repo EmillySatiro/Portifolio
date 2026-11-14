@@ -26,15 +26,16 @@ function handleLeave(e) {
   card.style.setProperty('--rx', '0deg')
 }
 
-function TechCard({ tech, index, dim }) {
+function TechCard({ tech, index, order = 0, static: isStatic = false }) {
   const type = tech.categories[0]
+  const Tag = isStatic ? 'span' : 'li'
   return (
-    <li
-      className={`tcard${dim ? ' is-dim' : ''}`}
+    <Tag
+      className={`tcard${isStatic ? ' is-static' : ''}`}
       data-cat={type}
-      style={{ '--i': index }}
-      onPointerMove={handleMove}
-      onPointerLeave={handleLeave}
+      style={{ '--i': order }}
+      onPointerMove={isStatic ? undefined : handleMove}
+      onPointerLeave={isStatic ? undefined : handleLeave}
     >
       <article className="tcard__body">
         <header className="tcard__top">
@@ -65,15 +66,53 @@ function TechCard({ tech, index, dim }) {
       </article>
       <span className="tcard__holo" aria-hidden="true" />
       <span className="tcard__glare" aria-hidden="true" />
-    </li>
+    </Tag>
+  )
+}
+
+// Algumas cartas de cada tipo para o monte que fica embaralhando.
+const DECK_PREVIEW = techCategories
+  .flatMap((cat) => technologies.filter((tech) => tech.categories[0] === cat.id).slice(0, 2))
+  .slice(0, 8)
+
+function ShuffleDeck({ onOpen }) {
+  return (
+    <div className="deck">
+      <div
+        className="deck__pile"
+        role="button"
+        tabIndex={0}
+        aria-label="Abrir o baralho com todas as cartas"
+        onClick={onOpen}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault()
+            onOpen()
+          }
+        }}
+      >
+        {DECK_PREVIEW.map((tech, k) => (
+          <span key={tech.name} className={`deck__card deck__card--${k % 2 ? 'right' : 'left'}`} style={{ '--k': k }}>
+            <TechCard tech={tech} index={technologies.indexOf(tech)} static />
+          </span>
+        ))}
+      </div>
+      <div className="deck__info">
+        <p className="deck__count">
+          <strong>{TOTAL}</strong> cartas no baralho
+        </p>
+        <p className="deck__hint">Escolha um tipo acima para abrir as cartas, ou clique no baralho para ver todas.</p>
+      </div>
+    </div>
   )
 }
 
 export default function Skills() {
-  const [active, setActive] = useState(ALL)
-  const matches = (tech) => active === ALL || tech.categories.includes(active)
-  const count = technologies.filter(matches).length
+  // null = baralho fechado embaralhando; senão, id da categoria (ou 'all')
+  const [active, setActive] = useState(null)
+  const visible = active ? technologies.filter((tech) => active === ALL || tech.categories.includes(active)) : []
   const filters = [{ id: ALL, name: 'Todas' }, ...techCategories]
+  const countFor = (id) => (id === ALL ? technologies.length : technologies.filter((t) => t.categories.includes(id)).length)
 
   return (
     <section id="skills" className="section skills pixel-edge">
@@ -92,7 +131,7 @@ export default function Skills() {
         </header>
 
         <div className="skills__toolbar" data-reveal style={{ '--delay': '0.12s' }}>
-          <div className="skills__filters" role="group" aria-label="Filtrar por categoria">
+          <div className="skills__filters" role="group" aria-label="Escolher tipo de carta">
             {filters.map((filter) => (
               <button
                 key={filter.id}
@@ -103,19 +142,29 @@ export default function Skills() {
                 onClick={() => setActive(filter.id)}
               >
                 {filter.name}
+                <span className="skills__filter-count">{countFor(filter.id)}</span>
               </button>
             ))}
           </div>
-          <p className="skills__count" aria-live="polite">
-            <strong key={count}>{String(count).padStart(2, '0')}</strong> cartas
-          </p>
+          {active && (
+            <button type="button" className="skills__shuffle" onClick={() => setActive(null)}>
+              ↺ Embaralhar
+            </button>
+          )}
         </div>
 
-        <ul className="skills__deck" data-reveal style={{ '--delay': '0.16s' }}>
-          {technologies.map((tech, index) => (
-            <TechCard key={tech.name} tech={tech} index={index} dim={!matches(tech)} />
-          ))}
-        </ul>
+        <div data-reveal style={{ '--delay': '0.16s' }}>
+          {active ? (
+            // key: ao trocar de filtro a lista remonta e as cartas são "distribuídas" de novo
+            <ul key={active} className="skills__grid" aria-live="polite">
+              {visible.map((tech, i) => (
+                <TechCard key={tech.name} tech={tech} index={technologies.indexOf(tech)} order={i} />
+              ))}
+            </ul>
+          ) : (
+            <ShuffleDeck onOpen={() => setActive(ALL)} />
+          )}
+        </div>
       </div>
     </section>
   )
