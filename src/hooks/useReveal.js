@@ -1,32 +1,43 @@
 import { useEffect } from 'react'
-import { useLocation } from 'react-router-dom'
+
+const SELECTOR = '[data-reveal]:not(.is-visible)'
 
 // Adiciona .is-visible aos elementos [data-reveal] quando entram na tela.
-// Roda de novo a cada troca de página.
+// Um MutationObserver acompanha elementos que aparecem depois (ex.: páginas carregadas sob demanda).
 export function useReveal() {
-  const { pathname } = useLocation()
-
   useEffect(() => {
-    const elements = document.querySelectorAll('[data-reveal]:not(.is-visible)')
-
     if (!('IntersectionObserver' in window)) {
-      elements.forEach((el) => el.classList.add('is-visible'))
+      document.querySelectorAll(SELECTOR).forEach((el) => el.classList.add('is-visible'))
       return undefined
     }
 
-    const observer = new IntersectionObserver(
+    const io = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             entry.target.classList.add('is-visible')
-            observer.unobserve(entry.target)
+            io.unobserve(entry.target)
           }
         })
       },
       { threshold: 0.15, rootMargin: '0px 0px -40px 0px' },
     )
 
-    elements.forEach((el) => observer.observe(el))
-    return () => observer.disconnect()
-  }, [pathname])
+    const observeWithin = (root) => {
+      if (root.matches?.(SELECTOR)) io.observe(root)
+      root.querySelectorAll?.(SELECTOR).forEach((el) => io.observe(el))
+    }
+
+    observeWithin(document.body)
+
+    const mo = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => mutation.addedNodes.forEach((node) => node.nodeType === 1 && observeWithin(node)))
+    })
+    mo.observe(document.body, { childList: true, subtree: true })
+
+    return () => {
+      io.disconnect()
+      mo.disconnect()
+    }
+  }, [])
 }

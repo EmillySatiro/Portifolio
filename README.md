@@ -11,6 +11,7 @@ Portfólio profissional de alta performance e experiência visual imersiva, dese
 - **Barra superior fixa** com o logo de morcego em pixel art, o nome, os links (com indicador da seção atual) e o botão de tema; no celular vira um menu.
 - **Temas claro e escuro**, salvos no navegador (na primeira visita segue o tema do sistema).
 - **Seções com fundos diferentes** e bordas "pixeladas" entre elas; palavras gigantes desfocadas ao fundo com parallax na rolagem.
+- **Página de Projetos** com o PREMAUT em destaque (galeria e fases), projetos selecionados com filtros e um arquivo dos trabalhos acadêmicos. Os dados ficam em `src/data/projects.js`.
 - **Tecnologias** como cartas colecionáveis (logo, tipo e descrição) com brilho holográfico, **currículo** com destaque para download e linha do tempo,
   e **contato** com canais copiáveis e formulário (Formspree).
 - Animações feitas com CSS e IntersectionObserver, sem bibliotecas. Respeitam `prefers-reduced-motion`.
@@ -88,13 +89,16 @@ docker-compose down
 │   ├── images/avatar-480.webp         # Ilustração (celular)
 │   ├── images/avatar-900.webp         # Ilustração (desktop)
 │   ├── images/og.jpg                  # Imagem de compartilhamento (WhatsApp, LinkedIn…)
+│   ├── images/projects/               # Capas dos projetos (WebP)
 │   └── Curriculo_formatado_*.pdf      # Currículos PT e EN
 ├── src/
 │   ├── components/
 │   │   ├── layout/                    # Topbar, Footer, UnderConstruction
+│   │   ├── projects/                  # FeaturedProject, ProjectCard, ProjectArchive (página de Projetos)
 │   │   ├── sections/                  # Hero, About, Skills, Curriculum, Contact, SentModal
 │   │   └── ui/                        # PixelAvatar, BatLogo, TechLogo, Icon, ThemeToggle
-│   ├── data/portfolio.js              # Todo o conteúdo: textos, links, experiências, tecnologias
+│   ├── data/portfolio.js              # Conteúdo da home: textos, links, experiências, tecnologias
+│   ├── data/projects.js               # Conteúdo da página de Projetos
 │   ├── hooks/                         # useTheme, useReveal, useActiveSection, useScrollOnNavigate
 │   ├── pages/                         # HomePage, ProjectsPage, DesignerPage, ResearchPage
 │   ├── styles/                        # tokens.css (cores/temas), base.css, utilities.css
