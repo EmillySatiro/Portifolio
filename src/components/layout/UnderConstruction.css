@@ -1,69 +1,70 @@
 .building {
   position: relative;
   overflow: hidden;
-  min-height: 100vh;
+  min-height: 100svh;
   display: flex;
   align-items: center;
-  padding: calc(var(--topbar-h) + 48px) 0 72px;
+  padding: calc(var(--topbar-h) + 48px) 0 88px;
+  background: radial-gradient(60% 50% at 85% 30%, rgba(123, 63, 196, 0.14), transparent 70%);
+}
+
+.building__blur {
+  right: -4%;
+  top: 50%;
+  translate: 0 -50%;
+  font-size: clamp(7rem, 24vw, 21rem);
 }
 
 .building__inner {
   position: relative;
   display: grid;
+  gap: 2.5rem;
+}
+
+.building__copy {
+  display: grid;
   justify-items: start;
-  gap: 1.5rem;
-}
-
-.building__blur {
-  position: absolute;
-  right: -4%;
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: clamp(6rem, 24vw, 21rem);
-  opacity: 0.85;
-}
-
-.building__badge,
-.building__heading,
-.building__text,
-.building__actions {
-  position: relative;
+  gap: 1.3rem;
+  max-width: 760px;
 }
 
 .building__title {
-  font-size: clamp(3.6rem, 11vw, 9.5rem);
-  animation: building-rise 1s var(--ease-out) both;
-}
-
-.building__heading {
-  display: inline-block;
-}
-
-.building__x {
-  width: clamp(54px, 8vw, 110px);
-  right: clamp(-90px, -7vw, -40px);
-  top: -14%;
+  font-size: clamp(3.4rem, 9vw, 7.5rem);
+  animation: building-rise 0.9s var(--ease-out) both;
 }
 
 .building__text {
-  max-width: 48ch;
-  font-size: 1.05rem;
+  max-width: 50ch;
+  font-size: 1.1rem;
+  color: var(--muted);
 }
 
 .building__actions {
   display: flex;
   flex-wrap: wrap;
-  align-items: center;
-  gap: 1.25rem 2.5rem;
-  margin-top: 1rem;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+}
+
+/* Barra de "carregando" em blocos */
+.building__progress {
+  display: flex;
+  gap: 6px;
+}
+
+.building__progress span {
+  width: 22px;
+  height: 22px;
+  background: var(--accent-soft);
+  animation: building-load 2.4s steps(1, end) infinite;
+  animation-delay: calc(var(--i) * 0.15s);
 }
 
 .building__bat {
   position: absolute;
-  right: 8%;
-  bottom: -40px;
+  right: 6%;
+  bottom: -20px;
   width: clamp(110px, 14vw, 190px);
-  opacity: 0.9;
   animation: building-float 4s ease-in-out infinite alternate;
 }
 
@@ -71,6 +72,17 @@
   from {
     opacity: 0;
     transform: translateY(40px);
+  }
+}
+
+@keyframes building-load {
+  0%,
+  45% {
+    background: var(--brand);
+  }
+  50%,
+  100% {
+    background: var(--accent-soft);
   }
 }
 
@@ -86,5 +98,10 @@
     right: auto;
     bottom: auto;
     justify-self: end;
+  }
+
+  .building__progress span {
+    width: 16px;
+    height: 16px;
   }
 }

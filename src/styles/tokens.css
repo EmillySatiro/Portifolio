@@ -6,34 +6,43 @@
 
   --container: 1240px;
   --gutter: clamp(16px, 4vw, 40px);
-  --topbar-h: 56px;
+  --topbar-h: 68px;
+  --radius: 14px;
+  --radius-sm: 10px;
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
 
-  /* Tema claro (padrão): papel + tinta + azul elétrico */
-  --paper: #efede8;
-  --paper-deep: #e4e1da;
-  --ink: #0c0c0e;
-  --muted: #8d8c90;
-  --line: rgba(12, 12, 14, 0.14);
-  --blue: #1f3dff;
-  --blue-ink: #1530d6;
-  --blue-glow: rgba(31, 61, 255, 0.85);
-  --noise-opacity: 0.09;
-  --photo-filter: none;
+  /* Azul índigo do cabelo da ilustração (fixo nos dois temas) */
+  --brand: #414575;
+  --brand-strong: #34386a;
+  --brand-deep: #23264d;
+  --violet: #7b3fc4;
+  --sky: #8ad7eb;
+  --on-brand: #ffffff;
+
+  /* Tema claro */
+  --bg: #f4f2ee;
+  --bg-alt: #ebe8e2;
+  --surface: #ffffff;
+  --ink: #15162e;
+  --muted: #62647c;
+  --line: rgba(21, 22, 46, 0.12);
+  --accent: #414575;
+  --accent-soft: rgba(65, 69, 117, 0.1);
+  --field: #f7f6f3;
+  --shadow: 0 18px 40px -18px rgba(21, 22, 46, 0.28);
   color-scheme: light;
 }
 
-/* Tema escuro: papel queimado + tinta clara */
 :root[data-theme='dark'] {
-  --paper: #0e0e11;
-  --paper-deep: #17171b;
-  --ink: #f1efe9;
-  --muted: #8b8a93;
-  --line: rgba(241, 239, 233, 0.14);
-  --blue: #4d6bff;
-  --blue-ink: #7e94ff;
-  --blue-glow: rgba(77, 107, 255, 0.8);
-  --noise-opacity: 0.06;
-  --photo-filter: brightness(0.92) contrast(1.05);
+  --bg: #0e0f1d;
+  --bg-alt: #141629;
+  --surface: #1a1c33;
+  --ink: #ecebf5;
+  --muted: #9fa1bd;
+  --line: rgba(236, 235, 245, 0.12);
+  --accent: #9ba2ec;
+  --accent-soft: rgba(155, 162, 236, 0.14);
+  --field: #12142a;
+  --shadow: 0 18px 40px -18px rgba(0, 0, 0, 0.7);
   color-scheme: dark;
 }

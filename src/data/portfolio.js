@@ -1,18 +1,20 @@
 // Conteúdo do portfólio. Edite aqui para atualizar textos, links e experiências.
 
 export const profile = {
+  name: 'Emílly Sátiro',
   firstName: 'Emílly',
   lastName: 'Sátiro',
   fullName: 'Clara Emílly Sousa Sátiro',
-  location: 'Picos · PI',
   year: '2026',
 }
 
-export const photo = {
-  src: '/images/foto-1200.webp',
-  srcSet: '/images/foto-640.webp 640w, /images/foto-1200.webp 1200w',
-  width: 1200,
-  height: 882,
+// Arte em pixel art usada no topo da página (fundo transparente).
+export const avatar = {
+  src: '/images/avatar-900.webp',
+  srcSet: '/images/avatar-480.webp 480w, /images/avatar-900.webp 900w',
+  width: 900,
+  height: 1051,
+  alt: 'Ilustração em pixel art de Emílly Sátiro, de óculos e cabelo azul',
 }
 
 export const navItems = [
@@ -35,24 +37,33 @@ export const roles = [
 
 export const focusAreas = ['Full Stack Development', 'Computer Vision', 'Machine Learning', 'Software Developer']
 
+export const aboutFacts = [
+  { icon: 'user', label: 'Nome', value: 'Clara Emílly Sousa Sátiro' },
+  { icon: 'graduation', label: 'Formação', value: 'Sistemas de Informação · UFPI' },
+  { icon: 'pin', label: 'Local', value: 'Picos · PI' },
+]
+
 export const socials = [
-  { name: 'GitHub', url: 'https://github.com/EmillySatiro' },
-  { name: 'LinkedIn', url: 'https://www.linkedin.com/in/emilly-s%C3%A1tiro-94912a369/' },
+  { name: 'GitHub', icon: 'github', url: 'https://github.com/EmillySatiro' },
+  { name: 'LinkedIn', icon: 'linkedin', url: 'https://www.linkedin.com/in/emilly-s%C3%A1tiro-94912a369/' },
 ]
 
 export const contactMethods = [
   {
     title: 'Email',
+    icon: 'mail',
     detail: 'sousasatiroclaraemilly@gmail.com',
     link: 'mailto:sousasatiroclaraemilly@gmail.com',
   },
   {
     title: 'LinkedIn',
+    icon: 'linkedin',
     detail: 'linkedin.com/in/emilly-sátiro',
     link: 'https://www.linkedin.com/in/emilly-s%C3%A1tiro-94912a369/',
   },
   {
     title: 'GitHub',
+    icon: 'github',
     detail: 'github.com/EmillySatiro',
     link: 'https://github.com/EmillySatiro',
   },
@@ -60,45 +71,35 @@ export const contactMethods = [
 
 export const formspreeEndpoint = 'https://formspree.io/f/mpwjkpen'
 
+// Categorias de tecnologias (os filtros da seção "Tecnologias").
 export const techCategories = [
-  {
-    name: 'Todas',
-    techs: [
-      'React',
-      'Vue.js',
-      'TypeScript',
-      'JavaScript',
-      'Python',
-      'Node.js',
-      'FastAPI',
-      'Flask',
-      'PostgreSQL',
-      'TailwindCSS',
-      'Docker',
-      'OpenCV',
-      'PyTorch',
-      'Git & GitHub',
-      'Quasar Framework',
-      'HTML5 / CSS3',
-      'Figma',
-    ],
-  },
-  {
-    name: 'Front-end & UI',
-    techs: ['React', 'Vue.js', 'TypeScript', 'JavaScript', 'TailwindCSS', 'Quasar Framework', 'HTML5 / CSS3', 'Figma'],
-  },
-  {
-    name: 'Back-end & DB',
-    techs: ['Node.js', 'Python', 'FastAPI', 'Flask', 'PostgreSQL', 'Docker'],
-  },
-  {
-    name: 'IA & Visão Computacional',
-    techs: ['OpenCV', 'PyTorch', 'Deep Learning (CNNs)', 'Processamento de Imagens'],
-  },
-  {
-    name: 'Ferramentas & DevOps',
-    techs: ['Git & GitHub', 'Docker', 'Figma'],
-  },
+  { id: 'front', name: 'Front-end & UI' },
+  { id: 'back', name: 'Back-end & DB' },
+  { id: 'ai', name: 'IA & Visão Computacional' },
+  { id: 'tools', name: 'Ferramentas & DevOps' },
+]
+
+// Cada tecnologia vira um "elemento" da tabela: símbolo de 2 letras + categorias.
+export const technologies = [
+  { name: 'React', symbol: 'Re', categories: ['front'] },
+  { name: 'Vue.js', symbol: 'Vu', categories: ['front'] },
+  { name: 'TypeScript', symbol: 'Ts', categories: ['front'] },
+  { name: 'JavaScript', symbol: 'Js', categories: ['front'] },
+  { name: 'TailwindCSS', symbol: 'Tw', categories: ['front'] },
+  { name: 'Quasar Framework', symbol: 'Qs', categories: ['front'] },
+  { name: 'HTML5 / CSS3', symbol: 'Hc', categories: ['front'] },
+  { name: 'Figma', symbol: 'Fg', categories: ['front', 'tools'] },
+  { name: 'Python', symbol: 'Py', categories: ['back'] },
+  { name: 'Node.js', symbol: 'No', categories: ['back'] },
+  { name: 'FastAPI', symbol: 'Fa', categories: ['back'] },
+  { name: 'Flask', symbol: 'Fl', categories: ['back'] },
+  { name: 'PostgreSQL', symbol: 'Pg', categories: ['back'] },
+  { name: 'Docker', symbol: 'Dk', categories: ['back', 'tools'] },
+  { name: 'OpenCV', symbol: 'Cv', categories: ['ai'] },
+  { name: 'PyTorch', symbol: 'Pt', categories: ['ai'] },
+  { name: 'Deep Learning (CNNs)', symbol: 'Dl', categories: ['ai'] },
+  { name: 'Processamento de Imagens', symbol: 'Pi', categories: ['ai'] },
+  { name: 'Git & GitHub', symbol: 'Gh', categories: ['tools'] },
 ]
 
 export const experiences = [
@@ -121,14 +122,16 @@ export const openForHire = {
 
 export const cvFiles = [
   {
-    label: 'Versão em Português',
+    label: 'Português',
     detail: 'PDF · PT-BR',
+    flag: '🇧🇷',
     href: '/Curriculo_formatado_PT.pdf',
     download: 'Curriculo_Emilly_Satiro_PT.pdf',
   },
   {
-    label: 'English Version',
+    label: 'English',
     detail: 'PDF · EN-US',
+    flag: '🇺🇸',
     href: '/Curriculo_formatado_ingles.pdf',
     download: 'Resume_Emilly_Satiro_EN.pdf',
   },

@@ -1,76 +1,83 @@
 import { useEffect, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
-import { navItems } from '../../data/portfolio'
+import { navItems, profile } from '../../data/portfolio'
 import { useActiveSection } from '../../hooks/useActiveSection'
-import { useScrollState } from '../../hooks/useScrollState'
 import { useTheme } from '../../hooks/useTheme'
+import Icon from '../ui/Icon'
 import ThemeToggle from '../ui/ThemeToggle'
-import MenuOverlay from './MenuOverlay'
 import './Topbar.css'
 
-const HOME_SECTIONS = ['home', 'about', 'curriculum', 'contact']
+const HOME_SECTIONS = ['home', 'about', 'skills', 'curriculum', 'contact']
+// "Tecnologias" faz parte de "Sobre" no menu
+const SECTION_TO_NAV = { skills: 'about' }
 
-// Nome da seção/página atual mostrado no centro da barra ("Nº 02 — Sobre").
-function useCurrentLabel(pathname, activeSection) {
-  const item =
-    pathname === '/'
-      ? navItems.find((nav) => nav.id === activeSection)
-      : navItems.find((nav) => nav.to === pathname)
-  if (!item) return null
-  const number = String(navItems.indexOf(item) + 1).padStart(2, '0')
-  return `Nº ${number} — ${item.name}`
+function useScrolled(threshold = 8) {
+  const [scrolled, setScrolled] = useState(false)
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > threshold)
+    onScroll()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [threshold])
+  return scrolled
 }
 
 export default function Topbar() {
-  const { pathname } = useLocation()
+  const { pathname, hash } = useLocation()
   const { theme, toggleTheme } = useTheme()
-  const { scrolled, goingDown } = useScrollState()
+  const scrolled = useScrolled()
   const [menuOpen, setMenuOpen] = useState(false)
-  const activeSection = useActiveSection(HOME_SECTIONS, pathname === '/')
-  const label = useCurrentLabel(pathname, activeSection)
+  const section = useActiveSection(HOME_SECTIONS, pathname === '/')
+  const activeHomeId = SECTION_TO_NAV[section] || section
 
-  // Fecha o menu ao trocar de página
-  useEffect(() => setMenuOpen(false), [pathname])
+  // Fecha o menu do celular ao navegar
+  useEffect(() => setMenuOpen(false), [pathname, hash])
 
-  const classes = ['topbar']
-  if (scrolled || pathname !== '/') classes.push('is-solid')
-  if (goingDown && !menuOpen) classes.push('is-hidden')
-  if (menuOpen) classes.push('is-menu-open')
+  const isActive = (item) => {
+    const [path] = item.to.split('#')
+    if (pathname !== '/') return item.to === pathname
+    return (path || '/') === '/' && item.id === activeHomeId
+  }
 
   return (
-    <>
-      <header className={classes.join(' ')}>
-        <div className="container topbar__inner">
-          <Link to="/#home" className="topbar__mark" aria-label="Emílly Sátiro — início">
-            E<span>/</span>S
-          </Link>
+    <header className={`topbar${scrolled || menuOpen ? ' is-scrolled' : ''}`}>
+      <div className="container topbar__inner">
+        <Link to="/#home" className="topbar__brand">
+          <span className="topbar__pixel" aria-hidden="true" />
+          {profile.name}
+        </Link>
 
-          {label && (
-            <span className="topbar__label" aria-live="polite">
-              {label}
-            </span>
-          )}
+        <nav id="topbar-nav" className={`topbar__nav${menuOpen ? ' is-open' : ''}`} aria-label="Navegação principal">
+          <ul>
+            {navItems.map((item, index) => (
+              <li key={item.id} style={{ '--i': index }}>
+                <Link
+                  to={item.to}
+                  className={`topbar__link${isActive(item) ? ' is-active' : ''}`}
+                  aria-current={isActive(item) ? 'page' : undefined}
+                  onClick={() => setMenuOpen(false)}
+                >
+                  {item.name}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </nav>
 
-          <div className="topbar__actions">
-            <ThemeToggle theme={theme} onToggle={toggleTheme} />
-            <button
-              type="button"
-              className="topbar__menu-btn"
-              aria-expanded={menuOpen}
-              aria-controls="site-menu"
-              onClick={() => setMenuOpen((open) => !open)}
-            >
-              <span>{menuOpen ? 'Fechar' : 'Menu'}</span>
-              <span className="topbar__burger" aria-hidden="true">
-                <i />
-                <i />
-              </span>
-            </button>
-          </div>
+        <div className="topbar__actions">
+          <ThemeToggle theme={theme} onToggle={toggleTheme} />
+          <button
+            type="button"
+            className="topbar__burger"
+            aria-expanded={menuOpen}
+            aria-controls="topbar-nav"
+            aria-label={menuOpen ? 'Fechar menu' : 'Abrir menu'}
+            onClick={() => setMenuOpen((open) => !open)}
+          >
+            <Icon name={menuOpen ? 'close' : 'menu'} size={20} />
+          </button>
         </div>
-      </header>
-
-      <MenuOverlay open={menuOpen} onClose={() => setMenuOpen(false)} />
-    </>
+      </div>
+    </header>
   )
 }
