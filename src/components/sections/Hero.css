@@ -68,14 +68,10 @@
 }
 
 .hero__role {
-  min-height: 2.4em;
-  font-size: clamp(1.15rem, 2vw, 1.5rem);
-  font-weight: 500;
+  min-height: 1.5em;
+  font-size: clamp(1.2rem, 2.2vw, 1.65rem);
+  color: var(--accent);
   animation: hero-in 0.9s var(--ease-out) 0.25s both;
-}
-
-.hero__role-label {
-  color: var(--muted);
 }
 
 .hero__role-text {

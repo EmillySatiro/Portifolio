@@ -1,4 +1,5 @@
 import { profile, socials } from '../../data/portfolio'
+import BatLogo from '../ui/BatLogo'
 import Icon from '../ui/Icon'
 import './Footer.css'
 
@@ -7,7 +8,7 @@ export default function Footer() {
     <footer className="footer pixel-edge">
       <div className="container footer__inner">
         <div className="footer__brand">
-          <span className="footer__pixel" aria-hidden="true" />
+          <BatLogo size={34} className="footer__logo" />
           <span className="display">{profile.name}</span>
         </div>
 

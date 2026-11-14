@@ -8,10 +8,10 @@ Portfólio profissional de alta performance e experiência visual imersiva, dese
 
 - **Ilustração em pixel art** no topo, com efeitos: aparece "pixelando" ao carregar (e de novo ao passar o mouse),
   inclina em 3D seguindo o ponteiro, flutua e tem brilhos em pixel piscando.
-- **Barra superior fixa** com o nome, os links (com indicador da seção atual) e o botão de tema; no celular vira um menu.
+- **Barra superior fixa** com o logo de morcego em pixel art, o nome, os links (com indicador da seção atual) e o botão de tema; no celular vira um menu.
 - **Temas claro e escuro**, salvos no navegador (na primeira visita segue o tema do sistema).
 - **Seções com fundos diferentes** e bordas "pixeladas" entre elas; palavras gigantes desfocadas ao fundo com parallax na rolagem.
-- **Tecnologias** como uma tabela periódica filtrável, **currículo** com destaque para download e linha do tempo,
+- **Tecnologias** como cartas colecionáveis (logo, tipo e descrição) com brilho holográfico, **currículo** com destaque para download e linha do tempo,
   e **contato** com canais copiáveis e formulário (Formspree).
 - Animações feitas com CSS e IntersectionObserver, sem bibliotecas. Respeitam `prefers-reduced-motion`.
 
@@ -23,7 +23,7 @@ Portfólio profissional de alta performance e experiência visual imersiva, dese
 
 ## ⚡ Desempenho
 
-- Dependências só `react`, `react-dom` e `react-router-dom`; ícones em SVG embutido.
+- Dependências só `react`, `react-dom`, `react-router-dom` e `simple-icons` (logos das tecnologias; só os usados entram no build). Ícones em SVG embutido.
 - Ilustração em WebP com fundo transparente, em duas larguras (480 px e 900 px).
 - Páginas Projetos, Designer e Pesquisa carregam sob demanda (`React.lazy`).
 
@@ -84,7 +84,7 @@ docker-compose down
 ```text
 .
 ├── public/
-│   ├── bat.svg                        # Mascote morcego (favicon, confirmação de envio, páginas em construção)
+│   ├── bat.svg                        # Favicon: morcego em pixel art
 │   ├── images/avatar-480.webp         # Ilustração (celular)
 │   ├── images/avatar-900.webp         # Ilustração (desktop)
 │   ├── images/og.jpg                  # Imagem de compartilhamento (WhatsApp, LinkedIn…)
@@ -93,7 +93,7 @@ docker-compose down
 │   ├── components/
 │   │   ├── layout/                    # Topbar, Footer, UnderConstruction
 │   │   ├── sections/                  # Hero, About, Skills, Curriculum, Contact, SentModal
-│   │   └── ui/                        # PixelAvatar, Icon, ThemeToggle
+│   │   └── ui/                        # PixelAvatar, BatLogo, TechLogo, Icon, ThemeToggle
 │   ├── data/portfolio.js              # Todo o conteúdo: textos, links, experiências, tecnologias
 │   ├── hooks/                         # useTheme, useReveal, useActiveSection, useScrollOnNavigate
 │   ├── pages/                         # HomePage, ProjectsPage, DesignerPage, ResearchPage

@@ -6,8 +6,8 @@
 }
 
 :root[data-theme='dark'] .footer {
-  --edge-color: #181a3a;
-  background: #181a3a;
+  --edge-color: #262a66;
+  background: #262a66;
 }
 
 .footer__inner {
@@ -25,11 +25,9 @@
   font-size: 1.5rem;
 }
 
-.footer__pixel {
-  width: 12px;
-  height: 12px;
-  background: var(--sky);
-  box-shadow: 6px 6px 0 var(--violet);
+.footer__logo {
+  color: #fff;
+  --bat-eyes: var(--violet);
 }
 
 .footer__copy {
