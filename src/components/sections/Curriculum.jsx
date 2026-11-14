@@ -81,9 +81,9 @@ export default function Curriculum() {
                 <Link to="/projetos" className="btn btn--light">
                   Ver meus projetos <Icon name="arrowRight" className="icon-arrow" />
                 </Link>
-                <a href="#contact" className="btn timeline__contact">
+                <Link to="/#contact" className="btn timeline__contact">
                   Falar comigo <Icon name="mail" />
-                </a>
+                </Link>
               </div>
             </article>
           </li>

@@ -129,5 +129,35 @@ export const events = [
   },
 ]
 
+// Linha do tempo da trajetória acadêmica (marcos da pesquisa + eventos), em ordem cronológica.
+// kind: 'research' (marco da pesquisa) | 'event' (evento)
+export const timeline = [
+  {
+    year: '2024',
+    date: 'out. 2024',
+    kind: 'research',
+    title: 'Início da Iniciação Científica no PAVIV',
+    text: 'Começo da pesquisa em visão computacional e deep learning na UFPI, com foco na classificação de macrófagos infectados por Leishmania Visceral Canina em imagens de medula óssea.',
+  },
+  {
+    year: '2025',
+    date: '2025',
+    kind: 'research',
+    title: 'Primeiras publicações',
+    text: 'Três trabalhos no Simpósio Brasileiro de Computação Aplicada à Saúde (SBCAS 2025) e um artigo na Revista de Sistemas e Computação.',
+    link: { label: 'Ver publicações', target: 'publicacoes' },
+  },
+  ...[...events].reverse().map((event) => ({
+    year: event.date.slice(-4),
+    date: event.date,
+    kind: 'event',
+    title: event.title,
+    role: event.role,
+    location: event.location,
+    text: event.description,
+    photos: event.photos,
+  })),
+]
+
 // Trecho destacado nos autores
 export const authorHighlight = /C?ES Sátiro/
