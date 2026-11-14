@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom'
 import PageHero from '../components/layout/PageHero'
 import Icon from '../components/ui/Icon'
 import TechLogo from '../components/ui/TechLogo'
-import { academicLinks, authorHighlight, publications, research, startup } from '../data/academic'
+import { academicLinks, authorHighlight, events, publications, research, startup } from '../data/academic'
 import './AcademicPage.css'
 
 function SectionTitle({ eyebrow, title }) {
@@ -89,6 +89,37 @@ function Publications() {
   )
 }
 
+function Events() {
+  return (
+    <div className="ac-events">
+      {events.map((event, index) => (
+        <article key={event.title} className="ac-event" data-reveal style={{ '--delay': `${index * 0.06}s` }}>
+          <div className="ac-event__top">
+            <span className="ac-event__date">{event.date}</span>
+            <span className="ac-event__role">
+              <Icon name="graduation" size={14} /> {event.role}
+            </span>
+          </div>
+          <h3 className="ac-event__title">{event.title}</h3>
+          {event.location && (
+            <p className="ac-event__place">
+              <Icon name="pin" size={15} /> {event.location}
+            </p>
+          )}
+          <p className="ac-event__desc">{event.description}</p>
+          {event.photos.length > 0 && (
+            <div className="ac-event__photos">
+              {event.photos.map((photo) => (
+                <img key={photo.src} src={photo.src} alt={photo.alt} loading="lazy" decoding="async" />
+              ))}
+            </div>
+          )}
+        </article>
+      ))}
+    </div>
+  )
+}
+
 export default function AcademicPage() {
   return (
     <main className="academic-page">
@@ -156,6 +187,14 @@ export default function AcademicPage() {
         <div className="container">
           <SectionTitle eyebrow="Produção científica" title="Publicações" />
           <Publications />
+        </div>
+      </section>
+
+      {/* ---------- Eventos ---------- */}
+      <section className="section ac-events-section pixel-edge">
+        <div className="container">
+          <SectionTitle eyebrow="Palestras, congressos e minicursos" title="Eventos" />
+          <Events />
         </div>
       </section>
     </main>
