@@ -65,12 +65,12 @@
 }
 
 .about__interests-list span:hover {
-  color: var(--violet);
+  color: var(--violet-text);
 }
 
 .about__interests-list i {
   font-style: normal;
-  color: var(--violet);
+  color: var(--violet-text);
 }
 
 /* ---------- Ficha: formação, mestrado e startup ---------- */
@@ -100,7 +100,7 @@
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: var(--tracking-label);
-  color: var(--violet);
+  color: var(--violet-text);
 }
 
 .about__fact dd {

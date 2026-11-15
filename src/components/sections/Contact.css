@@ -146,7 +146,7 @@
 .field textarea {
   width: 100%;
   padding: 0.9rem 1rem;
-  border: 1.5px solid var(--line);
+  border: 1.5px solid var(--line-strong);
   border-radius: var(--radius-sm);
   background: var(--field);
   font-size: var(--text-base);
@@ -157,7 +157,7 @@
 
 .field input:hover,
 .field textarea:hover {
-  border-color: color-mix(in srgb, var(--accent) 45%, var(--line));
+  border-color: var(--accent);
 }
 
 .field input:focus,
