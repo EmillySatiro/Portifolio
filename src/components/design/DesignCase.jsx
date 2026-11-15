@@ -29,7 +29,12 @@ function BrowserFrame({ screen, host }) {
         style={{ '--shift': `-${shift}px`, '--scroll-dur': `${Math.min(14, 2 + shift / 450)}s` }}
       >
         <img key={screen.src} src={screen.src} alt={screen.label} onLoad={measure} loading="lazy" decoding="async" />
-        {shift > 0 && <span className="dcase__hint">Passe o mouse para rolar a página</span>}
+        {shift > 0 && (
+          <span className="dcase__hint">
+            <span className="dcase__hint--mouse">Passe o mouse para rolar a página</span>
+            <span className="dcase__hint--touch">Toque para rolar a página</span>
+          </span>
+        )}
       </div>
     </figure>
   )
@@ -43,7 +48,7 @@ export default function DesignCase({ project, index }) {
   return (
     <article id={project.id} className={`dcase${index % 2 ? ' is-flipped' : ''}`}>
       <div className="dcase__text" data-reveal>
-        <span className="dcase__num display">{String(index + 1).padStart(2, '0')}</span>
+        <span className="dcase__num display" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
         <p className="dcase__type">{project.type}</p>
         <h2 className="dcase__title display">{project.title}</h2>
         <p className="dcase__desc">{project.description}</p>

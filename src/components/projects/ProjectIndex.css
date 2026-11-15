@@ -145,7 +145,7 @@
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: var(--tracking-label);
-  color: var(--violet);
+  color: var(--violet-text);
 }
 
 .pcase__did {

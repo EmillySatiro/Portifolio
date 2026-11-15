@@ -128,9 +128,9 @@
 }
 
 .btn--icon {
-  width: 48px;
+  width: var(--tap);
   padding: 0;
-  border-color: var(--line);
+  border-color: var(--line-strong);
 }
 
 .btn--icon:hover {
@@ -285,7 +285,6 @@
   line-height: 1;
   top: 0;
   color: inherit;
-  opacity: 0.7;
 }
 
 .tab::after {

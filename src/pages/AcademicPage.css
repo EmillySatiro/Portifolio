@@ -38,7 +38,7 @@
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.18em;
-  color: var(--violet);
+  color: var(--violet-text);
 }
 
 .ac-article__headline {
@@ -263,7 +263,7 @@
 }
 
 .ac-headline.is-active .ac-headline__meta {
-  color: var(--violet);
+  color: var(--violet-text);
 }
 
 .ac-headline.is-active .ac-headline__title {
