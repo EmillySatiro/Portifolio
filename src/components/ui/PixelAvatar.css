@@ -62,8 +62,9 @@
 
 .avatar__sticker {
   position: absolute;
-  left: -6%;
-  bottom: 16%;
+  /* No canto de cima, colado ao quadro da ilustração, "falando" com o rosto */
+  left: -7%;
+  top: 5%;
   padding: 0.55rem 0.95rem;
   border-radius: 8px;
   background: var(--surface);
@@ -122,6 +123,19 @@
   bottom: 3%;
   left: 34%;
   animation-delay: 0.3s;
+}
+
+/* Rabicho do balão apontando para a ilustração */
+.avatar__sticker::after {
+  content: '';
+  position: absolute;
+  right: 18px;
+  bottom: -8px;
+  width: 12px;
+  height: 12px;
+  background: inherit;
+  transform: rotate(45deg);
+  z-index: -1;
 }
 
 @keyframes avatar-float {

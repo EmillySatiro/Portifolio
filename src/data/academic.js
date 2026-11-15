@@ -26,7 +26,7 @@ export const startup = {
 
 // "Notícia" da pesquisa (fatos do SIUPI, das publicações e da startup)
 export const news = {
-  kicker: 'Notícia',
+  kicker: 'Pesquisa',
   date: 'nov. 2026',
   headline: 'Pesquisa sobre leishmaniose visceral canina encerra ciclo de dois anos na UFPI',
   lead: 'No SIUPI 2026, Emilly Sátiro apresentou os resultados da sua pesquisa de Iniciação Científica sobre classificação e contagem automática de leishmaniose visceral canina com aprendizado profundo. Foi a última apresentação de banner da sua graduação, encerrando dois anos de trabalho no PAVIV.',
@@ -129,35 +129,59 @@ export const events = [
   },
 ]
 
-// Linha do tempo da trajetória acadêmica (marcos da pesquisa + eventos), em ordem cronológica.
-// kind: 'research' (marco da pesquisa) | 'event' (evento)
-export const timeline = [
+// Notícias secundárias da página (textos só com fatos dos posts do LinkedIn, do currículo e das publicações).
+// photos (opcional): [{ src: '/images/academic/arquivo.webp', alt: '...' }]
+export const stories = [
   {
-    year: '2024',
-    date: 'out. 2024',
-    kind: 'research',
-    title: 'Início da Iniciação Científica no PAVIV',
-    text: 'Começo da pesquisa em visão computacional e deep learning na UFPI, com foco na classificação de macrófagos infectados por Leishmania Visceral Canina em imagens de medula óssea.',
+    kicker: 'Inovação',
+    date: '26 out. 2026',
+    place: 'Teresina, PI',
+    headline: 'Equipe conquista o 3º lugar no Desafio StartUFPI',
+    text: 'Na solenidade do Desafio StartUFPI, as equipes se encontraram com a Reitoria da UFPI para conhecer os próximos passos do programa. A equipe de Emilly ficou com o 3º lugar.',
+    eventTitle: 'Solenidade do Desafio StartUFPI',
   },
   {
-    year: '2025',
+    kicker: 'Empreendedorismo',
+    headline: 'Da pesquisa nasce a startup PathoVision',
+    text: 'A pesquisa em visão computacional aplicada ao diagnóstico de Leishmaniose deu origem à startup PathoVision, da qual Emilly faz parte.',
+    link: { label: '@pathovision_', url: 'https://www.instagram.com/pathovision_/' },
+  },
+  {
+    kicker: 'Palestra',
+    date: 'set. 2026',
+    place: 'UFPI',
+    headline: 'Prototipação de interfaces em pauta no GENIUS Hackathon',
+    text: 'No Health Hack Lab do GENIUS Hackathon 2026, Emilly apresentou a palestra "Prototipação de Interfaces e Integração de Soluções Tecnológicas", sobre transformar requisitos e necessidades reais em interfaces e protótipos para soluções digitais em saúde e desafios do SUS.',
+    eventTitle: 'GENIUS Hackathon 2026 · Health Hack Lab',
+  },
+  {
+    kicker: 'Evento',
+    date: 'set. 2026',
+    place: 'UFPI',
+    headline: 'SINFO 2026 tem organização e identidade visual da Juá',
+    text: 'No Simpósio de Sistemas de Informação da UFPI, Emilly atuou na equipe organizadora pela Juá Soluções em Tecnologia e como designer dos elementos visuais, além de acompanhar apresentações de artigos, palestras e a Maratona de Programação.',
+    eventTitle: 'SINFO 2026',
+  },
+  {
+    kicker: 'Evento',
+    date: 'set. 2026',
+    place: 'UFPI',
+    headline: 'StartUFPI 2026 reúne inovação, tecnologia e pesquisa',
+    text: 'Encontro do ecossistema de inovação da UFPI, com discussões sobre empreendedorismo, tecnologia e pesquisa, novas ideias e troca de experiências.',
+    eventTitle: 'StartUFPI 2026',
+  },
+  {
+    kicker: 'Publicação',
     date: '2025',
-    kind: 'research',
-    title: 'Primeiras publicações',
-    text: 'Três trabalhos no Simpósio Brasileiro de Computação Aplicada à Saúde (SBCAS 2025) e um artigo na Revista de Sistemas e Computação.',
-    link: { label: 'Ver publicações', target: 'publicacoes' },
+    headline: 'Trabalhos sobre leishmaniose chegam ao SBCAS 2025',
+    text: 'Três trabalhos da equipe foram publicados no Simpósio Brasileiro de Computação Aplicada à Saúde, e um artigo saiu na Revista de Sistemas e Computação.',
+    link: { label: 'Ver artigos', target: 'artigos' },
   },
-  ...[...events].reverse().map((event) => ({
-    year: event.date.slice(-4),
-    date: event.date,
-    kind: 'event',
-    title: event.title,
-    role: event.role,
-    location: event.location,
-    text: event.description,
-    photos: event.photos,
-  })),
-]
+].map((story) => ({
+  ...story,
+  // Reaproveita as fotos do evento correspondente, quando houver
+  photos: story.eventTitle ? events.find((event) => event.title === story.eventTitle)?.photos ?? [] : [],
+}))
 
 // Trecho destacado nos autores
 export const authorHighlight = /C?ES Sátiro/
