@@ -116,9 +116,6 @@ export default function Skills() {
 
   return (
     <section id="skills" className="section skills pixel-edge">
-      <span className="blur-word skills__blur parallax" aria-hidden="true">
-        Stack
-      </span>
 
       <div className="container">
         <header className="section-head">

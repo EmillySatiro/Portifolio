@@ -1,8 +1,8 @@
 .theme-toggle {
   display: grid;
   place-items: center;
-  width: 42px;
-  height: 42px;
+  width: var(--tap);
+  height: var(--tap);
   border-radius: 50%;
   border: 1.5px solid var(--line);
   transition: border-color 0.25s ease, color 0.25s ease, background-color 0.25s ease;
