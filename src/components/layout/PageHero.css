@@ -4,7 +4,7 @@
   overflow: hidden;
   padding: calc(var(--topbar-h) + var(--space-8)) 0 var(--space-8);
   background: radial-gradient(55% 60% at 85% 20%, rgba(123, 63, 196, 0.14), transparent 70%),
-    radial-gradient(50% 50% at 5% 100%, rgba(65, 69, 117, 0.16), transparent 70%);
+    radial-gradient(45% 45% at 10% 55%, rgba(65, 69, 117, 0.14), transparent 70%);
 }
 
 .page-hero__blur {

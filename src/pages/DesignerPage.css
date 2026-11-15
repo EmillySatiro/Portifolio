@@ -1,72 +1,11 @@
-/* ---------- Índice ---------- */
-.dz-index {
-  padding-top: var(--space-8);
-  padding-bottom: var(--space-8);
-}
-
-.dz-index__lead {
-  max-width: 52ch;
-  margin-bottom: var(--space-6);
+.dz-lead {
+  max-width: 46ch;
   font-size: var(--text-lg);
+  line-height: 1.5;
   color: var(--muted);
 }
 
-.dz-index__list {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  column-gap: var(--space-7);
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  border-top: 2px solid var(--ink);
-}
-
-.dz-index__item {
-  display: grid;
-  grid-template-columns: 2.4rem 1fr auto;
-  align-items: baseline;
-  gap: var(--space-3);
-  width: 100%;
-  min-height: var(--tap);
-  padding: var(--space-4) 0;
-  border-bottom: 1px solid var(--line);
-  text-align: left;
-}
-
-.dz-index__num {
-  font-family: var(--font-display);
-  color: var(--violet);
-}
-
-.dz-index__name {
-  font-family: var(--font-display);
-  font-size: var(--display-sm);
-  line-height: var(--leading-tight);
-  transition: transform var(--dur) var(--ease-out), color var(--dur-fast) ease;
-}
-
-.dz-index__type {
-  font-size: var(--text-sm);
-  color: var(--muted);
-  text-align: right;
-}
-
-.dz-index__item:hover .dz-index__name {
-  color: var(--accent);
-  transform: translateX(8px);
-}
-
-@media (max-width: 760px) {
-  .dz-index__list {
-    grid-template-columns: 1fr;
-  }
-
-  .dz-index__item {
-    grid-template-columns: 2.4rem 1fr;
-  }
-
-  .dz-index__type {
-    grid-column: 2;
-    text-align: left;
-  }
+/* O primeiro estudo de caso não precisa do fio de cima: o topo já separa */
+.designer-page .dcase:first-child {
+  border-top: 0;
 }

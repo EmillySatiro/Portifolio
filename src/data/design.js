@@ -61,6 +61,7 @@ export const designProjects = [
     id: 'ecomadeira',
     title: 'EcoMadeira',
     type: 'UI/UX · Ferramenta',
+    liveUrl: 'https://ecomadeiraweb.com/',
     description:
       'Planilha para engenheiros, arquitetos e projetistas calcularem e dimensionarem elementos estruturais de madeira com segurança e precisão, eliminando processos manuais demorados e gerando relatórios completos de forma fácil e intuitiva.',
     screens: [

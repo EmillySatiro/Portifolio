@@ -34,6 +34,10 @@ export default function ProjectsPage() {
             <h2 className="section-title display" data-reveal>
               Selecionados
             </h2>
+            <p className="section-lead" data-reveal style={{ '--delay': '0.08s' }}>
+              Sistemas web, sistemas distribuídos, mobile e inteligência artificial: o que construí, como fiz e com
+              quais tecnologias.
+            </p>
           </header>
 
           <div className="tabs pj-tabs" role="group" aria-label="Filtrar projetos" data-reveal>
