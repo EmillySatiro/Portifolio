@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import FeaturedProject from '../components/projects/FeaturedProject'
 import ProjectArchive from '../components/projects/ProjectArchive'
-import ProjectCard from '../components/projects/ProjectCard'
+import ProjectIndex from '../components/projects/ProjectIndex'
 import PageHero from '../components/layout/PageHero'
 import Icon from '../components/ui/Icon'
 import { archive, featuredProject, githubProfile, projectCategories, projects } from '../data/projects'
@@ -27,7 +27,7 @@ export default function ProjectsPage() {
         </div>
       </section>
 
-      {/* ---------- Grade com filtros ---------- */}
+      {/* ---------- Índice com filtros ---------- */}
       <section className="section pj-grid-section pixel-edge">
         <div className="container">
           <header className="section-head">
@@ -36,33 +36,25 @@ export default function ProjectsPage() {
             </h2>
           </header>
 
-          <div className="pj-filters" role="group" aria-label="Filtrar projetos" data-reveal>
+          <div className="tabs pj-tabs" role="group" aria-label="Filtrar projetos" data-reveal>
             {filters.map((filter) => (
               <button
                 key={filter.id}
                 type="button"
+                className="tab"
                 data-cat={filter.id}
+                style={{ '--tab-color': 'var(--cat)' }}
                 aria-pressed={active === filter.id}
-                className={`pj-filter${active === filter.id ? ' is-active' : ''}`}
                 onClick={() => setActive(filter.id)}
               >
                 {filter.name}
-                <span>{countFor(filter.id)}</span>
+                <sup>{countFor(filter.id)}</sup>
               </button>
             ))}
           </div>
 
-          {/* key: ao trocar o filtro, os cartões entram de novo em sequência */}
-          <div key={active} className="pj-grid">
-            {visible.map((project, index) => (
-              <ProjectCard
-                key={project.name}
-                project={project}
-                categoryName={CATEGORY_NAMES[project.category]}
-                order={index}
-              />
-            ))}
-          </div>
+          {/* key: ao trocar o filtro, as linhas entram de novo em sequência */}
+          <ProjectIndex key={active} projects={visible} categoryNames={CATEGORY_NAMES} />
         </div>
       </section>
 

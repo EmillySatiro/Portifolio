@@ -3,91 +3,72 @@ import { cvFiles, experiences, openForHire } from '../../data/portfolio'
 import Icon from '../ui/Icon'
 import './Curriculum.css'
 
+// Currículo como lista editorial: uma linha por experiência; a descrição abre no hover/foco.
 export default function Curriculum() {
   return (
     <section id="curriculum" className="section curriculum pixel-edge">
       <div className="container">
-        <header className="section-head">
-          <p className="eyebrow" data-reveal>
-            Currículo
-          </p>
-          <h2 className="section-title display" data-reveal style={{ '--delay': '0.08s' }}>
-            Trajetória e experiências
-          </h2>
-          <p className="section-lead" data-reveal style={{ '--delay': '0.12s' }}>
-            Trajetória profissional, atuação acadêmica e experiências
-          </p>
-        </header>
+        <header className="cv-head">
+          <div className="cv-head__title">
+            <p className="eyebrow" data-reveal>
+              Currículo
+            </p>
+            <h2 className="section-title display" data-reveal style={{ '--delay': '0.08s' }}>
+              Trajetória
+            </h2>
+          </div>
 
-        {/* Destaque para baixar o currículo */}
-        <div className="cv-banner" data-reveal>
-          <div className="cv-banner__text">
-            <span className="cv-banner__icon" aria-hidden="true">
-              <Icon name="file" size={28} />
-            </span>
-            <div>
-              <h3 className="cv-banner__title display">Baixar currículo</h3>
-              <p>Versão completa em PDF, disponível em português e inglês.</p>
+          {/* Download em destaque, ao lado do título */}
+          <div className="cv-download" data-reveal style={{ '--delay': '0.12s' }}>
+            <p className="cv-download__label">Currículo completo em PDF</p>
+            <div className="cv-download__actions">
+              {cvFiles.map((file, i) => (
+                <a
+                  key={file.href}
+                  href={file.href}
+                  download={file.download}
+                  className={`btn ${i === 0 ? 'btn--primary' : 'btn--outline'}`}
+                >
+                  <Icon name="download" size={17} /> {file.label}
+                </a>
+              ))}
             </div>
           </div>
-          <div className="cv-banner__actions">
-            {cvFiles.map((file) => (
-              <a key={file.href} href={file.href} download={file.download} className="cv-file">
-                <span className="cv-file__flag" aria-hidden="true">
-                  {file.flag}
-                </span>
-                <span className="cv-file__info">
-                  <span className="cv-file__label">{file.label}</span>
-                  <span className="cv-file__detail">{file.detail}</span>
-                </span>
-                <Icon name="download" size={20} className="cv-file__icon" />
-              </a>
-            ))}
-          </div>
-        </div>
+        </header>
 
-        {/* Linha do tempo */}
-        <ol className="timeline">
+        <ol className="cv-list">
           {experiences.map((item, index) => (
-            <li
-              key={`${item.company}-${item.title}`}
-              className="timeline__item"
-              data-reveal
-              style={{ '--delay': `${(index % 2) * 0.08}s` }}
-            >
-              <span className="timeline__dot" aria-hidden="true" />
-              {/* tabIndex: no celular/teclado, tocar ou focar também mostra a descrição */}
-              <article className="timeline__card is-expandable" tabIndex={0}>
-                <span className="timeline__period">{item.period}</span>
-                <h3 className="timeline__role">{item.title}</h3>
-                <p className="timeline__company">{item.company}</p>
-                <div className="timeline__more">
+            <li key={`${item.company}-${item.title}`} className="cv-row" tabIndex={0} data-reveal>
+              <span className="cv-row__num">{String(index + 1).padStart(2, '0')}</span>
+              <span className="cv-row__period">{item.period}</span>
+              <div className="cv-row__main">
+                <h3 className="cv-row__role display">{item.title}</h3>
+                <p className="cv-row__company">{item.company}</p>
+                <div className="cv-row__more">
                   <p>{item.description}</p>
                 </div>
-              </article>
+              </div>
+              <span className="cv-row__toggle" aria-hidden="true" />
             </li>
           ))}
-
-          <li className="timeline__item timeline__item--hire" data-reveal>
-            <span className="timeline__dot" aria-hidden="true" />
-            <article className="timeline__card">
-              <span className="timeline__period">{openForHire.period}</span>
-              <h3 className="timeline__role">{openForHire.title}</h3>
-              <p className="timeline__company">{openForHire.company}</p>
-              <p className="timeline__hire">
-                <strong>{openForHire.status}</strong> {openForHire.message}
-              </p>
-              <div className="timeline__actions">
-                <Link to="/projetos" className="btn btn--light">
-                  Ver meus projetos <Icon name="arrowRight" className="icon-arrow" />
-                </Link>
-                <Link to="/#contact" className="btn timeline__contact">
-                  Falar comigo <Icon name="mail" />
-                </Link>
-              </div>
-            </article>
-          </li>
         </ol>
+
+        {/* Fechamento: frase grande + chamadas, sem caixa */}
+        <div className="cv-close" data-reveal>
+          <p className="cv-close__status">
+            <span className="cv-close__pixel" aria-hidden="true" />
+            {openForHire.status.replace('!', '')}
+          </p>
+          <p className="cv-close__line display">{openForHire.message}</p>
+          <div className="cv-close__links">
+            <Link to="/#contact" className="cv-close__link">
+              Falar comigo <Icon name="arrowRight" size={18} />
+            </Link>
+            <Link to="/projetos" className="cv-close__link">
+              Ver projetos <Icon name="arrowRight" size={18} />
+            </Link>
+          </div>
+        </div>
       </div>
     </section>
   )

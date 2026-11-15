@@ -71,11 +71,8 @@
   display: grid;
   place-items: center;
   flex-shrink: 0;
-  width: 42px;
-  height: 42px;
-  border-radius: var(--radius-sm);
-  background: #fff;
-  color: var(--brand-deep);
+  width: 28px;
+  color: var(--sky);
 }
 
 .contact__channel-text {
@@ -116,18 +113,6 @@
   color: #fff;
 }
 
-/* Pixels decorativos no rodapé do painel */
-.contact__pixels {
-  position: absolute;
-  left: clamp(24px, 4vw, 40px);
-  bottom: 28px;
-  width: 10px;
-  height: 10px;
-  background: var(--sky);
-  box-shadow: 10px 0 0 var(--sky), 30px 0 0 var(--violet), 10px -10px 0 #fff, 50px -10px 0 var(--sky),
-    60px 0 0 var(--violet);
-  opacity: 0.8;
-}
 
 /* ---------- Formulário ---------- */
 .contact__form {
@@ -214,9 +199,6 @@
     grid-template-columns: 1fr;
   }
 
-  .contact__pixels {
-    display: none;
-  }
 
   .contact__submit {
     justify-self: stretch;
