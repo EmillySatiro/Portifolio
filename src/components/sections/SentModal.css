@@ -37,7 +37,7 @@
 }
 
 .sent-modal__close {
-  font-size: 1rem;
+  font-size: var(--text-base);
 }
 
 .sent-modal__title {
@@ -46,7 +46,7 @@
 }
 
 .sent-modal__hint {
-  font-size: 0.75rem;
+  font-size: var(--text-xs);
   color: var(--muted);
 }
 

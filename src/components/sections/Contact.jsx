@@ -53,9 +53,6 @@ export default function Contact() {
 
   return (
     <section id="contact" className="section contact pixel-edge">
-      <span className="blur-word contact__blur parallax" aria-hidden="true">
-        Contato
-      </span>
 
       <div className="container">
         <header className="section-head contact__head">

@@ -1,40 +1,45 @@
+/* Topo padrão das páginas internas (Projetos, Acadêmico) */
 .page-hero {
   position: relative;
   overflow: hidden;
-  padding: calc(var(--topbar-h) + clamp(48px, 7vw, 90px)) 0 clamp(56px, 7vw, 90px);
-  background: radial-gradient(55% 60% at 85% 20%, rgba(123, 63, 196, 0.16), transparent 70%),
-    radial-gradient(50% 50% at 5% 100%, rgba(65, 69, 117, 0.18), transparent 70%);
+  padding: calc(var(--topbar-h) + var(--space-8)) 0 var(--space-8);
+  background: radial-gradient(55% 60% at 85% 20%, rgba(123, 63, 196, 0.14), transparent 70%),
+    radial-gradient(50% 50% at 5% 100%, rgba(65, 69, 117, 0.16), transparent 70%);
 }
 
 .page-hero__blur {
   right: -3%;
-  top: 46%;
+  top: 50%;
   translate: 0 -50%;
+  --px-from: -4%;
+  --px-to: 4%;
+  --px-y: -50%;
   font-size: clamp(7rem, 23vw, 21rem);
-  opacity: 0.38;
+  opacity: 0.32;
 }
 
 .page-hero__inner {
   position: relative;
   display: grid;
-  gap: 1.6rem;
+  gap: var(--space-5);
 }
 
 .page-hero__title {
-  font-size: clamp(3.8rem, 10vw, 8.5rem);
-  animation: page-hero-rise 0.9s var(--ease-out) both;
+  font-size: var(--display-lg);
+  line-height: 0.95;
+  animation: page-hero-rise var(--dur-slow) var(--ease-out) both;
 }
 
 .page-hero__extra {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.75rem;
-  animation: page-hero-rise 0.9s var(--ease-out) 0.15s both;
+  gap: var(--space-3);
+  animation: page-hero-rise var(--dur-slow) var(--ease-out) 0.15s both;
 }
 
 @keyframes page-hero-rise {
   from {
     opacity: 0;
-    transform: translateY(30px);
+    transform: translateY(24px);
   }
 }

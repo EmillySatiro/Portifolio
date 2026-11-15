@@ -29,13 +29,13 @@
 }
 
 .building__title {
-  font-size: clamp(3.4rem, 9vw, 7.5rem);
+  font-size: var(--display-lg);
   animation: building-rise 0.9s var(--ease-out) both;
 }
 
 .building__text {
   max-width: 50ch;
-  font-size: 1.1rem;
+  font-size: var(--text-md);
   color: var(--muted);
 }
 

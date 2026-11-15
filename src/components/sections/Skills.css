@@ -36,13 +36,6 @@
   --cat: #ffffff;
 }
 
-.skills__blur {
-  right: -4%;
-  top: 4%;
-  font-size: clamp(8rem, 26vw, 24rem);
-  color: #6b72d6;
-  opacity: 0.35;
-}
 
 .skills__eyebrow {
   color: var(--sky);
@@ -65,13 +58,14 @@
 }
 
 .skills__filter {
+  min-height: var(--tap);
   display: inline-flex;
   align-items: center;
   gap: 0.55rem;
   padding: 0.6rem 1rem;
-  border-radius: 999px;
+  border-radius: var(--radius-pill);
   border: 1.5px solid rgba(255, 255, 255, 0.22);
-  font-size: 0.85rem;
+  font-size: var(--text-sm);
   font-weight: 600;
   color: rgba(255, 255, 255, 0.85);
   transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease;
@@ -103,9 +97,9 @@
 .skills__filter-count {
   min-width: 1.6em;
   padding: 0.05rem 0.35rem;
-  border-radius: 999px;
+  border-radius: var(--radius-pill);
   background: rgba(255, 255, 255, 0.14);
-  font-size: 0.72rem;
+  font-size: var(--text-xs);
   text-align: center;
 }
 
@@ -115,10 +109,10 @@
 
 .skills__shuffle {
   padding: 0.6rem 1.1rem;
-  border-radius: 999px;
+  border-radius: var(--radius-pill);
   background: var(--violet);
   color: #fff;
-  font-size: 0.85rem;
+  font-size: var(--text-sm);
   font-weight: 700;
   animation: skills-pop 0.4s var(--ease-out);
   transition: transform 0.3s var(--ease-out);
@@ -205,7 +199,7 @@
 }
 
 .deck__count {
-  font-size: 0.95rem;
+  font-size: var(--text-base);
   color: rgba(255, 255, 255, 0.8);
 }
 
@@ -219,7 +213,7 @@
 }
 
 .deck__hint {
-  font-size: 0.9rem;
+  font-size: var(--text-sm);
   color: rgba(255, 255, 255, 0.7);
 }
 
@@ -243,7 +237,7 @@
   position: relative;
   max-width: 190px;
   aspect-ratio: 63 / 90;
-  border-radius: 12px;
+  border-radius: var(--radius-sm);
   background: var(--cat);
   padding: 6px;
   color: #1b1c33;
@@ -272,7 +266,7 @@
   flex-direction: column;
   height: 100%;
   overflow: hidden;
-  border-radius: 7px;
+  border-radius: var(--radius-xs);
   background: linear-gradient(170deg, var(--cat-soft) 0%, #ffffff 60%);
 }
 

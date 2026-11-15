@@ -1,15 +1,72 @@
-/* Tokens de design: cores dos temas, fontes e medidas. */
+/*
+  Sistema de design do portfólio
+  ------------------------------
+  Identidade: editorial + pixel art. Manchetes condensadas (Anton), texto em Inter,
+  índigo do cabelo da ilustração como cor de marca, violeta como acento e a
+  "sombra pixel" (deslocada, sem desfoque) como assinatura.
+
+  Regras de uso
+  - Espaços: sempre da escala --space-* (base 4/8 px).
+  - Texto: --text-* para corpo e interface; --display-* só em manchetes (Anton).
+  - Cantos: --radius-xs (selos), --radius-sm (campos/ícones), --radius (cartões), --radius-lg (blocos grandes).
+  - Hover de cartões: sobe 4 px + --shadow-pixel. Duração --dur, curva --ease-out.
+  - Contraste mínimo AA: texto secundário usa --muted (≥ 4.5:1 nos dois temas).
+*/
 
 :root {
+  /* Fontes */
   --font-display: 'Anton', 'Impact', 'Arial Narrow', sans-serif;
   --font-body: 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
 
+  /* Escala de texto (corpo e interface) */
+  --text-xs: 0.75rem; /* 12 · rótulos, selos */
+  --text-sm: 0.875rem; /* 14 · metadados */
+  --text-base: 1rem; /* 16 · corpo */
+  --text-md: 1.125rem; /* 18 · corpo destacado */
+  --text-lg: 1.375rem; /* 22 · linha fina / lead */
+  --text-xl: 1.75rem; /* 28 · subtítulos */
+  --leading-tight: 1.05;
+  --leading-snug: 1.35;
+  --leading-body: 1.7;
+  --tracking-label: 0.18em;
+
+  /* Escala de manchetes (Anton) */
+  --display-sm: clamp(1.6rem, 2.4vw, 2rem); /* títulos de cartão */
+  --display-md: clamp(2.6rem, 5.4vw, 4.4rem); /* títulos de seção */
+  --display-lg: clamp(3.4rem, 8.5vw, 7.5rem); /* títulos de página */
+  --display-xl: clamp(4.2rem, 11vw, 10rem); /* nome no topo da home */
+
+  /* Espaços (base 4/8) */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+  --space-8: 64px;
+  --space-9: 96px;
+  --section-y: clamp(72px, 9vw, 128px);
+
+  /* Layout */
   --container: 1240px;
   --gutter: clamp(16px, 4vw, 40px);
   --topbar-h: 68px;
-  --radius: 14px;
+  --tap: 44px; /* alvo mínimo de toque */
+
+  /* Cantos */
+  --radius-xs: 6px;
   --radius-sm: 10px;
+  --radius: 14px;
+  --radius-lg: 20px;
+  --radius-pill: 999px;
+
+  /* Movimento */
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --dur-fast: 0.2s;
+  --dur: 0.4s;
+  --dur-slow: 0.8s;
+  --lift: -4px;
 
   /* Azul índigo do cabelo da ilustração (fixo nos dois temas) */
   --brand: #414575;
@@ -30,6 +87,9 @@
   --accent-soft: rgba(65, 69, 117, 0.1);
   --field: #f7f6f3;
   --shadow: 0 18px 40px -18px rgba(21, 22, 46, 0.28);
+  --shadow-pixel: 6px 6px 0 var(--violet);
+  --shadow-pixel-sm: 4px 4px 0 var(--violet);
+  --success: #2fb67c;
   color-scheme: light;
 }
 

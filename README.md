@@ -16,6 +16,14 @@ Portfólio profissional de alta performance e experiência visual imersiva, dese
   e **contato** com canais copiáveis e formulário (Formspree).
 - Animações feitas com CSS e IntersectionObserver, sem bibliotecas. Respeitam `prefers-reduced-motion`.
 
+## 🧩 Sistema de design
+
+Todas as decisões visuais saem de `src/styles/tokens.css` (documentado no topo do arquivo):
+escala de texto (`--text-*`) e de manchetes (`--display-*`), espaços em base 4/8 (`--space-*`),
+raios (`--radius-*`), sombras (incluindo a "sombra pixel" violeta), durações de animação e o alvo
+mínimo de toque (`--tap`, 44 px). Cartões seguem o mesmo hover (sobem 4 px + sombra pixel) e as
+páginas internas usam o mesmo topo (`PageHero`).
+
 ## 🎨 Identidade
 
 - **Fontes:** `Anton` (títulos) e `Inter` (textos), via Google Fonts.
