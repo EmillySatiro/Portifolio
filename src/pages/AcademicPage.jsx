@@ -1,6 +1,8 @@
+import { useEffect, useRef, useState } from 'react'
+import { useSearchParams } from 'react-router-dom'
 import PageHero from '../components/layout/PageHero'
 import Icon from '../components/ui/Icon'
-import { academicLinks, authorHighlight, news, publications, research, startup, timeline } from '../data/academic'
+import { academicLinks, authorHighlight, news, publications } from '../data/academic'
 import './AcademicPage.css'
 
 // Rola até uma seção da página sem mexer na URL (âncoras confundem o roteador)
@@ -19,113 +21,184 @@ function Authors({ text }) {
   )
 }
 
-// Agrupa a linha do tempo por ano
-const years = timeline.reduce((acc, item) => {
-  const group = acc.find((g) => g.year === item.year)
-  if (group) group.items.push(item)
-  else acc.push({ year: item.year, items: [item] })
-  return acc
-}, [])
+// Visualizador de fotos (dialog nativo), com navegação entre as fotos da notícia
+function Lightbox({ photos, index, onChange, onClose }) {
+  const ref = useRef(null)
+  const photo = index === null ? null : photos[index]
 
-function Intro() {
+  useEffect(() => {
+    const dialog = ref.current
+    if (photo && !dialog.open) dialog.showModal()
+    if (!photo && dialog.open) dialog.close()
+  }, [photo])
+
+  useEffect(() => {
+    if (!photo) return undefined
+    const onKey = (e) => {
+      if (e.key === 'ArrowRight') onChange((index + 1) % photos.length)
+      if (e.key === 'ArrowLeft') onChange((index - 1 + photos.length) % photos.length)
+    }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [photo, index, photos.length, onChange])
+
   return (
-    <section className="ac-intro">
-      <div className="container ac-intro__grid">
-        <div>
-          <p className="eyebrow" data-reveal>
-            {research.meta.join(' · ')}
-          </p>
-          <h2 className="ac-intro__title display" data-reveal style={{ '--delay': '0.08s' }}>
-            {research.title}
-          </h2>
-        </div>
-        <div className="ac-intro__text" data-reveal style={{ '--delay': '0.14s' }}>
-          {research.paragraphs.map((text) => (
-            <p key={text}>{text}</p>
-          ))}
-          <p className="ac-intro__startup">
-            <Icon name="rocket" size={20} />
-            <span>
-              {startup.text}{' '}
-              <a href={startup.url} target="_blank" rel="noopener noreferrer">
-                {startup.handle}
+    <dialog ref={ref} className="ac-lightbox" onClose={onClose} onClick={(e) => e.target === ref.current && onClose()}>
+      {photo && (
+        <figure>
+          <img src={photo.src} alt={photo.alt} />
+          <figcaption>
+            {photo.alt} <span>{index + 1} / {photos.length}</span>
+          </figcaption>
+        </figure>
+      )}
+      {photos.length > 1 && (
+        <>
+          <button type="button" className="ac-lightbox__nav is-prev" onClick={() => onChange((index - 1 + photos.length) % photos.length)} aria-label="Foto anterior">
+            <Icon name="arrowLeft" size={20} />
+          </button>
+          <button type="button" className="ac-lightbox__nav is-next" onClick={() => onChange((index + 1) % photos.length)} aria-label="Próxima foto">
+            <Icon name="arrowRight" size={20} />
+          </button>
+        </>
+      )}
+      <button type="button" className="ac-lightbox__close" onClick={onClose} aria-label="Fechar">
+        <Icon name="close" size={20} />
+      </button>
+    </dialog>
+  )
+}
+
+// A notícia aberta: manchete, foto de destaque, texto e galeria
+function Article({ item, onOpenPhoto }) {
+  const [cover, ...gallery] = item.photos
+  return (
+    <article className="ac-article" key={item.slug}>
+      <p className="ac-article__kicker">
+        <span className="ac-article__section">{item.section}</span>
+        {[item.date, item.location].filter(Boolean).join(' · ')}
+      </p>
+      <h2 className="ac-article__headline display">{item.headline}</h2>
+      <p className="ac-article__lead">{item.lead}</p>
+
+      {cover && (
+        <figure className="ac-article__cover">
+          <button type="button" className="ac-article__cover-btn" onClick={() => onOpenPhoto(0)} aria-label={`Ampliar: ${cover.alt}`}>
+            <img className="ac-article__cover-bg" src={cover.src} alt="" aria-hidden="true" />
+            <img className="ac-article__cover-img" src={cover.src} alt={cover.alt} />
+          </button>
+          <figcaption>{cover.alt}</figcaption>
+        </figure>
+      )}
+
+      <div className="ac-article__body">
+        {item.paragraphs.map((text) => (
+          <p key={text}>{text}</p>
+        ))}
+      </div>
+
+      {item.links && (
+        <div className="ac-article__links">
+          {item.links.map((link) =>
+            link.url ? (
+              <a key={link.label} href={link.url} target="_blank" rel="noopener noreferrer" className="btn btn--outline">
+                {link.label} <Icon name="external" size={14} />
               </a>
-            </span>
-          </p>
+            ) : (
+              <button key={link.label} type="button" className="btn btn--outline" onClick={() => scrollToId(link.target)}>
+                {link.label} <Icon name="arrowRight" size={14} />
+              </button>
+            ),
+          )}
         </div>
-      </div>
-    </section>
-  )
-}
+      )}
 
-function Timeline() {
-  return (
-    <section className="ac-journey pixel-edge">
-      <div className="container">
-        <header className="section-head">
-          <p className="eyebrow ac-journey__eyebrow" data-reveal>
-            Trajetória
-          </p>
-          <h2 className="section-title display" data-reveal style={{ '--delay': '0.08s' }}>
-            Da pesquisa aos eventos
-          </h2>
-        </header>
-
-        <div className="ac-line">
-          {years.map((group) => (
-            <div key={group.year} className="ac-line__year">
-              <p className="ac-line__label display" data-reveal>
-                {group.year}
-              </p>
-              {group.items.map((item) => (
-                <div key={item.title} className={`ac-line__item is-${item.kind}`} data-reveal>
-                  <span className="ac-line__dot" aria-hidden="true" />
-                  <p className="ac-line__date">
-                    {[item.date, item.location].filter(Boolean).join(' · ')}
-                    <span className="ac-line__tag">{item.kind === 'research' ? 'Pesquisa' : item.role}</span>
-                  </p>
-                  <h3 className="ac-line__title">{item.title}</h3>
-                  <p className="ac-line__text">{item.text}</p>
-                  {item.photos?.length > 0 && (
-                    <div className="ac-line__photos">
-                      {item.photos.map((photo) => (
-                        <img key={photo.src} src={photo.src} alt={photo.alt} loading="lazy" decoding="async" />
-                      ))}
-                    </div>
-                  )}
-                  {item.link && (
-                    <button type="button" className="ac-line__link" onClick={() => scrollToId(item.link.target)}>
-                      {item.link.label} <Icon name="arrowRight" size={16} />
-                    </button>
-                  )}
-                </div>
-              ))}
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  )
-}
-
-function News() {
-  return (
-    <section className="ac-news-section pixel-edge">
-      <div className="container">
-        <article className="ac-clip" data-reveal>
-          <header className="ac-clip__masthead">
-            <span>{news.kicker}</span>
-            <span>{news.date}</span>
-          </header>
-          <h2 className="ac-clip__headline display">{news.headline}</h2>
-          <p className="ac-clip__lead">{news.lead}</p>
-          <div className="ac-clip__body">
-            {news.paragraphs.map((text) => (
-              <p key={text}>{text}</p>
+      {gallery.length > 0 && (
+        <section className="ac-gallery" aria-label="Galeria de fotos">
+          <h3 className="ac-gallery__title">Galeria · {item.photos.length} fotos</h3>
+          <div className="ac-gallery__grid">
+            {gallery.map((photo, i) => (
+              <button key={photo.src} type="button" className="ac-gallery__item" onClick={() => onOpenPhoto(i + 1)} aria-label={`Ampliar: ${photo.alt}`}>
+                <img src={photo.src} alt={photo.alt} loading="lazy" decoding="async" />
+              </button>
             ))}
           </div>
-        </article>
+        </section>
+      )}
+    </article>
+  )
+}
+
+function Newsroom() {
+  const [params, setParams] = useSearchParams()
+  const [photoIndex, setPhotoIndex] = useState(null)
+  const topRef = useRef(null)
+
+  const current = Math.max(0, news.findIndex((n) => n.slug === params.get('noticia')))
+  const item = news[current]
+  const prev = news[current - 1]
+  const next = news[current + 1]
+
+  const open = (slug) => {
+    setParams({ noticia: slug }, { replace: true, preventScrollReset: true })
+    setPhotoIndex(null)
+    topRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  }
+
+  return (
+    <section className="ac-news" ref={topRef}>
+      <div className="container ac-news__grid">
+        <div className="ac-news__main">
+          <Article item={item} onOpenPhoto={setPhotoIndex} />
+
+          <nav className="ac-pager" aria-label="Outras notícias">
+            {prev ? (
+              <button type="button" className="ac-pager__link" onClick={() => open(prev.slug)}>
+                <span className="ac-pager__label">
+                  <Icon name="arrowLeft" size={14} /> Mais recente
+                </span>
+                <span className="ac-pager__title">{prev.headline}</span>
+              </button>
+            ) : (
+              <span />
+            )}
+            {next && (
+              <button type="button" className="ac-pager__link is-next" onClick={() => open(next.slug)}>
+                <span className="ac-pager__label">
+                  Anterior <Icon name="arrowRight" size={14} />
+                </span>
+                <span className="ac-pager__title">{next.headline}</span>
+              </button>
+            )}
+          </nav>
+        </div>
+
+        <aside className="ac-news__aside" aria-label="Todas as notícias">
+          <h2 className="ac-news__aside-title">Últimas notícias</h2>
+          <ol className="ac-headlines">
+            {news.map((n, i) => (
+              <li key={n.slug}>
+                <button
+                  type="button"
+                  className={`ac-headline ${i === current ? 'is-active' : ''}`}
+                  onClick={() => open(n.slug)}
+                  aria-current={i === current ? 'true' : undefined}
+                >
+                  {n.photos[0] && <img src={n.photos[0].src} alt="" loading="lazy" decoding="async" />}
+                  <span>
+                    <span className="ac-headline__meta">
+                      {n.section} · {n.date}
+                    </span>
+                    <span className="ac-headline__title">{n.headline}</span>
+                  </span>
+                </button>
+              </li>
+            ))}
+          </ol>
+        </aside>
       </div>
+
+      <Lightbox photos={item.photos} index={photoIndex} onChange={setPhotoIndex} onClose={() => setPhotoIndex(null)} />
     </section>
   )
 }
@@ -189,9 +262,7 @@ export default function AcademicPage() {
           </a>
         ))}
       </PageHero>
-      <Intro />
-      <Timeline />
-      <News />
+      <Newsroom />
       <Publications />
     </main>
   )
