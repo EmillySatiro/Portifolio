@@ -128,24 +128,24 @@ export default function Skills() {
         </header>
 
         <div className="skills__toolbar" data-reveal style={{ '--delay': '0.12s' }}>
-          <div className="skills__filters" role="group" aria-label="Escolher tipo de carta">
+          <div className="tabs tabs--on-dark skills__tabs" role="group" aria-label="Escolher tipo de carta">
             {filters.map((filter) => (
               <button
                 key={filter.id}
                 type="button"
-                className={`skills__filter${active === filter.id ? ' is-active' : ''}`}
+                className="tab"
                 data-cat={filter.id}
                 aria-pressed={active === filter.id}
                 onClick={() => setActive(filter.id)}
               >
                 {filter.name}
-                <span className="skills__filter-count">{countFor(filter.id)}</span>
+                <sup>{countFor(filter.id)}</sup>
               </button>
             ))}
           </div>
           {active && (
             <button type="button" className="skills__shuffle" onClick={() => setActive(null)}>
-              ↺ Embaralhar
+              Recolher o baralho
             </button>
           )}
         </div>

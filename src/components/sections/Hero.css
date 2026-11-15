@@ -42,17 +42,7 @@
   gap: var(--space-5);
 }
 
-.hero__status {
-  animation: hero-in 0.7s var(--ease-out) both;
-}
 
-.hero__dot {
-  width: 8px;
-  height: 8px;
-  background: var(--success);
-  box-shadow: 0 0 0 0 rgba(47, 182, 124, 0.6);
-  animation: hero-pulse 2s infinite;
-}
 
 .hero__name {
   display: grid;
@@ -98,27 +88,7 @@
 }
 
 /* ---------- Indicador de rolagem ---------- */
-.hero__scroll {
-  position: absolute;
-  left: 50%;
-  bottom: 22px;
-  width: 26px;
-  height: 42px;
-  translate: -50% 0;
-  border: 2px solid var(--line);
-  border-radius: var(--radius);
-}
 
-.hero__scroll span {
-  position: absolute;
-  left: 50%;
-  top: 8px;
-  width: 4px;
-  height: 8px;
-  translate: -50% 0;
-  background: var(--accent);
-  animation: hero-scroll 1.8s ease-in-out infinite;
-}
 
 @keyframes hero-in {
   from {
@@ -135,24 +105,7 @@
   }
 }
 
-@keyframes hero-pulse {
-  70% {
-    box-shadow: 0 0 0 8px rgba(62, 207, 142, 0);
-  }
-  100% {
-    box-shadow: 0 0 0 0 rgba(62, 207, 142, 0);
-  }
-}
 
-@keyframes hero-scroll {
-  60% {
-    transform: translateY(12px);
-    opacity: 0;
-  }
-  61% {
-    transform: none;
-  }
-}
 
 @media (max-width: 860px) {
   .hero {
@@ -167,9 +120,5 @@
     max-width: 380px;
     width: 88%;
     justify-self: center;
-  }
-
-  .hero__scroll {
-    display: none;
   }
 }

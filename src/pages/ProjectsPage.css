@@ -22,61 +22,7 @@
   gap: 1.5rem;
 }
 
-/* ---------- Filtros ---------- */
-.pj-filters {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  margin-bottom: 2rem;
+.pj-tabs {
+  margin-bottom: var(--space-6);
 }
 
-.pj-filter {
-  min-height: var(--tap);
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.6rem 1rem;
-  border-radius: var(--radius-pill);
-  border: 1.5px solid var(--line);
-  background: var(--surface);
-  font-size: var(--text-sm);
-  font-weight: 600;
-  transition: border-color 0.25s ease, background-color 0.25s ease, color 0.25s ease;
-}
-
-.pj-filter::before {
-  content: '';
-  width: 8px;
-  height: 8px;
-  background: var(--cat);
-}
-
-.pj-filter span {
-  min-width: 1.6em;
-  padding: 0.05rem 0.35rem;
-  border-radius: var(--radius-pill);
-  background: var(--accent-soft);
-  font-size: var(--text-xs);
-  text-align: center;
-}
-
-.pj-filter:hover {
-  border-color: var(--cat);
-}
-
-.pj-filter.is-active {
-  border-color: var(--ink);
-  background: var(--ink);
-  color: var(--bg);
-}
-
-.pj-filter.is-active span {
-  background: rgba(255, 255, 255, 0.18);
-}
-
-/* ---------- Grade ---------- */
-.pj-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr));
-  gap: 1.5rem;
-}

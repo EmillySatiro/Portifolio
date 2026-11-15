@@ -35,6 +35,18 @@ export const roles = [
   'UI/UX & Prototipação',
 ]
 
+// Áreas de interesse (linha do "Sobre")
+export const interests = [
+  'Desenvolvimento de Software',
+  'Full Stack',
+  'Front-end',
+  'Back-end',
+  'Engenharia de Software',
+  'Inteligência Artificial',
+  'Machine Learning',
+  'Visão Computacional',
+]
+
 export const aboutFacts = [
   {
     icon: 'graduation',
@@ -51,8 +63,8 @@ export const aboutFacts = [
   {
     icon: 'rocket',
     label: 'Startup',
-    value: 'Membro da PathoVision',
-    detail: '@pathovision_',
+    value: 'PathoVision',
+    detail: 'Membro da equipe · @pathovision_',
     url: 'https://www.instagram.com/pathovision_/',
   },
 ]
@@ -203,7 +215,7 @@ export const openForHire = {
   company: 'Emilly Sátiro · Open for Hire',
   period: '2026 — ∞',
   status: 'Disponível para contratação!',
-  message: 'Vamos criar algo incrível juntos? ✨',
+  message: 'Vamos criar algo incrível juntos?',
 }
 
 export const cvFiles = [

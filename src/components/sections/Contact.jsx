@@ -95,7 +95,6 @@ export default function Contact() {
                 </li>
               ))}
             </ul>
-            <span className="contact__pixels" aria-hidden="true" />
           </aside>
 
           {/* Formulário */}

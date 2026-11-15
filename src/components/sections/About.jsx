@@ -1,30 +1,6 @@
-import { aboutFacts } from '../../data/portfolio'
+import { aboutFacts, interests } from '../../data/portfolio'
 import Icon from '../ui/Icon'
 import './About.css'
-
-function FactCard({ fact }) {
-  const content = (
-    <>
-      <span className="about__fact-icon">
-        <Icon name={fact.icon} size={20} />
-      </span>
-      <span className="about__fact-text">
-        <span className="about__fact-label">{fact.label}</span>
-        <span className="about__fact-value">{fact.value}</span>
-        <span className="about__fact-detail">{fact.detail}</span>
-      </span>
-      {fact.url && <Icon name="external" size={16} className="about__fact-link" />}
-    </>
-  )
-
-  return fact.url ? (
-    <a href={fact.url} target="_blank" rel="noopener noreferrer" className="about__fact is-link">
-      {content}
-    </a>
-  ) : (
-    <div className="about__fact">{content}</div>
-  )
-}
 
 export default function About() {
   return (
@@ -65,19 +41,36 @@ export default function About() {
             </div>
           </div>
 
-          <p className="about__interests" data-reveal style={{ '--delay': '0.22s' }}>
-            Tenho interesse em oportunidades nas áreas de Desenvolvimento de Software, Desenvolvimento Full Stack,
-            Front-end, Back-end, Engenharia de Software, Inteligência Artificial, Machine Learning e Visão Computacional.
-          </p>
-        </div>
+          <div className="about__interests" data-reveal style={{ '--delay': '0.22s' }}>
+            <p className="eyebrow">Interesses</p>
+            <p className="about__interests-list">
+              {interests.map((item, i) => (
+                <span key={item}>
+                  {item}
+                  {i < interests.length - 1 && <i aria-hidden="true"> / </i>}
+                </span>
+              ))}
+            </p>
+          </div>        </div>
 
-        <ul className="about__facts">
+        {/* Ficha: rótulo em cima, informação embaixo, colunas separadas por fios */}
+        <dl className="about__facts">
           {aboutFacts.map((fact, index) => (
-            <li key={fact.label} data-reveal style={{ '--delay': `${0.1 + index * 0.08}s` }}>
-              <FactCard fact={fact} />
-            </li>
+            <div key={fact.label} className="about__fact" data-reveal style={{ '--delay': `${0.1 + index * 0.08}s` }}>
+              <dt className="about__fact-label">{fact.label}</dt>
+              <dd className="about__fact-value">
+                {fact.url ? (
+                  <a href={fact.url} target="_blank" rel="noopener noreferrer">
+                    {fact.value} <Icon name="arrowRight" size={18} className="about__fact-arrow" />
+                  </a>
+                ) : (
+                  fact.value
+                )}
+              </dd>
+              <dd className="about__fact-detail">{fact.detail}</dd>
+            </div>
           ))}
-        </ul>
+        </dl>
       </div>
     </section>
   )

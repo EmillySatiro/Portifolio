@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { openForHire, profile, roles, socials } from '../../data/portfolio'
+import { profile, roles, socials } from '../../data/portfolio'
 import Icon from '../ui/Icon'
 import PixelAvatar from '../ui/PixelAvatar'
 import './Hero.css'
@@ -29,10 +29,6 @@ export default function Hero() {
 
       <div className="container hero__grid">
         <div className="hero__copy">
-          <p className="chip hero__status">
-            <span className="hero__dot" aria-hidden="true" />
-            {openForHire.status}
-          </p>
 
           <h1 className="hero__name display">
             <span className="hero__line">{profile.firstName}</span>
@@ -72,10 +68,6 @@ export default function Hero() {
           <PixelAvatar />
         </div>
       </div>
-
-      <Link to="/#about" className="hero__scroll" aria-label="Rolar para Sobre">
-        <span />
-      </Link>
     </section>
   )
 }

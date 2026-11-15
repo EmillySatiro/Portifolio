@@ -256,3 +256,73 @@
     transform: none;
   }
 }
+
+/* ---------- Abas de texto (filtros) ----------
+   Texto puro com um traço que cresce sob a aba ativa; a contagem fica sobrescrita. */
+.tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1) var(--space-6);
+  border-bottom: 1px solid var(--line);
+}
+
+.tab {
+  position: relative;
+  display: inline-flex;
+  align-items: flex-start;
+  gap: 3px;
+  min-height: var(--tap);
+  padding: var(--space-3) 0;
+  font-size: var(--text-base);
+  font-weight: 600;
+  color: var(--muted);
+  transition: color var(--dur-fast) ease;
+}
+
+.tab sup {
+  font-size: var(--text-xs);
+  font-weight: 700;
+  line-height: 1;
+  top: 0;
+  color: inherit;
+  opacity: 0.7;
+}
+
+.tab::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 3px;
+  background: var(--tab-color, var(--violet));
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--dur) var(--ease-out);
+}
+
+.tab:hover {
+  color: var(--ink);
+}
+
+.tab[aria-pressed='true'] {
+  color: var(--ink);
+}
+
+.tab[aria-pressed='true']::after {
+  transform: scaleX(1);
+}
+
+/* Versão para fundo escuro (seção de tecnologias) */
+.tabs--on-dark {
+  border-bottom-color: rgba(255, 255, 255, 0.18);
+}
+
+.tabs--on-dark .tab {
+  color: rgba(255, 255, 255, 0.65);
+}
+
+.tabs--on-dark .tab:hover,
+.tabs--on-dark .tab[aria-pressed='true'] {
+  color: #fff;
+}

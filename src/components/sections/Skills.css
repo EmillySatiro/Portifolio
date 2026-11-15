@@ -45,81 +45,34 @@
 .skills__toolbar {
   display: flex;
   flex-wrap: wrap;
-  align-items: center;
+  align-items: flex-end;
   justify-content: space-between;
-  gap: 1rem 2rem;
-  margin-bottom: 1.75rem;
+  gap: var(--space-4) var(--space-6);
+  margin-bottom: var(--space-7);
 }
 
-.skills__filters {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
+.skills__tabs {
+  flex: 1;
 }
 
-.skills__filter {
-  min-height: var(--tap);
-  display: inline-flex;
-  align-items: center;
-  gap: 0.55rem;
-  padding: 0.6rem 1rem;
-  border-radius: var(--radius-pill);
-  border: 1.5px solid rgba(255, 255, 255, 0.22);
-  font-size: var(--text-sm);
-  font-weight: 600;
-  color: rgba(255, 255, 255, 0.85);
-  transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease;
-}
-
-.skills__filter::before {
-  content: '';
-  width: 8px;
-  height: 8px;
-  background: var(--cat);
-}
-
-.skills__filter:hover {
-  border-color: var(--cat);
-  color: #fff;
-}
-
-.skills__filter.is-active {
-  background: #fff;
-  border-color: #fff;
-  color: var(--brand-deep);
-}
-
-.skills__filter[data-cat='all']::before {
-  background: var(--violet);
+.skills .tab {
+  --tab-color: var(--cat);
 }
 
 /* ---------- Botão "Embaralhar" ---------- */
-.skills__filter-count {
-  min-width: 1.6em;
-  padding: 0.05rem 0.35rem;
-  border-radius: var(--radius-pill);
-  background: rgba(255, 255, 255, 0.14);
-  font-size: var(--text-xs);
-  text-align: center;
-}
-
-.skills__filter.is-active .skills__filter-count {
-  background: var(--accent-soft);
-}
-
 .skills__shuffle {
-  padding: 0.6rem 1.1rem;
-  border-radius: var(--radius-pill);
-  background: var(--violet);
-  color: #fff;
+  min-height: var(--tap);
   font-size: var(--text-sm);
   font-weight: 700;
-  animation: skills-pop 0.4s var(--ease-out);
-  transition: transform 0.3s var(--ease-out);
+  color: var(--sky);
+  text-decoration: underline;
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 4px;
+  transition: color var(--dur-fast) ease;
 }
 
 .skills__shuffle:hover {
-  transform: rotate(-4deg) scale(1.05);
+  color: #fff;
 }
 
 /* ---------- Monte embaralhando ---------- */
