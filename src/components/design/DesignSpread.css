@@ -1,5 +1,5 @@
 /*
-  Página dupla de revista (16:9 = duas páginas de 8:9 lado a lado).
+  Página dupla de revista ocupando a tela inteira, como um slide.
   Regras de composição:
   - margem única --m em todas as bordas e entre blocos;
   - no máximo duas imagens; telas aparecem inteiras (recorte 16:10) ou sangrando uma página inteira;
@@ -7,9 +7,8 @@
   - tamanhos em cqw: tudo escala junto com a largura da página.
 */
 .spread-wrap {
-  display: grid;
-  gap: var(--space-3);
-  scroll-margin-top: calc(var(--topbar-h) + var(--space-5));
+  position: relative;
+  scroll-snap-align: start;
 }
 
 .spread {
@@ -22,29 +21,18 @@
   display: grid;
   grid-template-columns: repeat(12, 1fr);
   grid-template-rows: repeat(8, 1fr);
-  aspect-ratio: 16 / 9;
+  height: calc(100svh - var(--topbar-h));
+  min-height: 560px;
+  max-height: 62vw;
   overflow: hidden;
   background: var(--paper);
   color: var(--print);
-  box-shadow: 0 24px 50px -28px rgba(10, 12, 30, 0.55), 0 2px 8px rgba(10, 12, 30, 0.12);
 }
 
 .spread.is-dark {
   --paper: #111;
   --print: #f4f3ef;
   --print-soft: #bdbcb6;
-}
-
-/* Dobra no meio, como numa revista aberta */
-.spread::after {
-  content: '';
-  position: absolute;
-  inset: 0 auto 0 50%;
-  width: 5%;
-  translate: -50% 0;
-  background: linear-gradient(90deg, transparent, rgba(0, 0, 0, 0.06) 47%, rgba(0, 0, 0, 0.13) 50%, rgba(0, 0, 0, 0.06) 53%, transparent);
-  pointer-events: none;
-  z-index: 5;
 }
 
 /* ---------- Peças ---------- */
@@ -137,14 +125,19 @@
   color: var(--print);
 }
 
-/* Numeração das duas páginas, embaixo de cada metade */
+/* Numeração das duas páginas, no pé de cada metade */
 .spread__pages {
+  position: absolute;
+  inset: auto 0 1.2cqw;
+  z-index: 3;
   display: grid;
   grid-template-columns: 1fr 1fr;
   font-size: var(--text-xs);
   font-variant-numeric: tabular-nums;
   text-align: center;
-  color: var(--muted);
+  color: rgba(255, 255, 255, 0.75);
+  mix-blend-mode: difference;
+  pointer-events: none;
 }
 
 /* ---------- Capa: título e texto na página da esquerda, tela sangrando a da direita ---------- */
@@ -340,12 +333,14 @@
     display: flex;
     flex-direction: column;
     gap: var(--space-5);
-    aspect-ratio: auto;
-    padding: var(--space-5);
+    height: auto;
+    min-height: 0;
+    max-height: none;
+    padding: var(--space-7) var(--gutter);
   }
 
-  .spread::after,
-  .spread__spine {
+  .spread__spine,
+  .spread__pages {
     display: none;
   }
 

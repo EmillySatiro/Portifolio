@@ -18,7 +18,7 @@ export default function DesignerPage() {
       </PageHero>
 
       <section className="dz-board">
-        <div className="container dz-board__list">
+        <div className="dz-board__list">
           {designProjects.map((project, i) => (
             <DesignSpread
               key={project.id}

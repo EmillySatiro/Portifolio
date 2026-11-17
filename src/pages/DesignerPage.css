@@ -5,14 +5,14 @@
   color: var(--muted);
 }
 
-/* Mesa onde as páginas da revista ficam dispostas */
-.dz-board {
-  padding: var(--space-8) 0 var(--section-y);
-  background: var(--bg-alt);
-}
-
+/* As páginas da revista, uma por tela, de ponta a ponta */
 .dz-board__list {
   display: grid;
-  gap: clamp(var(--space-7), 6vw, var(--space-9));
-  max-width: 1180px;
+}
+
+/* Ao rolar, cada página se encaixa na tela (só onde há espaço para a página inteira) */
+@media (min-width: 1025px) {
+  html:has(.dz-board) {
+    scroll-snap-type: y proximity;
+  }
 }
