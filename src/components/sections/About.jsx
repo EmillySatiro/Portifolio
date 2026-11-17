@@ -1,76 +1,73 @@
 import { aboutFacts, interests } from '../../data/portfolio'
-import Icon from '../ui/Icon'
+import VoxelBat from '../ui/VoxelBat'
 import './About.css'
 
+const [graduation, masters, startup] = aboutFacts
+
+// Blocos em volta do morcego: três à esquerda, três à direita
+const LEFT = [
+  {
+    title: 'Quem sou',
+    text: 'Estudante de Sistemas de Informação na Universidade Federal do Piauí (UFPI), em Picos - PI, com experiência em desenvolvimento full stack, front-end, prototipação de interfaces (UI/UX) e integração de soluções tecnológicas.',
+  },
+  {
+    title: 'Desenvolvimento',
+    text: 'Aplicações com React, TypeScript, JavaScript, Python, FastAPI, Flask, Node.js, Tailwind CSS, PostgreSQL, Git e Docker, além de modelagem de bancos de dados, APIs REST e sistemas web.',
+  },
+  {
+    title: 'Pesquisa científica',
+    text: 'Inteligência Artificial, Visão Computacional, Deep Learning e Processamento de Imagens aplicados à saúde, com foco em imagens biomédicas, redes neurais convolucionais (CNNs) e classificação de dados.',
+  },
+]
+
+// Layout de "objeto central": título no alto, o morcego em 3D no meio e as informações em volta.
 export default function About() {
   return (
     <section id="about" className="section about">
       <div className="container">
-        <header className="about__head">
-          <p className="eyebrow" data-reveal>
-            Sobre
-          </p>
-          <h2 className="section-title display about__title" data-reveal style={{ '--delay': '0.08s' }}>
-            Entre Desenvolvimento e Pesquisa Científica
-          </h2>
-        </header>
+        <h2 className="about__title">Sobre mim</h2>
 
-        <div className="about__grid">
-          <p className="about__lead" data-reveal style={{ '--delay': '0.12s' }}>
-            Sou <strong>Emilly Sátiro</strong>, estudante de Sistemas de Informação na{' '}
-            <strong>Universidade Federal do Piauí (UFPI)</strong> em Picos - PI, com experiência em Desenvolvimento Full
-            Stack, Desenvolvimento Front-end, prototipação de interfaces (UI/UX) e integração de soluções tecnológicas.
-          </p>
-
-          <div className="about__columns" data-reveal style={{ '--delay': '0.18s' }}>
-            <div className="about__block">
-              <h3 className="about__block-title">Desenvolvimento</h3>
-              <p>
-                Atuo no desenvolvimento de aplicações utilizando React, TypeScript, JavaScript, Python, FastAPI, Flask,
-                Node.js, HTML, CSS, Tailwind CSS, PostgreSQL, Git e Docker, além de possuir experiência em modelagem de
-                bancos de dados, APIs REST e desenvolvimento de sistemas web.
-              </p>
-            </div>
-            <div className="about__block">
-              <h3 className="about__block-title">Pesquisa científica</h3>
-              <p>
-                Na área de pesquisa, trabalho com Inteligência Artificial, Visão Computacional, Deep Learning e
-                Processamento de Imagens aplicados à saúde, com foco na análise de imagens biomédicas utilizando Redes
-                Neurais Convolucionais (CNNs), pré-processamento de imagens e classificação de dados.
-              </p>
-            </div>
+        <div className="about__stage">
+          <div className="about__col about__col--left">
+            {LEFT.map((block) => (
+              <article key={block.title} className="about__block" data-reveal>
+                <h3 className="about__block-title">{block.title}</h3>
+                <p>{block.text}</p>
+              </article>
+            ))}
           </div>
 
-          <div className="about__interests" data-reveal style={{ '--delay': '0.22s' }}>
-            <p className="eyebrow">Interesses</p>
-            <p className="about__interests-list">
-              {interests.map((item, i) => (
-                <span key={item}>
-                  {item}
-                  {i < interests.length - 1 && <i aria-hidden="true"> / </i>}
-                </span>
-              ))}
-            </p>
-          </div>        </div>
+          <div className="about__center">
+            <VoxelBat />
+          </div>
 
-        {/* Ficha: rótulo em cima, informação embaixo, colunas separadas por fios */}
-        <dl className="about__facts">
-          {aboutFacts.map((fact, index) => (
-            <div key={fact.label} className="about__fact" data-reveal style={{ '--delay': `${0.1 + index * 0.08}s` }}>
-              <dt className="about__fact-label">{fact.label}</dt>
-              <dd className="about__fact-value">
-                {fact.url ? (
-                  <a href={fact.url} target="_blank" rel="noopener noreferrer">
-                    {fact.value} <Icon name="arrowRight" size={18} className="about__fact-arrow" />
-                  </a>
-                ) : (
-                  fact.value
-                )}
-              </dd>
-              <dd className="about__fact-detail">{fact.detail}</dd>
-            </div>
-          ))}
-        </dl>
+          <div className="about__col about__col--right">
+            <article className="about__block" data-reveal>
+              <h3 className="about__block-title">Formação</h3>
+              <p>
+                {graduation.value} · {graduation.detail}
+                <br />
+                Aluna especial do mestrado em {masters.value} · UFPI
+              </p>
+            </article>
+
+            <article className="about__block" data-reveal>
+              <h3 className="about__block-title">Startup</h3>
+              <p>
+                Membro da{' '}
+                <a href={startup.url} target="_blank" rel="noopener noreferrer">
+                  {startup.value}
+                </a>
+                , startup nascida da minha pesquisa de iniciação científica.
+              </p>
+            </article>
+
+            <article className="about__block" data-reveal>
+              <h3 className="about__block-title">Interesses</h3>
+              <p>{interests.join(' · ')}</p>
+            </article>
+          </div>
+        </div>
       </div>
     </section>
   )
