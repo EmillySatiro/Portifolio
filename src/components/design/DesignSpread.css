@@ -1,7 +1,10 @@
 /*
-  Página dupla de revista. A página é uma grade 12 × 8; cada layout posiciona as telas,
-  o título e o texto em linhas da grade (podem se sobrepor, como numa colagem).
-  Tamanhos em cqw: tudo escala junto com a largura da página.
+  Página dupla de revista (16:9 = duas páginas de 8:9 lado a lado).
+  Regras de composição:
+  - margem única --m em todas as bordas e entre blocos;
+  - no máximo duas imagens; telas aparecem inteiras (recorte 16:10) ou sangrando uma página inteira;
+  - texto nunca por cima de tela, só sobre papel liso ou sobre o degradê escuro do sangrado;
+  - tamanhos em cqw: tudo escala junto com a largura da página.
 */
 .spread-wrap {
   display: grid;
@@ -12,7 +15,8 @@
 .spread {
   --paper: #fff;
   --print: #111;
-  --print-soft: #444;
+  --print-soft: #4a4a4a;
+  --m: 4cqw;
   position: relative;
   container-type: inline-size;
   display: grid;
@@ -26,9 +30,9 @@
 }
 
 .spread.is-dark {
-  --paper: #0f0f10;
+  --paper: #111;
   --print: #f4f3ef;
-  --print-soft: #c9c8c2;
+  --print-soft: #bdbcb6;
 }
 
 /* Dobra no meio, como numa revista aberta */
@@ -36,28 +40,29 @@
   content: '';
   position: absolute;
   inset: 0 auto 0 50%;
-  width: 6%;
+  width: 5%;
   translate: -50% 0;
-  background: linear-gradient(90deg, transparent, rgba(0, 0, 0, 0.07) 48%, rgba(0, 0, 0, 0.12) 50%, rgba(0, 0, 0, 0.07) 52%, transparent);
+  background: linear-gradient(90deg, transparent, rgba(0, 0, 0, 0.06) 47%, rgba(0, 0, 0, 0.13) 50%, rgba(0, 0, 0, 0.06) 53%, transparent);
   pointer-events: none;
-  z-index: 4;
+  z-index: 5;
 }
 
 /* ---------- Peças ---------- */
 .spread__img {
   position: relative;
   display: block;
+  min-width: 0;
   min-height: 0;
   overflow: hidden;
-  background: #ddd;
+  background: #e5e5e5;
 }
 
 .spread__img img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: top center;
-  transition: transform 0.7s var(--ease-out), filter 0.4s ease;
+  object-position: center top;
+  transition: transform 0.8s var(--ease-out);
 }
 
 @media (hover: hover) and (pointer: fine) {
@@ -66,43 +71,53 @@
   }
 }
 
-.spread__title {
+/* Tela "impressa": inteira, em 16:10, com uma sombra curta de papel */
+.spread--collage .spread__img,
+.spread--collage-r .spread__img {
+  align-self: start;
+  aspect-ratio: 16 / 10;
+  box-shadow: 0 1.2cqw 2.4cqw -1cqw rgba(0, 0, 0, 0.35);
+}
+
+.spread__head {
   position: relative;
   z-index: 2;
-  align-self: center;
+  display: grid;
+  align-content: start;
+  gap: 1.2cqw;
+}
+
+.spread__title {
   margin: 0;
   font-family: 'Archivo', var(--font-display);
   font-stretch: 125%;
   font-weight: 900;
-  font-size: 7.4cqw;
-  line-height: 0.88;
+  font-size: min(8cqw, calc(42cqw / var(--chars)));
+  line-height: 0.9;
   letter-spacing: -0.01em;
   text-transform: uppercase;
   text-wrap: balance;
-  pointer-events: none;
 }
 
 .spread__type {
-  z-index: 2;
-  font-size: max(11px, 0.95cqw);
+  font-size: max(11px, 0.9cqw);
   font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.04em;
-}
-
-.spread__text {
-  z-index: 2;
-  display: grid;
-  align-content: start;
-  gap: 0.9em;
-  min-height: 0;
-  font-size: max(12.5px, 1.05cqw);
-  line-height: 1.45;
+  letter-spacing: 0.06em;
   color: var(--print-soft);
 }
 
-.spread__text > p:first-child {
-  hyphens: auto;
+.spread__text {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  align-content: end;
+  gap: 1.4cqw;
+  min-height: 0;
+  max-width: 34ch;
+  font-size: max(12.5px, 1.05cqw);
+  line-height: 1.5;
+  color: var(--print-soft);
 }
 
 .spread__actions {
@@ -122,12 +137,6 @@
   color: var(--print);
 }
 
-.spread__credit {
-  z-index: 2;
-  font-size: max(11px, 0.95cqw);
-  color: var(--print-soft);
-}
-
 /* Numeração das duas páginas, embaixo de cada metade */
 .spread__pages {
   display: grid;
@@ -138,239 +147,158 @@
   color: var(--muted);
 }
 
-/* ---------- Layout 1 · capa: título à esquerda, tela grande à direita ---------- */
-.spread--cover .spread__title {
-  grid-column: 1 / 8;
-  grid-row: 2 / 6;
-  margin-left: 12%;
-  font-size: min(9cqw, calc(55cqw / var(--chars)));
+/* ---------- Capa: título e texto na página da esquerda, tela sangrando a da direita ---------- */
+.spread--cover .spread__img--0 {
+  grid-column: 7 / 13;
+  grid-row: 1 / 9;
 }
 
-.spread--cover .spread__type {
-  grid-column: 1 / 6;
-  grid-row: 6 / 7;
-  align-self: start;
-  margin-left: 6cqw;
+.spread--cover .spread__head {
+  grid-column: 1 / 7;
+  grid-row: 1 / 5;
+  margin: var(--m) var(--m) 0;
+}
+
+.spread--cover .spread__title {
+  font-size: min(9cqw, calc(42cqw / var(--chars)));
 }
 
 .spread--cover .spread__text {
   grid-column: 1 / 6;
-  grid-row: 6 / 9;
-  margin: 3.2cqw 0 0 6cqw;
+  grid-row: 5 / 9;
+  margin: 0 0 var(--m) var(--m);
 }
 
-.spread--cover .spread__img--0 {
-  grid-column: 8 / 13;
-  grid-row: 1 / 9;
-}
-
-.spread--cover .spread__img--1 {
-  grid-column: 6 / 9;
-  grid-row: 5 / 8;
-  z-index: 3;
-  margin-right: 10%;
-  border: 0.5cqw solid var(--paper);
-}
-
-.spread--cover .spread__credit {
-  grid-column: 9 / 13;
-  grid-row: 8 / 9;
-  align-self: end;
-  z-index: 3;
-  margin: 0 0 1.6cqw 1.6cqw;
-  padding: 0.3em 0.6em;
-  background: var(--paper);
-  justify-self: start;
-}
-
-/* ---------- Layout 2 · sangrado: tela ocupando tudo, título branco embaixo ---------- */
+/* ---------- Sangrado: a tela ocupa a página dupla; título e texto sobre o degradê de baixo ---------- */
 .spread--bleed .spread__img--0 {
   grid-column: 1 / 13;
   grid-row: 1 / 9;
 }
 
-.spread--bleed .spread__img--0 img {
-  filter: grayscale(1) contrast(1.15) brightness(0.62);
-}
-
-@media (hover: hover) and (pointer: fine) {
-  .spread--bleed .spread__img--0:hover img {
-    filter: grayscale(0.2) brightness(0.55);
-  }
-}
-
 .spread--bleed .spread__img--0::after {
+  /* Metade de baixo desfocada e escurecida: o texto do site some e o título fica limpo */
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(0, 0, 0, 0.72) 0%, rgba(0, 0, 0, 0.15) 38%, rgba(0, 0, 0, 0.2) 55%, rgba(0, 0, 0, 0.85) 100%);
+  background: linear-gradient(180deg, transparent 30%, rgba(0, 0, 0, 0.6) 58%, rgba(0, 0, 0, 0.92) 100%);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  mask-image: linear-gradient(180deg, transparent 32%, #000 56%);
+  -webkit-mask-image: linear-gradient(180deg, transparent 32%, #000 56%);
 }
 
-.spread--bleed .spread__title {
-  grid-column: 1 / 10;
-  grid-row: 6 / 9;
-  align-self: end;
-  margin: 0 0 3.5cqw 4cqw;
-  font-size: min(10cqw, calc(79cqw / var(--chars)));
+.spread--bleed .spread__head {
+  grid-column: 1 / 9;
+  grid-row: 5 / 9;
+  align-content: end;
+  margin: 0 0 var(--m) var(--m);
   color: #fff;
 }
 
 .spread--bleed .spread__type {
-  grid-column: 1 / 8;
-  grid-row: 5 / 6;
-  align-self: end;
-  margin-left: 4cqw;
-  color: #fff;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.spread--bleed .spread__title {
+  font-size: min(10cqw, calc(62cqw / var(--chars)));
 }
 
 .spread--bleed .spread__text {
-  grid-column: 1 / 5;
-  grid-row: 1 / 5;
-  margin: 3.5cqw 0 0 4cqw;
-  color: rgba(255, 255, 255, 0.86);
+  grid-column: 9 / 13;
+  grid-row: 5 / 9;
+  margin: 0 var(--m) var(--m) 0;
+  color: rgba(255, 255, 255, 0.85);
 }
 
-.spread--bleed .spread__text .spread__link {
+.spread--bleed .spread__link {
   color: #fff;
 }
 
-.spread--bleed .spread__img--1 {
-  grid-column: 10 / 13;
-  grid-row: 1 / 6;
-  z-index: 3;
-  margin: 3.5cqw 3.5cqw 0 0;
-  border: 0.4cqw solid #fff;
-}
-
-/* ---------- Layout 3 · colagem: duas telas à esquerda, título por cima ---------- */
+/* ---------- Colagem: duas telas impressas numa página, título e texto na outra ---------- */
 .spread--collage .spread__img--0 {
-  grid-column: 1 / 5;
+  grid-column: 1 / 6;
   grid-row: 1 / 6;
+  margin: var(--m) 0 0 var(--m);
 }
 
 .spread--collage .spread__img--1 {
-  grid-column: 1 / 4;
-  grid-row: 6 / 9;
-  margin: 1cqw 0 0 3cqw;
-}
-
-.spread--collage .spread__img--2 {
-  grid-column: 10 / 13;
-  grid-row: 1 / 3;
-}
-
-.spread--collage .spread__title {
-  grid-column: 4 / 13;
-  grid-row: 3 / 6;
+  grid-column: 3 / 7;
+  grid-row: 5 / 9;
   align-self: end;
-  margin: 0 3cqw 1.6cqw 0;
-  font-size: min(9.4cqw, calc(80cqw / var(--chars)));
+  z-index: 1;
+  margin: 0 -2cqw var(--m) 0;
+  outline: 0.6cqw solid var(--paper);
 }
 
-.spread--collage .spread__type {
-  grid-column: 5 / 10;
-  grid-row: 2 / 3;
-  align-self: end;
-  margin-left: 2.5cqw;
+.spread--collage .spread__head {
+  grid-column: 7 / 13;
+  grid-row: 1 / 5;
+  margin: var(--m) var(--m) 0 calc(var(--m) * 0.75);
 }
 
 .spread--collage .spread__text {
-  grid-column: 5 / 12;
-  grid-row: 6 / 9;
-  margin: 0.6cqw 0 0 2.5cqw;
-  display: block;
-  column-count: 2;
-  column-gap: 2.5cqw;
-}
-
-.spread--collage .spread__text > p + p {
-  margin-top: 0.9em;
-}
-
-/* ---------- Layout 4 · figura: tela inteira à esquerda, título à direita ---------- */
-.spread--figure .spread__img--0 {
-  grid-column: 1 / 7;
-  grid-row: 1 / 9;
-}
-
-.spread--figure .spread__title {
-  grid-column: 5 / 13;
-  grid-row: 1 / 4;
-  align-self: end;
-  margin-right: 3.5cqw;
-  text-align: right;
-  font-size: min(7.6cqw, calc(64cqw / var(--chars)));
-}
-
-.spread--figure .spread__type {
   grid-column: 8 / 13;
-  grid-row: 4 / 5;
-  justify-self: end;
-  align-self: start;
-  margin: 1cqw 3.5cqw 0 0;
-}
-
-.spread--figure .spread__img--1 {
-  grid-column: 7 / 10;
   grid-row: 5 / 9;
-  margin: 0 1.5cqw 3.5cqw 2.5cqw;
+  margin: 0 var(--m) var(--m) 0;
 }
 
-.spread--figure .spread__text {
-  grid-column: 10 / 13;
+/* Espelhada: título e texto à esquerda, telas à direita */
+.spread--collage-r .spread__head {
+  grid-column: 1 / 7;
+  grid-row: 1 / 5;
+  margin: var(--m) calc(var(--m) * 0.75) 0 var(--m);
+}
+
+.spread--collage-r .spread__text {
+  grid-column: 1 / 6;
   grid-row: 5 / 9;
-  margin: 0 3.5cqw 3.5cqw 0;
+  margin: 0 0 var(--m) var(--m);
 }
 
-/* ---------- Layout 5 · par: uma tela de cada lado, título no meio ---------- */
-.spread--pair .spread__img--0 {
-  grid-column: 1 / 4;
-  grid-row: 2 / 9;
-  margin: 0 0 3.5cqw 3.5cqw;
+.spread--collage-r .spread__img--0 {
+  grid-column: 8 / 13;
+  grid-row: 1 / 6;
+  margin: var(--m) var(--m) 0 0;
 }
 
-.spread--pair .spread__img--1 {
-  grid-column: 10 / 13;
-  grid-row: 1 / 8;
-  margin: 3.5cqw 3.5cqw 0 0;
-}
-
-.spread--pair .spread__title {
-  grid-column: 4 / 10;
-  grid-row: 1 / 4;
+.spread--collage-r .spread__img--1 {
+  grid-column: 7 / 11;
+  grid-row: 5 / 9;
   align-self: end;
-  justify-self: center;
-  text-align: center;
-  font-size: min(7cqw, calc(55cqw / var(--chars)));
+  z-index: 1;
+  margin: 0 0 var(--m) -2cqw;
+  outline: 0.6cqw solid var(--paper);
 }
 
-.spread--pair .spread__type {
-  grid-column: 4 / 10;
-  grid-row: 4 / 5;
-  justify-self: center;
-  align-self: start;
-  margin-top: 1.2cqw;
-}
-
-.spread--pair .spread__text {
-  grid-column: 5 / 10;
-  grid-row: 5 / 9;
-  margin: 0 1cqw 0 1cqw;
-  display: block;
-  column-count: 2;
-  column-gap: 2.5cqw;
-}
-
-.spread--pair .spread__text > p + p {
-  margin-top: 0.9em;
-}
-
-/* ---------- Layout 6 · lombada: tela à esquerda, faixa vertical, título à direita ---------- */
+/* ---------- Figura e lombada: tela sangrando a página da esquerda ---------- */
+.spread--figure .spread__img--0,
 .spread--spine .spread__img--0 {
   grid-column: 1 / 7;
   grid-row: 1 / 9;
 }
 
+/* Meia página é mais estreita que a tela: ancora à esquerda, onde começa o texto do site */
+.spread--figure .spread__img--0 img,
+.spread--spine .spread__img--0 img {
+  object-position: left top;
+}
+
+.spread--figure .spread__head {
+  grid-column: 7 / 13;
+  grid-row: 1 / 5;
+  justify-items: end;
+  margin: var(--m) var(--m) 0;
+  text-align: right;
+}
+
+.spread--figure .spread__text {
+  grid-column: 8 / 13;
+  grid-row: 5 / 9;
+  justify-self: end;
+  margin: 0 var(--m) var(--m) 0;
+}
+
+/* Faixa vertical com o nome, entre a tela e o texto */
 .spread__spine {
   grid-column: 7 / 8;
   grid-row: 1 / 9;
@@ -384,37 +312,26 @@
   font-family: 'Archivo', var(--font-display);
   font-stretch: 125%;
   font-weight: 900;
-  font-size: 1.7cqw;
+  font-size: 1.5cqw;
   text-transform: uppercase;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.04em;
   white-space: nowrap;
 }
 
-.spread--spine .spread__title {
+.spread--spine .spread__head {
   grid-column: 8 / 13;
   grid-row: 1 / 5;
-  align-self: end;
-  margin: 0 3cqw 0 2.5cqw;
-  font-size: min(6.6cqw, calc(35cqw / var(--chars)));
+  margin: var(--m) var(--m) 0 calc(var(--m) * 0.75);
 }
 
-.spread--spine .spread__type {
-  grid-column: 8 / 13;
-  grid-row: 5 / 6;
-  align-self: start;
-  margin: 1.2cqw 0 0 2.5cqw;
+.spread--spine .spread__title {
+  font-size: min(7cqw, calc(34cqw / var(--chars)));
 }
 
 .spread--spine .spread__text {
-  grid-column: 8 / 11;
-  grid-row: 6 / 9;
-  margin: 0 1.5cqw 3cqw 2.5cqw;
-}
-
-.spread--spine .spread__img--1 {
-  grid-column: 11 / 13;
+  grid-column: 8 / 13;
   grid-row: 5 / 9;
-  margin: 1.2cqw 3cqw 3cqw 0;
+  margin: 0 var(--m) var(--m) calc(var(--m) * 0.75);
 }
 
 /* ---------- Tablet e celular: a página vira uma coluna de revista ---------- */
@@ -422,85 +339,64 @@
   .spread {
     display: flex;
     flex-direction: column;
-    gap: var(--space-4);
+    gap: var(--space-5);
     aspect-ratio: auto;
     padding: var(--space-5);
   }
 
   .spread::after,
-  .spread__spine,
-  .spread__img--2 {
+  .spread__spine {
     display: none;
   }
 
   .spread > * {
     margin: 0 !important;
-    align-self: stretch !important;
-    justify-self: auto !important;
+    outline: 0 !important;
   }
 
-  .spread__type,
-  .spread__credit {
-    align-self: flex-start !important;
+  .spread__head {
+    order: 1;
+    justify-items: start !important;
+    text-align: left !important;
+    color: var(--print) !important;
   }
 
   .spread__title,
-  .spread--figure .spread__title,
-  .spread--pair .spread__title {
-    order: 1;
-    font-size: min(12cqw, calc(98cqw / var(--chars))) !important;
-    text-align: left;
-    justify-self: auto;
+  .spread--cover .spread__title,
+  .spread--bleed .spread__title,
+  .spread--spine .spread__title {
+    font-size: min(12cqw, calc(80cqw / var(--chars)));
   }
 
   .spread__type {
-    order: 2;
+    color: var(--print-soft) !important;
   }
 
   .spread__img--0 {
-    order: 3;
+    order: 2;
     aspect-ratio: 16 / 10;
+  }
+
+  .spread__img--0::after {
+    display: none;
+  }
+
+  .spread__img--1 {
+    order: 3;
+    width: 70%;
+    align-self: flex-end !important;
+    margin-top: calc(var(--space-7) * -1) !important;
+    outline: 4px solid var(--paper) !important;
   }
 
   .spread__text {
     order: 4;
-    display: grid !important;
-    column-count: 1 !important;
+    max-width: none;
     font-size: var(--text-sm);
+    color: var(--print-soft) !important;
   }
 
-  .spread__img--1 {
-    order: 5;
-    aspect-ratio: 16 / 10;
-    border: 0 !important;
-  }
-
-  .spread__credit {
-    order: 6;
-    padding: 0 !important;
-  }
-
-  /* No sangrado o fundo escuro segura o título branco */
-  .spread--bleed .spread__title,
-  .spread--bleed .spread__type {
-    color: var(--print);
-  }
-
-  .spread--bleed .spread__img--0 img {
-  filter: grayscale(1) contrast(1.15) brightness(0.62);
-}
-
-@media (hover: hover) and (pointer: fine) {
-  .spread--bleed .spread__img--0:hover img {
-    filter: grayscale(0.2) brightness(0.55);
-  }
-}
-
-.spread--bleed .spread__img--0::after {
-    display: none;
-  }
-
-  .spread--bleed .spread__text {
-    color: var(--print-soft);
+  .spread__link {
+    color: var(--print) !important;
   }
 }

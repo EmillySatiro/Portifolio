@@ -1,8 +1,8 @@
 // Projetos de design (base: a antiga página Designer do portfólio, sem os arquivos .fig).
 // Imagens em public/images/design/.
 // spread: como o projeto aparece como página dupla de revista
-//   layout: cover | bleed | collage | figure | pair | spine · paper: light | dark
-//   images: índices das telas usadas na página (todas abrem no visualizador)
+//   layout: cover | bleed | collage | collage-r | figure | spine · paper: light | dark
+//   images: índices das telas usadas na página (versão -view, recorte 16:10 do topo)
 
 const img = (name) => `/images/design/${name}.webp`
 
@@ -24,7 +24,7 @@ export const designProjects = [
   },
   {
     id: 'jua',
-    spread: { layout: 'bleed', paper: 'dark', images: [0, 2] },
+    spread: { layout: 'bleed', paper: 'dark', images: [0] },
     title: 'Juá 2025',
     type: 'Site institucional',
     description:
@@ -32,14 +32,16 @@ export const designProjects = [
     liveUrl: 'https://www.juasolucoes.com.br/',
     screens: [
       { src: img('jua-inicio'), label: 'Início' },
-      { src: img('jua-projetos'), label: 'Projetos' },
-      { src: img('jua-projetos-detalhe'), label: 'Detalhe do projeto' },
+      { src: img('jua-sobre'), label: 'Sobre' },
+      { src: img('jua-servicos'), label: 'Serviços' },
+      { src: img('jua-diferenciais'), label: 'Diferenciais' },
       { src: img('jua-duvidas'), label: 'Dúvidas' },
+      { src: img('jua-contato'), label: 'Contato' },
     ],
   },
   {
     id: 'premaut',
-    spread: { layout: 'collage', paper: 'light', images: [0, 1, 2] },
+    spread: { layout: 'collage', paper: 'light', images: [0, 1] },
     title: 'PREMAUT',
     type: 'UI/UX · Sistema web',
     description:
@@ -53,7 +55,7 @@ export const designProjects = [
   },
   {
     id: 'cronometrai',
-    spread: { layout: 'figure', paper: 'dark', images: [0, 1] },
+    spread: { layout: 'figure', paper: 'dark', images: [0] },
     title: 'Cronometraí',
     type: 'UI/UX · Plataforma',
     description:
@@ -66,7 +68,7 @@ export const designProjects = [
   },
   {
     id: 'ecomadeira',
-    spread: { layout: 'bleed', paper: 'dark', images: [0, 1] },
+    spread: { layout: 'bleed', paper: 'dark', images: [0] },
     title: 'EcoMadeira',
     type: 'UI/UX · Ferramenta',
     liveUrl: 'https://ecomadeiraweb.com/',
@@ -79,7 +81,7 @@ export const designProjects = [
   },
   {
     id: 'plantando-ideias',
-    spread: { layout: 'pair', paper: 'light', images: [0, 2] },
+    spread: { layout: 'collage-r', paper: 'light', images: [0, 1] },
     title: 'Plantando Ideias',
     type: 'UI/UX · Plataforma',
     description:
@@ -93,7 +95,7 @@ export const designProjects = [
   },
   {
     id: 'geek-day',
-    spread: { layout: 'spine', paper: 'dark', images: [1, 0] },
+    spread: { layout: 'spine', paper: 'dark', images: [0] },
     title: 'Geek Day Workshop',
     type: 'Minicurso · Design web',
     description:

@@ -1,7 +1,10 @@
 import Icon from '../ui/Icon'
 import './DesignSpread.css'
 
-// Um projeto como página dupla de revista: título enorme, telas em colagem e texto em colunas.
+// Recorte 16:10 do topo da tela (gerado ao lado da imagem original, com sufixo -view)
+const viewOf = (src) => src.replace(/\.webp$/, '-view.webp')
+
+// Um projeto como página dupla de revista: título enorme, telas impressas e texto curto.
 // O layout e o papel (claro/escuro) vêm de project.spread; clicar numa tela abre o visualizador.
 export default function DesignSpread({ project, index, onOpen }) {
   const { layout, paper, images } = project.spread
@@ -23,13 +26,15 @@ export default function DesignSpread({ project, index, onOpen }) {
               onClick={() => onOpen(screenIndex)}
               aria-label={`Ver a tela ${screen.label} de ${project.title}`}
             >
-              <img src={screen.src} alt="" loading="lazy" decoding="async" />
+              <img src={viewOf(screen.src)} alt="" loading="lazy" decoding="async" />
             </button>
           )
         })}
 
-        <h2 className="spread__title">{project.title}</h2>
-        <p className="spread__type">{project.type}</p>
+        <header className="spread__head">
+          <p className="spread__type">{project.type}</p>
+          <h2 className="spread__title">{project.title}</h2>
+        </header>
 
         <div className="spread__text">
           <p>{project.description}</p>
@@ -50,7 +55,6 @@ export default function DesignSpread({ project, index, onOpen }) {
             {project.title}
           </span>
         )}
-        {layout === 'cover' && <p className="spread__credit">por Emilly Sátiro</p>}
       </div>
 
       <p className="spread__pages" aria-hidden="true">
