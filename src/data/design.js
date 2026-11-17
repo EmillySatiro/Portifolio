@@ -1,11 +1,15 @@
 // Projetos de design (base: a antiga página Designer do portfólio, sem os arquivos .fig).
-// Imagens em public/images/design/. Páginas longas rolam sozinhas dentro da janela no hover.
+// Imagens em public/images/design/.
+// spread: como o projeto aparece como página dupla de revista
+//   layout: cover | bleed | collage | figure | pair | spine · paper: light | dark
+//   images: índices das telas usadas na página (todas abrem no visualizador)
 
 const img = (name) => `/images/design/${name}.webp`
 
 export const designProjects = [
   {
     id: 'sinfo',
+    spread: { layout: 'cover', paper: 'light', images: [0] },
     title: 'SINFO 2026',
     type: 'Identidade visual · Site',
     description:
@@ -20,6 +24,7 @@ export const designProjects = [
   },
   {
     id: 'jua',
+    spread: { layout: 'bleed', paper: 'dark', images: [0, 2] },
     title: 'Juá 2025',
     type: 'Site institucional',
     description:
@@ -34,6 +39,7 @@ export const designProjects = [
   },
   {
     id: 'premaut',
+    spread: { layout: 'collage', paper: 'light', images: [0, 1, 2] },
     title: 'PREMAUT',
     type: 'UI/UX · Sistema web',
     description:
@@ -47,6 +53,7 @@ export const designProjects = [
   },
   {
     id: 'cronometrai',
+    spread: { layout: 'figure', paper: 'dark', images: [0, 1] },
     title: 'Cronometraí',
     type: 'UI/UX · Plataforma',
     description:
@@ -59,6 +66,7 @@ export const designProjects = [
   },
   {
     id: 'ecomadeira',
+    spread: { layout: 'bleed', paper: 'dark', images: [0, 1] },
     title: 'EcoMadeira',
     type: 'UI/UX · Ferramenta',
     liveUrl: 'https://ecomadeiraweb.com/',
@@ -71,6 +79,7 @@ export const designProjects = [
   },
   {
     id: 'plantando-ideias',
+    spread: { layout: 'pair', paper: 'light', images: [0, 2] },
     title: 'Plantando Ideias',
     type: 'UI/UX · Plataforma',
     description:
@@ -84,6 +93,7 @@ export const designProjects = [
   },
   {
     id: 'geek-day',
+    spread: { layout: 'spine', paper: 'dark', images: [1, 0] },
     title: 'Geek Day Workshop',
     type: 'Minicurso · Design web',
     description:

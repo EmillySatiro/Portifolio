@@ -5,7 +5,14 @@
   color: var(--muted);
 }
 
-/* O primeiro estudo de caso não precisa do fio de cima: o topo já separa */
-.designer-page .dcase:first-child {
-  border-top: 0;
+/* Mesa onde as páginas da revista ficam dispostas */
+.dz-board {
+  padding: var(--space-8) 0 var(--section-y);
+  background: var(--bg-alt);
+}
+
+.dz-board__list {
+  display: grid;
+  gap: clamp(var(--space-7), 6vw, var(--space-9));
+  max-width: 1180px;
 }
