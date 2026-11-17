@@ -1,165 +1,116 @@
+/* Ilustração recortada (sem fundo), montada por pixels que voam ao entrar na página */
 .avatar {
-  --rx: 0deg;
-  --ry: 0deg;
   position: relative;
   width: 100%;
-  max-width: 470px;
-  margin-inline: auto;
-  perspective: 1000px;
+  height: 100%;
 }
 
-.avatar__tilt {
+.avatar__stage {
   position: relative;
-  aspect-ratio: 900 / 1051;
-  transform: rotateX(var(--rx)) rotateY(var(--ry));
-  transform-style: preserve-3d;
-  transition: transform 0.6s var(--ease-out);
-}
-
-/* Quadrado da arte original, agora no azul índigo, com sombra "pixel" violeta */
-.avatar__card {
-  position: absolute;
-  inset: 9.8% 0 8.2% 0;
-  overflow: hidden;
-  border-radius: var(--radius-lg);
-  background: linear-gradient(155deg, #5a5f9c 0%, var(--brand) 45%, var(--brand-deep) 100%);
-  box-shadow: 14px 14px 0 var(--violet);
-  transform: translateZ(-30px);
-  animation: avatar-card-in 0.9s var(--ease-out) both;
-}
-
-/* Grade de pixels sutil dentro do quadrado */
-.avatar__grid {
-  position: absolute;
-  inset: 0;
-  background-image: linear-gradient(rgba(255, 255, 255, 0.07) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.07) 1px, transparent 1px);
-  background-size: 24px 24px;
-  mask-image: linear-gradient(to bottom, #000, transparent 85%);
+  width: 100%;
+  height: 100%;
 }
 
 .avatar__float {
   position: relative;
   height: 100%;
-  transform: translateZ(40px);
-  animation: avatar-float 5s ease-in-out infinite alternate;
 }
 
-.avatar__img,
-.avatar__canvas {
-  position: absolute;
-  inset: 0;
+.avatar.is-done .avatar__float {
+  animation: avatar-float 6s ease-in-out 0.4s infinite alternate;
+}
+
+.avatar__img {
+  display: block;
   width: 100%;
   height: 100%;
+  object-fit: contain;
   image-rendering: pixelated;
-  transition: opacity 0.2s ease;
+  opacity: 0;
+  transition: opacity 0.35s ease;
 }
 
-.avatar__img.is-hidden,
-.avatar__canvas.is-hidden {
+.avatar.is-done .avatar__img {
+  opacity: 1;
+}
+
+/* O canvas passa da arte para os lados e para cima (os pixels chegam voando de fora) */
+.avatar__canvas {
+  position: absolute;
+  left: -30%;
+  top: -15%;
+  width: 160%;
+  height: 115%;
+  image-rendering: pixelated;
+  pointer-events: none;
+  transition: opacity 0.35s ease;
+}
+
+.avatar.is-done .avatar__canvas {
   opacity: 0;
 }
 
-.avatar__sticker {
+/* ---------- Brilhos nos óculos e no anel ---------- */
+.avatar__glint {
   position: absolute;
-  /* No canto de cima, colado ao quadro da ilustração, "falando" com o rosto */
-  left: -7%;
-  top: 5%;
-  padding: 0.55rem 0.95rem;
-  border-radius: var(--radius-xs);
-  background: var(--surface);
-  color: var(--ink);
-  font-family: ui-monospace, 'SFMono-Regular', Menlo, monospace;
-  font-size: var(--text-sm);
-  font-weight: 600;
-  box-shadow: 4px 4px 0 var(--ink);
-  transform: translateZ(70px) rotate(-6deg);
-  animation: avatar-sticker 0.8s var(--ease-out) 0.9s both;
+  width: calc(6% * var(--s));
+  aspect-ratio: 1;
+  translate: -50% -50%;
+  opacity: 0;
+  pointer-events: none;
 }
 
-/* Brilhos em pixel (uma cruz de 5 quadradinhos) piscando em volta */
-.avatar__spark {
-  --c: var(--sky);
-  --s: 8px;
-  position: absolute;
-  width: var(--s);
-  height: var(--s);
-  background: var(--c);
-  box-shadow: 0 calc(var(--s) * -1) 0 var(--c), 0 var(--s) 0 var(--c), calc(var(--s) * -1) 0 0 var(--c),
-    var(--s) 0 0 var(--c);
-  transform: translateZ(60px);
-  animation: avatar-blink 2.4s steps(1, end) infinite;
+.avatar__glint svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  fill: #fff;
+  filter: drop-shadow(0 0 10px rgba(160, 225, 255, 1)) drop-shadow(0 0 3px #fff);
 }
 
-.avatar__spark--0 {
-  top: 3%;
-  right: 8%;
+/* Só começam depois que a arte terminou de montar; cada um no seu ritmo */
+.avatar.is-done .avatar__glint {
+  animation: avatar-glint 3s ease-in-out 0.3s infinite;
 }
 
-.avatar__spark--1 {
-  --c: var(--violet);
-  top: 36%;
-  left: -3%;
-  animation-delay: 0.6s;
+.avatar.is-done .avatar__glint:nth-of-type(2) {
+  animation-delay: 1.3s;
 }
 
-.avatar__spark--2 {
-  bottom: 24%;
-  right: -2%;
-  animation-delay: 1.2s;
+.avatar.is-done .avatar__glint:nth-of-type(3) {
+  animation-delay: 2.1s;
 }
 
-.avatar__spark--3 {
-  --c: #fff;
-  --s: 5px;
-  top: 16%;
-  left: 14%;
-  animation-delay: 1.7s;
-}
-
-.avatar__spark--4 {
-  --c: var(--violet);
-  --s: 6px;
-  bottom: 3%;
-  left: 34%;
-  animation-delay: 0.3s;
-}
-
-/* Rabicho do balão apontando para a ilustração */
-.avatar__sticker::after {
-  content: '';
-  position: absolute;
-  right: 18px;
-  bottom: -8px;
-  width: 12px;
-  height: 12px;
-  background: inherit;
-  transform: rotate(45deg);
-  z-index: -1;
+@keyframes avatar-glint {
+  0%,
+  45%,
+  100% {
+    opacity: 0;
+    transform: scale(0.2) rotate(0deg);
+  }
+  62% {
+    opacity: 1;
+    transform: scale(1) rotate(45deg);
+  }
+  72% {
+    opacity: 1;
+    transform: scale(0.85) rotate(70deg);
+  }
+  85% {
+    opacity: 0;
+    transform: scale(0.3) rotate(90deg);
+  }
 }
 
 @keyframes avatar-float {
   to {
-    translate: 0 -10px;
+    translate: 0 -8px;
   }
 }
 
-@keyframes avatar-blink {
-  50% {
-    opacity: 0;
-  }
-}
-
-@keyframes avatar-card-in {
-  from {
-    opacity: 0;
-    transform: translateZ(-30px) translateY(40px) scale(0.9);
-  }
-}
-
-@keyframes avatar-sticker {
-  from {
-    opacity: 0;
-    transform: translateZ(70px) rotate(-20deg) scale(0.6);
+@media (prefers-reduced-motion: reduce) {
+  .avatar.is-done .avatar__float,
+  .avatar.is-done .avatar__glint {
+    animation: none;
   }
 }

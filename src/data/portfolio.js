@@ -28,9 +28,8 @@ export const navItems = [
 ]
 
 export const roles = [
-  'Pesquisadora em Visão Computacional',
-  'Desenvolvedora Front-end',
   'Desenvolvedora Full Stack',
+  'Pesquisadora em Visão Computacional',
   'UI/UX Designer',
   'UI/UX & Prototipação',
 ]

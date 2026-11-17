@@ -1,140 +1,155 @@
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { avatar } from '../../data/portfolio'
 import './PixelAvatar.css'
 
-const PIXEL_STEPS = [42, 28, 18, 11, 6, 3] // tamanho do "pixel" em cada quadro
-const STEP_MS = 85
-const REPLAY_COOLDOWN = 2500
+const BLOCK = 5 // tamanho de cada "pixel" que voa, em px de tela
+const FLY_MS = 950 // tempo de voo de cada pixel
+const SPREAD_MS = 900 // quanto os pixels demoram para começar a sair (de cima para baixo, com sorteio)
+const BLEED = 0.3 // o canvas passa 30% da arte para os lados: os pixels aparecem voando de fora
+
+// Pontos de brilho na arte (em % da imagem): lentes dos óculos e a pedra do anel
+const GLINTS = [
+  { x: 27, y: 42.5, size: 1 },
+  { x: 49, y: 45, size: 0.7 },
+  { x: 28.2, y: 80.6, size: 0.85 },
+]
 
 const prefersReducedMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches
+const easeOutCubic = (t) => 1 - (1 - t) ** 3
 
-// Ilustração com efeitos: aparece "pixelando" ao carregar (e de novo no hover),
-// inclina em 3D seguindo o ponteiro e flutua levemente.
+// Monta a ilustração com pixels que voam de fora até o lugar certo; no fim, a imagem nítida
+// assume e aparecem brilhos nos óculos e no anel.
 export default function PixelAvatar() {
   const stageRef = useRef(null)
   const imgRef = useRef(null)
   const canvasRef = useRef(null)
-  const lastRun = useRef(0)
-  const [pixelating, setPixelating] = useState(true)
+  const [phase, setPhase] = useState('loading') // loading | flying | done
 
-  const pixelate = useCallback(() => {
+  useEffect(() => {
     const img = imgRef.current
-    const canvas = canvasRef.current
-    if (!img?.naturalWidth || !canvas || prefersReducedMotion()) {
-      setPixelating(false)
-      return () => {}
-    }
+    let frame = 0
+    let cancelled = false
 
-    lastRun.current = Date.now()
-    const dpr = Math.min(window.devicePixelRatio || 1, 2)
-    canvas.width = Math.round(img.clientWidth * dpr)
-    canvas.height = Math.round(img.clientHeight * dpr)
-    const ctx = canvas.getContext('2d')
-    const tiny = document.createElement('canvas')
-    const tinyCtx = tiny.getContext('2d')
-    ctx.imageSmoothingEnabled = false
-
-    let step = 0
-    let timer
-    const draw = () => {
-      if (step >= PIXEL_STEPS.length) {
-        setPixelating(false)
+    const run = () => {
+      if (cancelled) return
+      const stage = stageRef.current
+      const canvas = canvasRef.current
+      if (!img.naturalWidth || !stage || !canvas || prefersReducedMotion()) {
+        setPhase('done')
         return
       }
-      const block = PIXEL_STEPS[step] * dpr
-      tiny.width = Math.max(1, Math.ceil(canvas.width / block))
-      tiny.height = Math.max(1, Math.ceil(canvas.height / block))
-      tinyCtx.drawImage(img, 0, 0, tiny.width, tiny.height)
-      ctx.clearRect(0, 0, canvas.width, canvas.height)
-      ctx.drawImage(tiny, 0, 0, tiny.width, tiny.height, 0, 0, canvas.width, canvas.height)
-      step += 1
-      timer = setTimeout(draw, STEP_MS)
+
+      const w = stage.clientWidth
+      const h = stage.clientHeight
+      const dpr = Math.min(window.devicePixelRatio || 1, 2)
+      const padX = w * BLEED
+      const padY = h * 0.15
+      const cw = Math.round((w + padX * 2) * dpr)
+      const ch = Math.round((h + padY) * dpr)
+      canvas.width = cw
+      canvas.height = ch
+
+      // Amostra a arte numa grade de BLOCK px: cada célula opaca vira uma partícula
+      const cols = Math.ceil(w / BLOCK)
+      const rows = Math.ceil(h / BLOCK)
+      const sample = document.createElement('canvas')
+      sample.width = cols
+      sample.height = rows
+      const sctx = sample.getContext('2d', { willReadFrequently: true })
+      sctx.drawImage(img, 0, 0, cols, rows)
+      const data = new Uint32Array(sctx.getImageData(0, 0, cols, rows).data.buffer)
+
+      const size = Math.max(1, Math.round(BLOCK * dpr))
+      const parts = []
+      for (let r = 0; r < rows; r += 1) {
+        for (let c = 0; c < cols; c += 1) {
+          const color = data[r * cols + c]
+          if (color >>> 24 < 140) continue // pula o transparente
+          const tx = (padX + c * BLOCK) * dpr
+          const ty = (padY + r * BLOCK) * dpr
+          const angle = Math.random() * Math.PI * 2
+          const dist = (0.35 + Math.random() * 0.75) * Math.max(cw, ch)
+          parts.push({
+            tx,
+            ty,
+            sx: tx + Math.cos(angle) * dist,
+            sy: ty + Math.sin(angle) * dist * 0.6,
+            delay: (r / rows) * SPREAD_MS * 0.55 + Math.random() * SPREAD_MS * 0.45,
+            color: color | 0xff000000,
+          })
+        }
+      }
+
+      const ctx = canvas.getContext('2d')
+      const out = ctx.createImageData(cw, ch)
+      const buf = new Uint32Array(out.data.buffer)
+      const total = SPREAD_MS + FLY_MS
+      const start = performance.now()
+      setPhase('flying')
+
+      const draw = (now) => {
+        const elapsed = now - start
+        buf.fill(0)
+        for (const p of parts) {
+          const t = Math.min(1, Math.max(0, (elapsed - p.delay) / FLY_MS))
+          if (t <= 0) continue
+          const e = easeOutCubic(t)
+          const x = Math.round(p.sx + (p.tx - p.sx) * e)
+          const y = Math.round(p.sy + (p.ty - p.sy) * e)
+          // Pinta o bloquinho direto no buffer (bem mais rápido que fillRect por partícula)
+          const x0 = Math.max(0, x)
+          const x1 = Math.min(cw, x + size)
+          const y0 = Math.max(0, y)
+          const y1 = Math.min(ch, y + size)
+          for (let yy = y0; yy < y1; yy += 1) buf.fill(p.color, yy * cw + x0, yy * cw + x1)
+        }
+        ctx.putImageData(out, 0, 0)
+        if (elapsed < total) frame = requestAnimationFrame(draw)
+        else setPhase('done')
+      }
+      frame = requestAnimationFrame(draw)
     }
 
-    setPixelating(true)
-    draw()
-    return () => clearTimeout(timer)
-  }, [])
+    if (img.complete && img.naturalWidth) run()
+    else img.addEventListener('load', run, { once: true })
 
-  // Primeira revelação quando a imagem termina de carregar
-  useEffect(() => {
-    const img = imgRef.current
-    let cancel = () => {}
-    const start = () => {
-      cancel = pixelate()
-    }
-    if (img.complete) start()
-    else img.addEventListener('load', start, { once: true })
     return () => {
-      img.removeEventListener('load', start)
-      cancel()
-    }
-  }, [pixelate])
-
-  // Inclinação 3D seguindo o ponteiro (escreve direto no estilo, sem re-render)
-  useEffect(() => {
-    const stage = stageRef.current
-    if (prefersReducedMotion() || window.matchMedia('(pointer: coarse)').matches) return undefined
-    let frame = 0
-
-    const onMove = (e) => {
+      cancelled = true
       cancelAnimationFrame(frame)
-      frame = requestAnimationFrame(() => {
-        const rect = stage.getBoundingClientRect()
-        const x = (e.clientX - rect.left) / rect.width - 0.5
-        const y = (e.clientY - rect.top) / rect.height - 0.5
-        stage.style.setProperty('--ry', `${(x * 14).toFixed(2)}deg`)
-        stage.style.setProperty('--rx', `${(-y * 10).toFixed(2)}deg`)
-      })
-    }
-    const onLeave = () => {
-      cancelAnimationFrame(frame)
-      stage.style.setProperty('--ry', '0deg')
-      stage.style.setProperty('--rx', '0deg')
-    }
-
-    stage.addEventListener('pointermove', onMove)
-    stage.addEventListener('pointerleave', onLeave)
-    return () => {
-      cancelAnimationFrame(frame)
-      stage.removeEventListener('pointermove', onMove)
-      stage.removeEventListener('pointerleave', onLeave)
+      img.removeEventListener('load', run)
     }
   }, [])
-
-  const replay = () => {
-    if (!pixelating && Date.now() - lastRun.current > REPLAY_COOLDOWN) pixelate()
-  }
 
   return (
-    <div ref={stageRef} className="avatar" onPointerEnter={replay}>
-      <div className="avatar__tilt">
-        <div className="avatar__card" aria-hidden="true">
-          <span className="avatar__grid" />
-        </div>
-
+    <div className={`avatar is-${phase}`}>
+      <div ref={stageRef} className="avatar__stage">
         <div className="avatar__float">
           <img
             ref={imgRef}
-            className={`avatar__img${pixelating ? ' is-hidden' : ''}`}
+            className="avatar__img"
             src={avatar.src}
             srcSet={avatar.srcSet}
-            sizes="(max-width: 860px) 80vw, 460px"
+            sizes="(max-width: 760px) 94vw, 720px"
             width={avatar.width}
             height={avatar.height}
             alt={avatar.alt}
             fetchPriority="high"
             decoding="async"
           />
-          <canvas ref={canvasRef} className={`avatar__canvas${pixelating ? '' : ' is-hidden'}`} aria-hidden="true" />
+          {GLINTS.map((g) => (
+            <span
+              key={`${g.x}-${g.y}`}
+              className="avatar__glint"
+              style={{ left: `${g.x}%`, top: `${g.y}%`, '--s': g.size }}
+              aria-hidden="true"
+            >
+              <svg viewBox="0 0 24 24">
+                <path d="M12 0c.7 6.6 5.4 11.3 12 12-6.6.7-11.3 5.4-12 12-.7-6.6-5.4-11.3-12-12C6.6 11.3 11.3 6.6 12 0Z" />
+              </svg>
+            </span>
+          ))}
         </div>
-
-        <span className="avatar__sticker" aria-hidden="true">
-          Hello, World! 👋
-        </span>
-        {[0, 1, 2, 3, 4].map((i) => (
-          <span key={i} className={`avatar__spark avatar__spark--${i}`} aria-hidden="true" />
-        ))}
+        <canvas ref={canvasRef} className="avatar__canvas" aria-hidden="true" />
       </div>
     </div>
   )

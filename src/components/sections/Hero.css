@@ -1,97 +1,45 @@
 /*
   Topo da home como capa de revista.
-  Camadas (de trás para frente): luzes de fundo → nome sólido → ilustração → nome em contorno → textos.
-  O nome em contorno fica exatamente sobre o sólido: fora da arte os dois coincidem;
-  sobre a arte só o contorno aparece, então o nome atravessa a ilustração sem escondê-la.
+  Camadas (de trás para frente): luzes de fundo → ilustração recortada → nome enorme → textos.
+  A arte desce até a borda e o nome passa pelo corpo, logo abaixo do anel (que precisa ficar à mostra
+  por causa do brilho): tamanho e posição saem da altura da seção (cqh), valem para qualquer tela.
+  O nome leva um contorno da cor do fundo, que o separa da arte onde passa por cima dela.
 */
 .hero {
-  --name-size: 15.4vw;
-  --name-bottom: 21%;
+  --art-h: calc((100cqh - var(--topbar-h)) * 0.9);
+  --name-size: min(14.8vw, (100cqh - var(--topbar-h)) * 0.25);
+  --name-bottom: 2.6cqh;
   position: relative;
+  container-type: size;
   height: clamp(640px, 100svh, 1000px);
   overflow: hidden;
   isolation: isolate;
-  background: radial-gradient(42% 52% at 50% 46%, rgba(123, 63, 196, 0.16), transparent 70%),
+  background: radial-gradient(42% 52% at 50% 42%, rgba(123, 63, 196, 0.16), transparent 70%),
     radial-gradient(60% 45% at 50% 100%, rgba(65, 69, 117, 0.14), transparent 70%);
-}
-
-/* ---------- Nome gigante ---------- */
-.hero__name {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: var(--name-bottom);
-  z-index: 1;
-  margin: 0;
-  font-family: var(--font-display);
-  font-size: var(--name-size);
-  font-weight: 400;
-  line-height: 0.8;
-  letter-spacing: -0.005em;
-  text-align: center;
-  text-transform: uppercase;
-  white-space: nowrap;
-  color: var(--ink);
-  pointer-events: none;
-}
-
-/* Cada palavra sobe de dentro de uma janela (só na entrada) */
-.hero__word {
-  display: inline-block;
-  overflow: hidden;
-  /* Espaço em cima para os acentos (Í, Á) não serem cortados pela janela */
-  padding: 0.2em 0 0.02em;
-  margin-top: -0.2em;
-  vertical-align: bottom;
-}
-
-.hero__word > span {
-  display: inline-block;
-  animation: hero-word 1s var(--ease-out) both;
-}
-
-.hero__word--accent {
-  color: var(--accent);
-}
-
-.hero__word--accent > span {
-  animation-delay: 0.09s;
-}
-
-.hero__name--outline {
-  z-index: 3;
-  color: transparent;
-  -webkit-text-stroke: max(1px, 0.09vw) rgba(255, 255, 255, 0.92);
-}
-
-.hero__name--outline .hero__word--accent {
-  color: transparent;
 }
 
 /* ---------- Ilustração ---------- */
 .hero__art {
   position: absolute;
   left: 50%;
-  bottom: 0;
+  top: calc(var(--topbar-h) + 8px);
   z-index: 2;
-  height: calc(100% - var(--topbar-h) - 12px);
+  height: var(--art-h);
   aspect-ratio: 900 / 1051;
   translate: -50% 0;
-}
-
-.hero__art .avatar {
-  max-width: none;
-  height: 100%;
+  /* O corpo some suavemente atrás do nome, sem uma borda reta no fim da arte */
+  mask-image: linear-gradient(180deg, #000 86%, transparent 99%);
+  -webkit-mask-image: linear-gradient(180deg, #000 86%, transparent 99%);
 }
 
 /* Elipse fina que "abraça" a ilustração, desenhada uma vez na entrada */
 .hero__orbit {
   position: absolute;
   left: -38%;
-  top: 30%;
+  top: 26%;
   z-index: 3;
   width: 176%;
-  height: 34%;
+  height: 30%;
   overflow: visible;
   rotate: -12deg;
   pointer-events: none;
@@ -104,14 +52,71 @@
   vector-effect: non-scaling-stroke;
   stroke-dasharray: 1;
   stroke-dashoffset: 1;
-  opacity: 0.55;
-  animation: hero-orbit 1.6s var(--ease-in-out, cubic-bezier(0.77, 0, 0.175, 1)) 0.5s forwards;
+  opacity: 0.5;
+  animation: hero-orbit 1.6s var(--ease-in-out, cubic-bezier(0.77, 0, 0.175, 1)) 1.6s forwards;
+}
+
+/* ---------- Nome gigante, por cima da arte ---------- */
+.hero__name {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: var(--name-bottom);
+  z-index: 3;
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: var(--name-size);
+  font-weight: 400;
+  line-height: 0.8;
+  letter-spacing: -0.005em;
+  text-align: center;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--ink);
+  -webkit-text-stroke: 0.05em var(--bg);
+  paint-order: stroke fill;
+  pointer-events: none;
+}
+
+/* Cada palavra sobe de dentro de uma janela (só na entrada) */
+.hero__word {
+  display: inline-block;
+  overflow: hidden;
+  /* Espaço em cima para os acentos (Í, Á) não serem cortados pela janela */
+  padding: 0.2em 0.04em 0.02em;
+  margin-top: -0.2em;
+  vertical-align: bottom;
+}
+
+.hero__word > span {
+  display: inline-block;
+  animation: hero-word 1s var(--ease-out) 0.9s both;
+}
+
+.hero__word--accent {
+  color: var(--accent);
+}
+
+.hero__word--accent > span {
+  animation-delay: 1s;
 }
 
 /* ---------- Textos pequenos ---------- */
-.hero__corner,
+.hero__intro {
+  position: absolute;
+  top: calc(var(--topbar-h) + var(--space-6));
+  left: var(--gutter);
+  z-index: 4;
+  display: grid;
+  gap: var(--space-3);
+  justify-items: start;
+  max-width: min(25vw, 330px);
+  animation: hero-fade 0.8s ease 1.2s both;
+}
+
 .hero__role,
 .hero__tagline {
+  margin: 0;
   font-size: var(--text-xs);
   font-weight: 700;
   line-height: 1.5;
@@ -119,30 +124,7 @@
   letter-spacing: 0.12em;
 }
 
-.hero__corner {
-  position: absolute;
-  top: calc(var(--topbar-h) + var(--space-5));
-  z-index: 4;
-  margin: 0;
-  color: var(--muted);
-  animation: hero-fade 0.8s ease 0.4s both;
-}
-
-.hero__corner--left {
-  left: var(--gutter);
-}
-
-.hero__corner--right {
-  right: var(--gutter);
-}
-
-/* Atuação girando, logo acima do começo do nome */
 .hero__role {
-  position: absolute;
-  left: var(--gutter);
-  bottom: calc(var(--name-bottom) + var(--name-size) * 0.86);
-  z-index: 4;
-  margin: 0;
   min-height: 1.5em;
   font-size: var(--text-sm);
   color: var(--accent);
@@ -153,19 +135,7 @@
   animation: hero-role 0.6s var(--ease-out) both;
 }
 
-.hero__foot {
-  position: absolute;
-  left: var(--gutter);
-  bottom: var(--space-6);
-  z-index: 4;
-  display: grid;
-  gap: var(--space-4);
-  max-width: min(26vw, 340px);
-  animation: hero-fade 0.8s ease 0.5s both;
-}
-
 .hero__tagline {
-  margin: 0;
   color: var(--ink);
 }
 
@@ -173,16 +143,17 @@
   display: flex;
   flex-wrap: wrap;
   gap: var(--space-2);
+  margin-top: var(--space-3);
 }
 
 .hero__socials {
   position: absolute;
+  top: calc(var(--topbar-h) + var(--space-6));
   right: var(--gutter);
-  bottom: var(--space-6);
   z-index: 4;
   display: flex;
   gap: var(--space-2);
-  animation: hero-fade 0.8s ease 0.5s both;
+  animation: hero-fade 0.8s ease 1.3s both;
 }
 
 /* ---------- Animações de entrada ---------- */
@@ -212,40 +183,20 @@
   }
 }
 
-/* ---------- Tablet ---------- */
-@media (max-width: 1100px) and (min-width: 761px) {
-  /* Arte um pouco menor para sobrar a lateral esquerda aos textos e botões */
-  .hero {
-    --name-bottom: 22%;
-  }
-
-  .hero__art {
-    left: 58%;
-    height: 76%;
-  }
-
-  .hero__tagline {
-    display: none;
-  }
-
-  .hero__foot {
-    max-width: none;
-  }
-}
-
-/* ---------- Celular: arte no alto, nome sobre ela, textos embaixo ---------- */
+/* ---------- Celular: arte no alto, nome logo abaixo, textos e botões embaixo ---------- */
 @media (max-width: 760px) {
   .hero {
     --name-size: 15.4vw;
-    --name-bottom: 196px;
-    height: max(760px, 100svh);
+    --name-bottom: 168px;
+    height: max(720px, 100svh);
   }
 
   /* A arte termina um pouco abaixo do topo do nome: as letras "seguram" a ilustração */
   .hero__art {
+    top: auto;
+    bottom: calc(var(--name-bottom) + var(--name-size) * 0.5);
     width: 94vw;
     height: auto;
-    bottom: calc(var(--name-bottom) + var(--name-size) * 0.55);
   }
 
   .hero__orbit,
@@ -253,20 +204,21 @@
     display: none;
   }
 
-  .hero__corner {
-    top: calc(var(--topbar-h) + var(--space-3));
+  .hero__intro {
+    top: auto;
+    right: var(--gutter);
+    bottom: var(--space-5);
+    justify-items: stretch;
+    max-width: none;
   }
 
-  /* Atuação logo abaixo do nome */
   .hero__role {
-    bottom: calc(var(--name-bottom) - 2.2em);
     font-size: var(--text-xs);
   }
 
-  .hero__foot {
-    right: var(--gutter);
-    bottom: var(--space-5);
-    max-width: none;
+  .hero__actions {
+    flex-wrap: nowrap;
+    margin-top: var(--space-1);
   }
 
   .hero__actions .btn {

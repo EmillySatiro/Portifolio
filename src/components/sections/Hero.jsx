@@ -19,9 +19,9 @@ function useRotatingIndex(length, interval) {
 }
 
 // O nome em letras gigantes; cada palavra sobe de dentro de uma "janela" ao carregar
-function Name({ outline = false }) {
+function Name() {
   return (
-    <p className={`hero__name${outline ? ' hero__name--outline' : ''}`} aria-hidden={outline || undefined}>
+    <p className="hero__name" aria-hidden="true">
       <span className="hero__word">
         <span>{profile.firstName}</span>
       </span>{' '}
@@ -32,20 +32,14 @@ function Name({ outline = false }) {
   )
 }
 
-// Topo da home em camadas (referência: capa de revista):
-// nome enorme atrás da ilustração → ilustração com os pixels → o mesmo nome só em contorno por cima,
-// para as letras continuarem legíveis onde passam pela arte.
+// Topo da home como capa de revista: a ilustração recortada no centro (montada por pixels que voam)
+// e o nome enorme por cima dela, com um contorno da cor do fundo que separa as letras da arte.
 export default function Hero() {
   const roleIndex = useRotatingIndex(roles.length, ROLE_INTERVAL)
 
   return (
     <section id="home" className="hero">
       <h1 className="sr-only">{profile.name}</h1>
-
-      <p className="hero__corner hero__corner--left">Portfólio — {profile.year}</p>
-      <p className="hero__corner hero__corner--right">Picos, PI · Brasil</p>
-
-      <Name />
 
       <div className="hero__art">
         <svg className="hero__orbit" viewBox="0 0 600 300" aria-hidden="true" preserveAspectRatio="none">
@@ -54,15 +48,14 @@ export default function Hero() {
         <PixelAvatar />
       </div>
 
-      <Name outline />
+      <Name />
 
-      <p className="hero__role" aria-live="polite">
-        <span key={roleIndex} className="hero__role-text">
-          {roles[roleIndex]}
-        </span>
-      </p>
-
-      <div className="hero__foot">
+      <div className="hero__intro">
+        <p className="hero__role" aria-live="polite">
+          <span key={roleIndex} className="hero__role-text">
+            {roles[roleIndex]}
+          </span>
+        </p>
         <p className="hero__tagline">Desenvolvimento, design de interfaces e pesquisa em visão computacional.</p>
         <div className="hero__actions">
           <Link to="/projetos" className="btn btn--primary">
