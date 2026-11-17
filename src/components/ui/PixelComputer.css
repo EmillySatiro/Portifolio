@@ -1,0 +1,459 @@
+/*
+  Computador em pixel art (cantos em degrau, contornos de 4 px), flutuando.
+  A tela troca de cena a cada 4 s em um ciclo de 12 s: código → visão computacional → interface.
+*/
+.pc {
+  --px: clamp(3px, 0.32vw, 4px); /* "pixel" do desenho */
+  --body: #e9e6f2;
+  --body-dark: #c9c3dc;
+  --line: #23264d;
+  --glass: #12142b;
+  position: relative;
+  display: grid;
+  justify-items: center;
+  width: clamp(260px, 30vw, 420px);
+}
+
+.pc__float {
+  display: grid;
+  justify-items: center;
+  width: 100%;
+  animation: pc-float 4.5s ease-in-out infinite alternate;
+}
+
+/* Cantos em degrau: um clip-path que tira um "pixel" de cada canto */
+.pc__monitor,
+.pc__base {
+  clip-path: polygon(
+    var(--px) 0,
+    calc(100% - var(--px)) 0,
+    calc(100% - var(--px)) var(--px),
+    100% var(--px),
+    100% calc(100% - var(--px)),
+    calc(100% - var(--px)) calc(100% - var(--px)),
+    calc(100% - var(--px)) 100%,
+    var(--px) 100%,
+    var(--px) calc(100% - var(--px)),
+    0 calc(100% - var(--px)),
+    0 var(--px),
+    var(--px) var(--px)
+  );
+}
+
+.pc__monitor {
+  width: 100%;
+  padding: calc(var(--px) * 4);
+  padding-bottom: 0;
+  background: var(--line);
+}
+
+.pc__screen {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background: var(--glass);
+  box-shadow: 0 0 0 calc(var(--px) * 3) var(--body), 0 0 0 calc(var(--px) * 4) var(--body-dark);
+  margin: calc(var(--px) * 3);
+  /* Linhas de varredura de monitor antigo */
+  background-image: repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.035) 0 2px, transparent 2px 4px);
+}
+
+.pc__chin {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: calc(var(--px) * 3) calc(var(--px) * -4) 0;
+  padding: calc(var(--px) * 3) calc(var(--px) * 7) calc(var(--px) * 4);
+  background: var(--body);
+  color: var(--line);
+}
+
+.pc__led {
+  width: calc(var(--px) * 2);
+  height: calc(var(--px) * 2);
+  background: #3fd68a;
+  box-shadow: 0 0 8px #3fd68a;
+  animation: pc-led 2.4s steps(1, end) infinite;
+}
+
+.pc__neck {
+  width: 16%;
+  height: calc(var(--px) * 7);
+  background: linear-gradient(90deg, var(--body-dark), var(--body) 40%, var(--body-dark));
+  border-inline: var(--px) solid var(--line);
+}
+
+.pc__base {
+  width: 46%;
+  height: calc(var(--px) * 5);
+  background: var(--line);
+  box-shadow: inset 0 calc(var(--px) * -2) 0 var(--body-dark), inset 0 0 0 var(--px) var(--line);
+  background: linear-gradient(var(--line) 0 var(--px), var(--body) var(--px) calc(100% - var(--px)), var(--line) 0);
+}
+
+.pc__shadow {
+  width: 70%;
+  height: 18px;
+  margin-top: var(--space-2);
+  border-radius: 50%;
+  background: radial-gradient(closest-side, rgba(10, 10, 30, 0.28), transparent);
+  animation: pc-shadow 4.5s ease-in-out infinite alternate;
+}
+
+/* Reflexo diagonal no vidro */
+.pc__glare {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  background: linear-gradient(125deg, rgba(255, 255, 255, 0.1) 0 22%, transparent 22% 30%, rgba(255, 255, 255, 0.05) 30% 34%, transparent 34%);
+  pointer-events: none;
+}
+
+/* ---------- Cenas: cada uma aparece por 4 s de um ciclo de 12 s ---------- */
+.pc__scene {
+  position: absolute;
+  inset: 0;
+  padding: 8% 8%;
+  opacity: 0;
+  animation: pc-scene 12s steps(1, end) infinite;
+}
+
+.pc__scene--code {
+  animation-delay: 0s;
+}
+
+.pc__scene--vision {
+  animation-delay: -8s;
+}
+
+.pc__scene--ui {
+  animation-delay: -4s;
+}
+
+/* Cena 1 · código */
+.pc__scene--code {
+  display: grid;
+  align-content: start;
+  gap: 7%;
+  font-size: clamp(6px, 0.7vw, 9px);
+}
+
+.pc__line {
+  display: flex;
+  gap: 0.8em;
+  height: 1.3em;
+  clip-path: inset(0 100% 0 0);
+  animation: pc-type 12s steps(12, end) infinite;
+  animation-delay: calc(var(--line) * 0.45s);
+}
+
+.pc__tok {
+  width: calc(var(--len) * 0.9em);
+  height: 100%;
+}
+
+.pc__tok--k {
+  background: #b597f0;
+}
+
+.pc__tok--f {
+  background: #8ad7eb;
+}
+
+.pc__tok--v {
+  background: #ffb89a;
+}
+
+.pc__tok--s {
+  background: #9be59b;
+}
+
+.pc__tok--p {
+  background: #5d6191;
+}
+
+.pc__cursor {
+  width: 0.9em;
+  height: 1.3em;
+  background: #fff;
+  animation: pc-blink 0.8s steps(1, end) infinite;
+}
+
+/* Cena 2 · visão computacional */
+.pc__scene--vision {
+  padding: 0;
+  background: #1c1f3d;
+}
+
+.pc__scene--vision img {
+  position: absolute;
+  left: 50%;
+  top: 4%;
+  width: 72%;
+  translate: -50% 0;
+  image-rendering: pixelated;
+  filter: saturate(0.8);
+}
+
+/* Linha de varredura descendo pela imagem */
+.pc__scan {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: #8ad7eb;
+  box-shadow: 0 0 12px 3px rgba(138, 215, 235, 0.7);
+  animation: pc-scan 12s linear infinite;
+  animation-delay: -8s;
+}
+
+/* Caixa que "encontra" o rosto */
+.pc__box {
+  position: absolute;
+  left: 32%;
+  top: 22%;
+  width: 40%;
+  height: 46%;
+  border: 2px solid #3fd68a;
+  opacity: 0;
+  animation: pc-box 12s steps(1, end) infinite;
+  animation-delay: -8s;
+}
+
+.pc__label {
+  position: absolute;
+  left: -2px;
+  bottom: 100%;
+  padding: 1px 5px;
+  background: #3fd68a;
+  color: #0b2016;
+  font-family: ui-monospace, Menlo, monospace;
+  font-size: clamp(7px, 0.75vw, 10px);
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+/* Cena 3 · interface montando, peça por peça */
+.pc__scene--ui {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto auto auto 1fr auto;
+  gap: 6%;
+  background: #f4f2ee;
+}
+
+.pc__ui {
+  background: #414575;
+  opacity: 0;
+  transform: scale(0.6);
+  animation: pc-pop 12s steps(1, end) infinite;
+  animation-delay: -4s;
+}
+
+.pc__ui--bar {
+  grid-column: 1 / -1;
+  height: 8px;
+  background: #23264d;
+}
+
+.pc__ui--title {
+  grid-column: 1 / -1;
+  width: 70%;
+  height: 14px;
+  animation-name: pc-pop-2;
+}
+
+.pc__ui--text {
+  grid-column: 1 / -1;
+  width: 90%;
+  height: 6px;
+  background: #b9bbd2;
+  animation-name: pc-pop-3;
+}
+
+.pc__ui--card {
+  min-height: 30px;
+  background: #8ad7eb;
+  animation-name: pc-pop-4;
+}
+
+.pc__ui--card + .pc__ui--card {
+  background: #b597f0;
+}
+
+.pc__ui--btn {
+  width: 60%;
+  height: 12px;
+  background: #ffb89a;
+  animation-name: pc-pop-5;
+}
+
+/* ---------- Animações ---------- */
+@keyframes pc-scene {
+  0% {
+    opacity: 1;
+  }
+  33.33% {
+    opacity: 0;
+  }
+}
+
+@keyframes pc-type {
+  0% {
+    clip-path: inset(0 100% 0 0);
+  }
+  12%,
+  33% {
+    clip-path: inset(0 0 0 0);
+  }
+  33.34%,
+  100% {
+    clip-path: inset(0 100% 0 0);
+  }
+}
+
+@keyframes pc-scan {
+  0% {
+    top: 0;
+  }
+  16% {
+    top: 100%;
+  }
+  16.01%,
+  100% {
+    top: -10%;
+  }
+}
+
+@keyframes pc-box {
+  0%,
+  14% {
+    opacity: 0;
+  }
+  15%,
+  33% {
+    opacity: 1;
+  }
+  33.34% {
+    opacity: 0;
+  }
+}
+
+@keyframes pc-pop {
+  0% {
+    opacity: 1;
+    transform: none;
+  }
+  33.34% {
+    opacity: 0;
+    transform: scale(0.6);
+  }
+}
+
+@keyframes pc-pop-2 {
+  0%,
+  3% {
+    opacity: 0;
+  }
+  4% {
+    opacity: 1;
+    transform: none;
+  }
+  33.34% {
+    opacity: 0;
+  }
+}
+
+@keyframes pc-pop-3 {
+  0%,
+  7% {
+    opacity: 0;
+  }
+  8% {
+    opacity: 1;
+    transform: none;
+  }
+  33.34% {
+    opacity: 0;
+  }
+}
+
+@keyframes pc-pop-4 {
+  0%,
+  11% {
+    opacity: 0;
+  }
+  12% {
+    opacity: 1;
+    transform: none;
+  }
+  33.34% {
+    opacity: 0;
+  }
+}
+
+@keyframes pc-pop-5 {
+  0%,
+  16% {
+    opacity: 0;
+  }
+  17% {
+    opacity: 1;
+    transform: none;
+  }
+  33.34% {
+    opacity: 0;
+  }
+}
+
+@keyframes pc-blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+@keyframes pc-led {
+  80% {
+    opacity: 0.3;
+  }
+}
+
+@keyframes pc-float {
+  from {
+    transform: translateY(-6px);
+  }
+  to {
+    transform: translateY(6px);
+  }
+}
+
+@keyframes pc-shadow {
+  from {
+    scale: 0.85;
+    opacity: 0.7;
+  }
+  to {
+    scale: 1;
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pc__float,
+  .pc__shadow,
+  .pc__scene,
+  .pc__line,
+  .pc__ui,
+  .pc__scan,
+  .pc__box,
+  .pc__cursor {
+    animation: none;
+  }
+
+  /* Sem movimento: fica parada a cena da interface pronta */
+  .pc__scene--ui,
+  .pc__ui {
+    opacity: 1;
+    transform: none;
+  }
+}

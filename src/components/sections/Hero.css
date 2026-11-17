@@ -6,14 +6,14 @@
 */
 .hero {
   /* O topo é sempre claro: as cores locais não seguem o tema escuro */
-  --bg: #efeeeb;
+  --edge: 48px; /* altura da borda de pixels que leva à próxima seção */
   --ink: #121212;
   --muted: #55565e;
   --accent: #414575;
   --line-strong: rgba(18, 18, 18, 0.5);
   --avail: calc(100cqh - var(--topbar-h));
   --name-size: min(9.8vw, var(--avail) * 0.2);
-  --name-bottom: calc(var(--space-6) + 44px + var(--space-5));
+  --name-bottom: calc(var(--edge) + var(--space-4) + 44px + var(--space-5));
   /* O anel (a 80,6% da imagem) fica logo acima do topo do nome; a arte cresce para cima até
      as pontas do cabelo (5% de cima da imagem) passarem por trás da barra do topo */
   --ring-y: calc(100cqh - var(--name-bottom) - var(--name-size) * 0.8 - 26px);
@@ -187,7 +187,7 @@
 .hero__foot {
   position: absolute;
   left: var(--gutter);
-  bottom: var(--space-6);
+  bottom: calc(var(--edge) + var(--space-4));
   z-index: 4;
   display: flex;
   flex-wrap: wrap;
@@ -209,11 +209,34 @@
 .hero__socials {
   position: absolute;
   right: var(--gutter);
-  bottom: var(--space-6);
+  bottom: calc(var(--edge) + var(--space-4));
   z-index: 4;
   display: flex;
   gap: var(--space-2);
   animation: hero-fade 0.8s ease 1.3s both;
+}
+
+/* ---------- Passagem para a próxima seção ----------
+   O fundo colorido "se desfaz" em pixels: uma faixa de quadradinhos na cor da página,
+   em degraus (esparsos → xadrez → sólido), como a arte em pixel. */
+.hero::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  z-index: 5;
+  height: var(--edge);
+  pointer-events: none;
+  background:
+    linear-gradient(var(--bg), var(--bg)) 0 32px / 100% 16px no-repeat,
+    linear-gradient(90deg, var(--bg) 16px, transparent 0) 0 16px / 32px 16px repeat-x,
+    linear-gradient(90deg, var(--bg) 16px, transparent 0) 16px 0 / 64px 16px repeat-x;
+}
+
+/* O botão de contorno no hover usa as cores fixas do topo (a página pode estar no tema escuro) */
+.hero .btn--outline:hover {
+  color: #fff;
 }
 
 /* ---------- Animações de entrada ---------- */
@@ -252,7 +275,7 @@
 @media (max-width: 760px) {
   .hero {
     --name-size: 9.8vw;
-    --name-bottom: 176px;
+    --name-bottom: calc(176px + var(--edge) - var(--space-5));
     height: max(720px, 100svh);
   }
 
@@ -275,7 +298,7 @@
 
   .hero__foot {
     right: var(--gutter);
-    bottom: var(--space-5);
+    bottom: var(--edge);
     display: grid;
     gap: var(--space-3);
   }
