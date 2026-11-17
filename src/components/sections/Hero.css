@@ -1,21 +1,31 @@
 /*
-  Topo da home como capa de revista.
-  Camadas (de trás para frente): luzes de fundo → ilustração recortada → nome enorme → textos.
-  A arte desce até a borda e o nome passa pelo corpo, logo abaixo do anel (que precisa ficar à mostra
-  por causa do brilho): tamanho e posição saem da altura da seção (cqh), valem para qualquer tela.
-  O nome leva um contorno da cor do fundo, que o separa da arte onde passa por cima dela.
+  Topo da home como capa de revista (referência: capa "CREATORS").
+  Fundo claro de estúdio nos dois temas; ilustração recortada no centro; nome enorme em
+  grotesca expandida e preta, na frente do corpo, logo abaixo do anel (que precisa ficar à mostra).
+  Tamanho e posição saem da altura da seção (cqh), então valem para qualquer tela.
 */
 .hero {
-  --art-h: calc((100cqh - var(--topbar-h)) * 0.9);
-  --name-size: min(14.8vw, (100cqh - var(--topbar-h)) * 0.25);
-  --name-bottom: 2.6cqh;
+  /* O topo é sempre claro: as cores locais não seguem o tema escuro */
+  --bg: #efeeeb;
+  --ink: #121212;
+  --muted: #55565e;
+  --accent: #414575;
+  --line-strong: rgba(18, 18, 18, 0.5);
+  --avail: calc(100cqh - var(--topbar-h));
+  --name-size: min(9.8vw, var(--avail) * 0.2);
+  --name-bottom: calc(var(--space-6) + 44px + var(--space-6));
+  /* Altura da arte calculada para o anel (a 80,6% da imagem) ficar logo acima do topo do nome */
+  --art-h: calc((100cqh - var(--name-bottom) - var(--name-size) * 0.8 - 36px - var(--topbar-h) - 8px) / 0.806);
   position: relative;
   container-type: size;
   height: clamp(640px, 100svh, 1000px);
   overflow: hidden;
   isolation: isolate;
-  background: radial-gradient(42% 52% at 50% 42%, rgba(123, 63, 196, 0.16), transparent 70%),
-    radial-gradient(60% 45% at 50% 100%, rgba(65, 69, 117, 0.14), transparent 70%);
+  color: var(--ink);
+  color-scheme: light;
+  background-color: #efeeeb;
+  /* Luz de estúdio: centro mais claro, bordas um pouco mais escuras, sem cantos marcados */
+  background-image: radial-gradient(70% 80% at 50% 38%, #fbfbfa 0%, #efeeeb 55%, #e2e1dd 100%);
 }
 
 /* ---------- Ilustração ---------- */
@@ -27,16 +37,13 @@
   height: var(--art-h);
   aspect-ratio: 900 / 1051;
   translate: -50% 0;
-  /* O corpo some suavemente atrás do nome, sem uma borda reta no fim da arte */
-  mask-image: linear-gradient(180deg, #000 86%, transparent 99%);
-  -webkit-mask-image: linear-gradient(180deg, #000 86%, transparent 99%);
 }
 
 /* Elipse fina que "abraça" a ilustração, desenhada uma vez na entrada */
 .hero__orbit {
   position: absolute;
   left: -38%;
-  top: 26%;
+  top: 30%;
   z-index: 3;
   width: 176%;
   height: 30%;
@@ -48,15 +55,15 @@
 .hero__orbit ellipse {
   fill: none;
   stroke: var(--ink);
-  stroke-width: 1.3;
+  stroke-width: 1.2;
   vector-effect: non-scaling-stroke;
   stroke-dasharray: 1;
   stroke-dashoffset: 1;
-  opacity: 0.5;
+  opacity: 0.6;
   animation: hero-orbit 1.6s var(--ease-in-out, cubic-bezier(0.77, 0, 0.175, 1)) 1.6s forwards;
 }
 
-/* ---------- Nome gigante, por cima da arte ---------- */
+/* ---------- Nome gigante, na frente da arte ---------- */
 .hero__name {
   position: absolute;
   left: 0;
@@ -64,17 +71,16 @@
   bottom: var(--name-bottom);
   z-index: 3;
   margin: 0;
-  font-family: var(--font-display);
+  font-family: 'Archivo', var(--font-display);
+  font-stretch: 125%;
+  font-weight: 900;
   font-size: var(--name-size);
-  font-weight: 400;
   line-height: 0.8;
-  letter-spacing: -0.005em;
+  letter-spacing: -0.02em;
   text-align: center;
   text-transform: uppercase;
   white-space: nowrap;
   color: var(--ink);
-  -webkit-text-stroke: 0.05em var(--bg);
-  paint-order: stroke fill;
   pointer-events: none;
 }
 
@@ -83,8 +89,8 @@
   display: inline-block;
   overflow: hidden;
   /* Espaço em cima para os acentos (Í, Á) não serem cortados pela janela */
-  padding: 0.2em 0.04em 0.02em;
-  margin-top: -0.2em;
+  padding: 0.24em 0.02em 0.04em;
+  margin-top: -0.24em;
   vertical-align: bottom;
 }
 
@@ -93,27 +99,11 @@
   animation: hero-word 1s var(--ease-out) 0.9s both;
 }
 
-.hero__word--accent {
-  color: var(--accent);
-}
-
 .hero__word--accent > span {
   animation-delay: 1s;
 }
 
 /* ---------- Textos pequenos ---------- */
-.hero__intro {
-  position: absolute;
-  top: calc(var(--topbar-h) + var(--space-6));
-  left: var(--gutter);
-  z-index: 4;
-  display: grid;
-  gap: var(--space-3);
-  justify-items: start;
-  max-width: min(25vw, 330px);
-  animation: hero-fade 0.8s ease 1.2s both;
-}
-
 .hero__role,
 .hero__tagline {
   margin: 0;
@@ -124,10 +114,15 @@
   letter-spacing: 0.12em;
 }
 
+/* Atuação girando, logo acima do começo do nome */
 .hero__role {
+  position: absolute;
+  left: var(--gutter);
+  bottom: calc(var(--name-bottom) + var(--name-size) * 1.02);
+  z-index: 4;
   min-height: 1.5em;
   font-size: var(--text-sm);
-  color: var(--accent);
+  color: var(--ink);
 }
 
 .hero__role-text {
@@ -135,21 +130,32 @@
   animation: hero-role 0.6s var(--ease-out) both;
 }
 
+.hero__foot {
+  position: absolute;
+  left: var(--gutter);
+  bottom: var(--space-6);
+  z-index: 4;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-4) var(--space-6);
+  animation: hero-fade 0.8s ease 1.3s both;
+}
+
 .hero__tagline {
+  max-width: 34ch;
   color: var(--ink);
 }
 
 .hero__actions {
   display: flex;
-  flex-wrap: wrap;
   gap: var(--space-2);
-  margin-top: var(--space-3);
 }
 
 .hero__socials {
   position: absolute;
-  top: calc(var(--topbar-h) + var(--space-6));
   right: var(--gutter);
+  bottom: var(--space-6);
   z-index: 4;
   display: flex;
   gap: var(--space-2);
@@ -159,7 +165,7 @@
 /* ---------- Animações de entrada ---------- */
 @keyframes hero-word {
   from {
-    transform: translateY(105%);
+    transform: translateY(140%);
   }
 }
 
@@ -183,18 +189,29 @@
   }
 }
 
+/* ---------- Tablet: a frase sai, sobra espaço para os botões ---------- */
+@media (max-width: 1100px) and (min-width: 761px) {
+  .hero__tagline {
+    display: none;
+  }
+
+  .hero__role {
+    max-width: 28vw;
+  }
+}
+
 /* ---------- Celular: arte no alto, nome logo abaixo, textos e botões embaixo ---------- */
 @media (max-width: 760px) {
   .hero {
-    --name-size: 15.4vw;
-    --name-bottom: 168px;
+    --name-size: 9.8vw;
+    --name-bottom: 176px;
     height: max(720px, 100svh);
   }
 
-  /* A arte termina um pouco abaixo do topo do nome: as letras "seguram" a ilustração */
+  /* A arte termina logo abaixo do topo do nome: as letras "seguram" a ilustração */
   .hero__art {
     top: auto;
-    bottom: calc(var(--name-bottom) + var(--name-size) * 0.5);
+    bottom: calc(var(--name-bottom) + var(--name-size) * 0.3);
     width: 94vw;
     height: auto;
   }
@@ -204,21 +221,16 @@
     display: none;
   }
 
-  .hero__intro {
-    top: auto;
-    right: var(--gutter);
-    bottom: var(--space-5);
-    justify-items: stretch;
-    max-width: none;
-  }
-
   .hero__role {
+    bottom: calc(var(--name-bottom) - 2.4em);
     font-size: var(--text-xs);
   }
 
-  .hero__actions {
-    flex-wrap: nowrap;
-    margin-top: var(--space-1);
+  .hero__foot {
+    right: var(--gutter);
+    bottom: var(--space-5);
+    display: grid;
+    gap: var(--space-3);
   }
 
   .hero__actions .btn {

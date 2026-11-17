@@ -28,19 +28,19 @@
   image-rendering: pixelated;
   opacity: 0;
   transition: opacity 0.35s ease;
+  /* O corpo some suavemente embaixo, sem uma borda reta no fim da arte */
+  mask-image: linear-gradient(180deg, #000 84%, transparent 99%);
+  -webkit-mask-image: linear-gradient(180deg, #000 84%, transparent 99%);
 }
 
 .avatar.is-done .avatar__img {
   opacity: 1;
 }
 
-/* O canvas passa da arte para os lados e para cima (os pixels chegam voando de fora) */
+/* Posição e tamanho vêm do JS: o canvas cobre o campo inteiro de onde os pixels saem */
 .avatar__canvas {
   position: absolute;
-  left: -30%;
-  top: -15%;
-  width: 160%;
-  height: 115%;
+  z-index: 5;
   image-rendering: pixelated;
   pointer-events: none;
   transition: opacity 0.35s ease;

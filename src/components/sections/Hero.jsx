@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { profile, roles, socials } from '../../data/portfolio'
 import Icon from '../ui/Icon'
@@ -32,30 +32,32 @@ function Name() {
   )
 }
 
-// Topo da home como capa de revista: a ilustração recortada no centro (montada por pixels que voam)
-// e o nome enorme por cima dela, com um contorno da cor do fundo que separa as letras da arte.
+// Topo da home como capa de revista: fundo claro de estúdio, a ilustração recortada no centro
+// (montada por pixels que voam de toda a área do topo) e o nome enorme na frente do corpo.
 export default function Hero() {
   const roleIndex = useRotatingIndex(roles.length, ROLE_INTERVAL)
+  const heroRef = useRef(null)
 
   return (
-    <section id="home" className="hero">
+    <section id="home" className="hero" ref={heroRef}>
       <h1 className="sr-only">{profile.name}</h1>
 
       <div className="hero__art">
         <svg className="hero__orbit" viewBox="0 0 600 300" aria-hidden="true" preserveAspectRatio="none">
           <ellipse cx="300" cy="150" rx="290" ry="120" pathLength="1" />
         </svg>
-        <PixelAvatar />
+        <PixelAvatar fieldRef={heroRef} />
       </div>
 
       <Name />
 
-      <div className="hero__intro">
-        <p className="hero__role" aria-live="polite">
-          <span key={roleIndex} className="hero__role-text">
-            {roles[roleIndex]}
-          </span>
-        </p>
+      <p className="hero__role" aria-live="polite">
+        <span key={roleIndex} className="hero__role-text">
+          {roles[roleIndex]}
+        </span>
+      </p>
+
+      <div className="hero__foot">
         <p className="hero__tagline">Desenvolvimento, design de interfaces e pesquisa em visão computacional.</p>
         <div className="hero__actions">
           <Link to="/projetos" className="btn btn--primary">

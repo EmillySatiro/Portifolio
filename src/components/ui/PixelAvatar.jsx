@@ -5,7 +5,6 @@ import './PixelAvatar.css'
 const BLOCK = 5 // tamanho de cada "pixel" que voa, em px de tela
 const FLY_MS = 950 // tempo de voo de cada pixel
 const SPREAD_MS = 900 // quanto os pixels demoram para começar a sair (de cima para baixo, com sorteio)
-const BLEED = 0.3 // o canvas passa 30% da arte para os lados: os pixels aparecem voando de fora
 
 // Pontos de brilho na arte (em % da imagem): lentes dos óculos e a pedra do anel
 const GLINTS = [
@@ -17,9 +16,9 @@ const GLINTS = [
 const prefersReducedMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches
 const easeOutCubic = (t) => 1 - (1 - t) ** 3
 
-// Monta a ilustração com pixels que voam de fora até o lugar certo; no fim, a imagem nítida
-// assume e aparecem brilhos nos óculos e no anel.
-export default function PixelAvatar() {
+// Monta a ilustração com pixels espalhados por toda a área (fieldRef, ex.: a seção do topo) que voam
+// até o lugar certo; no fim, a imagem nítida assume e aparecem brilhos nos óculos e no anel.
+export default function PixelAvatar({ fieldRef }) {
   const stageRef = useRef(null)
   const imgRef = useRef(null)
   const canvasRef = useRef(null)
@@ -41,13 +40,17 @@ export default function PixelAvatar() {
 
       const w = stage.clientWidth
       const h = stage.clientHeight
-      const dpr = Math.min(window.devicePixelRatio || 1, 2)
-      const padX = w * BLEED
-      const padY = h * 0.15
-      const cw = Math.round((w + padX * 2) * dpr)
-      const ch = Math.round((h + padY) * dpr)
+      // O canvas cobre o campo inteiro (ou só a arte, se não houver campo); 1 px de canvas = 1 px de tela
+      const field = fieldRef?.current ?? stage
+      const fr = field.getBoundingClientRect()
+      const sr = stage.getBoundingClientRect()
+      const cw = Math.round(fr.width)
+      const ch = Math.round(fr.height)
+      const offX = sr.left - fr.left
+      const offY = sr.top - fr.top
       canvas.width = cw
       canvas.height = ch
+      Object.assign(canvas.style, { left: `${-offX}px`, top: `${-offY}px`, width: `${cw}px`, height: `${ch}px` })
 
       // Amostra a arte numa grade de BLOCK px: cada célula opaca vira uma partícula
       const cols = Math.ceil(w / BLOCK)
@@ -59,21 +62,20 @@ export default function PixelAvatar() {
       sctx.drawImage(img, 0, 0, cols, rows)
       const data = new Uint32Array(sctx.getImageData(0, 0, cols, rows).data.buffer)
 
-      const size = Math.max(1, Math.round(BLOCK * dpr))
+      const size = BLOCK
       const parts = []
       for (let r = 0; r < rows; r += 1) {
         for (let c = 0; c < cols; c += 1) {
           const color = data[r * cols + c]
           if (color >>> 24 < 140) continue // pula o transparente
-          const tx = (padX + c * BLOCK) * dpr
-          const ty = (padY + r * BLOCK) * dpr
-          const angle = Math.random() * Math.PI * 2
-          const dist = (0.35 + Math.random() * 0.75) * Math.max(cw, ch)
+          const tx = Math.round(offX + c * BLOCK)
+          const ty = Math.round(offY + r * BLOCK)
           parts.push({
             tx,
             ty,
-            sx: tx + Math.cos(angle) * dist,
-            sy: ty + Math.sin(angle) * dist * 0.6,
+            // Saem de qualquer ponto do campo (e um pouco além das bordas)
+            sx: (Math.random() * 1.2 - 0.1) * cw,
+            sy: (Math.random() * 1.2 - 0.1) * ch,
             delay: (r / rows) * SPREAD_MS * 0.55 + Math.random() * SPREAD_MS * 0.45,
             color: color | 0xff000000,
           })
@@ -118,7 +120,7 @@ export default function PixelAvatar() {
       cancelAnimationFrame(frame)
       img.removeEventListener('load', run)
     }
-  }, [])
+  }, [fieldRef])
 
   return (
     <div className={`avatar is-${phase}`}>
