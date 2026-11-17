@@ -1,3 +1,11 @@
-.designer-page {
-  padding-bottom: var(--section-y);
+.dz-lead {
+  max-width: 46ch;
+  font-size: var(--text-lg);
+  line-height: 1.5;
+  color: var(--muted);
+}
+
+/* O primeiro estudo de caso não precisa do fio de cima: o topo já separa */
+.designer-page .dcase:first-child {
+  border-top: 0;
 }

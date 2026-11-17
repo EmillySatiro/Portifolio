@@ -210,6 +210,13 @@ export const experiences = [
   },
 ]
 
+export const openForHire = {
+  title: 'Desenvolvedora Full Stack & UI/UX',
+  company: 'Emilly Sátiro · Open for Hire',
+  period: '2026 — ∞',
+  status: 'Disponível para contratação!',
+  message: 'Vamos criar algo incrível juntos?',
+}
 
 export const cvFiles = [
   {

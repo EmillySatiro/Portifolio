@@ -23,12 +23,13 @@ export default function Hero() {
 
   return (
     <section id="home" className="hero">
-      <span className="watermark hero__mark" aria-hidden="true">
+      <span className="blur-word hero__blur parallax" aria-hidden="true">
         Portfólio
       </span>
 
       <div className="container hero__grid">
         <div className="hero__copy">
+
           <h1 className="hero__name display">
             <span className="hero__line">{profile.firstName}</span>
             <span className="hero__line hero__line--accent">{profile.lastName}</span>

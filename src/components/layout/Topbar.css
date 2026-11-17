@@ -9,10 +9,7 @@
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
   border-bottom: 1px solid transparent;
-  transition:
-    border-color 0.3s ease,
-    box-shadow 0.3s ease,
-    background-color 0.3s ease;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
 }
 
 .topbar.is-scrolled {
@@ -78,9 +75,7 @@
   font-size: var(--text-sm);
   font-weight: 500;
   color: var(--muted);
-  transition:
-    color 0.25s ease,
-    background-color 0.25s ease;
+  transition: color 0.25s ease, background-color 0.25s ease;
 }
 
 .topbar__link:hover {
@@ -101,7 +96,7 @@
   bottom: 0;
   width: 6px;
   height: 6px;
-  background: var(--mark);
+  background: var(--violet);
   transform: translateX(-50%) scale(0);
   transition: transform 0.4s var(--ease-out);
 }
@@ -143,17 +138,13 @@
     box-shadow: 0 24px 40px -24px rgba(0, 0, 0, 0.45);
     clip-path: inset(0 0 100% 0);
     visibility: hidden;
-    transition:
-      clip-path 0.5s var(--ease-out),
-      visibility 0s linear 0.5s;
+    transition: clip-path 0.5s var(--ease-out), visibility 0s linear 0.5s;
   }
 
   .topbar__nav.is-open {
     clip-path: inset(0 0 0 0);
     visibility: visible;
-    transition:
-      clip-path 0.5s var(--ease-out),
-      visibility 0s;
+    transition: clip-path 0.5s var(--ease-out), visibility 0s;
   }
 
   .topbar__nav ul {
@@ -166,9 +157,7 @@
   .topbar__nav li {
     opacity: 0;
     transform: translateY(-10px);
-    transition:
-      opacity 0.4s ease,
-      transform 0.4s var(--ease-out);
+    transition: opacity 0.4s ease, transform 0.4s var(--ease-out);
   }
 
   .topbar__nav.is-open li {

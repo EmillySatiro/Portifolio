@@ -1,48 +1,78 @@
-/* Contato: convite e canais à esquerda, formulário à direita */
 .contact {
   --edge-color: var(--bg);
   overflow-x: clip;
 }
 
-.contact__grid {
-  display: grid;
-  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
-  align-items: start;
-  gap: var(--space-7) clamp(var(--space-6), 6vw, var(--space-9));
+
+.contact__head {
+  position: relative;
 }
 
-.contact__intro {
+/* ---------- Cartão ---------- */
+.contact__card {
+  position: relative;
   display: grid;
-  gap: var(--space-4);
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.25fr);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow);
 }
 
-/* ---------- Canais: linhas sob fios, sem caixas ---------- */
+/* ---------- Painel de canais ---------- */
+.contact__panel {
+  position: relative;
+  display: grid;
+  align-content: start;
+  gap: 1.5rem;
+  padding: clamp(24px, 4vw, 40px);
+  background: linear-gradient(160deg, var(--brand) 0%, var(--brand-deep) 100%);
+  color: #fff;
+}
+
+.contact__panel-title {
+  font-size: clamp(2rem, 3.4vw, 2.6rem);
+}
+
 .contact__channels {
-  margin: var(--space-4) 0 0;
+  display: grid;
+  gap: 0.75rem;
+  margin: 0;
   padding: 0;
   list-style: none;
-  border-top: 2px solid var(--ink);
 }
 
 .contact__channel {
   display: flex;
   align-items: center;
-  gap: var(--space-3);
-  border-bottom: 1px solid var(--line);
+  gap: 0.5rem;
+  padding: 0.5rem;
+  border-radius: var(--radius);
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  transition: background-color 0.25s ease, transform 0.35s var(--ease-out);
+}
+
+.contact__channel:hover {
+  background: rgba(255, 255, 255, 0.14);
+  transform: translateX(4px);
 }
 
 .contact__channel-link {
   display: flex;
   align-items: center;
-  gap: var(--space-4);
+  gap: 0.85rem;
   flex: 1;
   min-width: 0;
-  padding: var(--space-4) 0;
 }
 
-.contact__channel-link svg {
+.contact__channel-icon {
+  display: grid;
+  place-items: center;
   flex-shrink: 0;
-  color: var(--accent);
+  width: 28px;
+  color: var(--sky);
 }
 
 .contact__channel-text {
@@ -59,73 +89,52 @@
   text-overflow: ellipsis;
   white-space: nowrap;
   font-size: var(--text-sm);
-  color: var(--muted);
-  transition: color var(--dur-fast) ease;
+  color: rgba(255, 255, 255, 0.75);
 }
 
 .contact__copy {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-2);
+  display: grid;
+  place-items: center;
   flex-shrink: 0;
-  min-height: var(--tap);
-  padding: 0 var(--space-3);
+  width: 38px;
+  height: 38px;
   border-radius: var(--radius-sm);
-  font-size: var(--text-sm);
-  font-weight: 600;
-  color: var(--muted);
-  transition:
-    background-color var(--dur-fast) ease,
-    color var(--dur-fast) ease,
-    transform 160ms var(--ease-out);
+  color: rgba(255, 255, 255, 0.8);
+  transition: background-color 0.25s ease, color 0.25s ease;
 }
 
-.contact__copy:active {
-  transform: scale(0.97);
+.contact__copy:hover {
+  background: rgba(255, 255, 255, 0.16);
+  color: #fff;
 }
 
 .contact__copy.is-copied {
-  color: var(--ink);
+  background: #3ecf8e;
+  color: #fff;
 }
 
-.contact__copy.is-copied svg {
-  color: var(--success);
-}
-
-@media (hover: hover) and (pointer: fine) {
-  .contact__channel-link:hover .contact__channel-detail {
-    color: var(--ink);
-  }
-
-  .contact__copy:hover {
-    background: var(--accent-soft);
-    color: var(--ink);
-  }
-}
 
 /* ---------- Formulário ---------- */
-.contact__box {
-  border-radius: var(--radius-lg);
-  border: 1px solid var(--line);
-  background: var(--surface);
-  box-shadow: var(--shadow);
-}
-
 .contact__form {
   display: grid;
-  gap: var(--space-5);
+  gap: 1.25rem;
   padding: clamp(24px, 4vw, 44px);
+}
+
+.contact__form-title {
+  font-size: var(--text-lg);
+  font-weight: 700;
 }
 
 .contact__row {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: var(--space-5);
+  gap: 1.25rem;
 }
 
 .field {
   display: grid;
-  gap: var(--space-2);
+  gap: 0.45rem;
 }
 
 .field label {
@@ -143,17 +152,12 @@
   font-size: var(--text-base);
   outline: none;
   resize: vertical;
-  transition:
-    border-color var(--dur-fast) ease,
-    box-shadow var(--dur-fast) ease,
-    background-color var(--dur-fast) ease;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease, background-color 0.25s ease;
 }
 
-@media (hover: hover) and (pointer: fine) {
-  .field input:hover,
-  .field textarea:hover {
-    border-color: var(--ink);
-  }
+.field input:hover,
+.field textarea:hover {
+  border-color: var(--accent);
 }
 
 .field input:focus,
@@ -166,7 +170,7 @@
 .field input::placeholder,
 .field textarea::placeholder {
   color: var(--muted);
-  opacity: 0.85;
+  opacity: 0.75;
 }
 
 .contact__submit {
@@ -177,52 +181,24 @@
 .contact__error {
   display: flex;
   align-items: flex-start;
-  gap: var(--space-3);
-  padding: var(--space-3) var(--space-4);
+  gap: 0.6rem;
+  padding: 0.9rem 1rem;
   border-radius: var(--radius-sm);
   background: rgba(214, 69, 80, 0.1);
-  color: #b3263a;
+  color: #c4384a;
   font-size: var(--text-sm);
 }
 
 :root[data-theme='dark'] .contact__error {
-  color: #ff9aa5;
+  color: #ff8d99;
 }
 
-/* ---------- Confirmação no lugar do formulário ---------- */
-.contact__sent {
-  display: grid;
-  justify-items: start;
-  gap: var(--space-4);
-  padding: clamp(32px, 5vw, 56px);
-  animation: contact-sent var(--dur) var(--ease-out) both;
-}
-
-.contact__sent p {
-  max-width: 44ch;
-  color: var(--muted);
-}
-
-.contact__sent-title {
-  font-size: var(--display-sm);
-}
-
-.contact__bat {
-  color: var(--accent);
-}
-
-@keyframes contact-sent {
-  from {
-    opacity: 0;
-    transform: scale(0.97);
-  }
-}
-
-@media (max-width: 900px) {
-  .contact__grid,
+@media (max-width: 860px) {
+  .contact__card,
   .contact__row {
     grid-template-columns: 1fr;
   }
+
 
   .contact__submit {
     justify-self: stretch;

@@ -36,6 +36,11 @@
   --cat: #ffffff;
 }
 
+
+.skills__eyebrow {
+  color: var(--sky);
+}
+
 /* ---------- Filtros ---------- */
 .skills__toolbar {
   display: flex;
@@ -66,10 +71,8 @@
   transition: color var(--dur-fast) ease;
 }
 
-@media (hover: hover) and (pointer: fine) {
-  .skills__shuffle:hover {
-    color: #fff;
-  }
+.skills__shuffle:hover {
+  color: #fff;
 }
 
 /* ---------- Monte embaralhando ---------- */
@@ -108,10 +111,8 @@
   max-width: none;
 }
 
-@media (hover: hover) and (pointer: fine) {
-  .deck__pile:hover .deck__card {
-    animation-play-state: paused;
-  }
+.deck__pile:hover .deck__card {
+  animation-play-state: paused;
 }
 
 .deck__pile:focus-visible {
@@ -150,20 +151,23 @@
   max-width: 300px;
 }
 
-.deck__hint {
+.deck__count {
   font-size: var(--text-base);
-  line-height: 1.6;
-  color: rgba(255, 255, 255, 0.78);
+  color: rgba(255, 255, 255, 0.8);
 }
 
-.deck__hint strong {
+.deck__count strong {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 4rem;
+  font-weight: 400;
+  line-height: 1;
   color: #fff;
 }
 
-.tcard__pip {
-  width: 6px;
-  height: 6px;
-  background: currentColor;
+.deck__hint {
+  font-size: var(--text-sm);
+  color: rgba(255, 255, 255, 0.7);
 }
 
 /* ---------- Cartas distribuídas ---------- */
@@ -193,9 +197,7 @@
   box-shadow: 0 10px 24px -12px rgba(0, 0, 0, 0.6);
   transform: rotateX(var(--rx)) rotateY(var(--ry));
   transform-style: preserve-3d;
-  transition:
-    transform 0.35s var(--ease-out),
-    box-shadow 0.35s ease;
+  transition: transform 0.35s var(--ease-out), box-shadow 0.35s ease;
   /* "distribui" as cartas: saem do monte uma a uma */
   animation: tcard-deal 0.55s var(--ease-out) both;
   animation-delay: calc(var(--i) * 0.045s);
@@ -207,13 +209,9 @@
   box-shadow: 0 6px 16px -8px rgba(0, 0, 0, 0.6);
 }
 
-@media (hover: hover) and (pointer: fine) {
-  .tcard:hover {
-    z-index: 2;
-    box-shadow:
-      0 20px 34px -14px rgba(0, 0, 0, 0.7),
-      0 0 0 2px #fff;
-  }
+.tcard:hover {
+  z-index: 2;
+  box-shadow: 0 20px 34px -14px rgba(0, 0, 0, 0.7), 0 0 0 2px #fff;
 }
 
 .tcard__body {
@@ -280,8 +278,7 @@
   margin: 0 0.45rem;
   border: 3px solid #d9b45b;
   border-radius: 3px;
-  background:
-    radial-gradient(circle at 50% 40%, #fff 0%, var(--cat-soft) 70%),
+  background: radial-gradient(circle at 50% 40%, #fff 0%, var(--cat-soft) 70%),
     repeating-linear-gradient(45deg, rgba(0, 0, 0, 0.03) 0 6px, transparent 6px 12px);
   box-shadow: inset 0 0 12px rgba(0, 0, 0, 0.12);
 }
@@ -291,10 +288,8 @@
   transition: transform 0.4s var(--ease-out);
 }
 
-@media (hover: hover) and (pointer: fine) {
-  .tcard:hover .tcard__art svg {
-    transform: translateZ(20px) scale(1.08);
-  }
+.tcard:hover .tcard__art svg {
+  transform: translateZ(30px) scale(1.12);
 }
 
 .tcard__strip {
@@ -357,14 +352,12 @@
   mix-blend-mode: overlay;
 }
 
-@media (hover: hover) and (pointer: fine) {
-  .tcard:hover .tcard__holo {
-    opacity: 0.35;
-  }
+.tcard:hover .tcard__holo {
+  opacity: 0.35;
+}
 
-  .tcard:hover .tcard__glare {
-    opacity: 1;
-  }
+.tcard:hover .tcard__glare {
+  opacity: 1;
 }
 
 @keyframes tcard-deal {

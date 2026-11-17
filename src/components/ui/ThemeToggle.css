@@ -5,10 +5,7 @@
   height: var(--tap);
   border-radius: 50%;
   border: 1.5px solid var(--line-strong);
-  transition:
-    border-color 0.25s ease,
-    color 0.25s ease,
-    background-color 0.25s ease;
+  transition: border-color 0.25s ease, color 0.25s ease, background-color 0.25s ease;
 }
 
 .theme-toggle:hover {

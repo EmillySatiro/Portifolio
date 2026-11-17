@@ -1,32 +1,38 @@
 .avatar {
+  --rx: 0deg;
+  --ry: 0deg;
   position: relative;
   width: 100%;
   max-width: 470px;
   margin-inline: auto;
+  perspective: 1000px;
 }
 
-.avatar__stage {
+.avatar__tilt {
   position: relative;
   aspect-ratio: 900 / 1051;
+  transform: rotateX(var(--rx)) rotateY(var(--ry));
+  transform-style: preserve-3d;
+  transition: transform 0.6s var(--ease-out);
 }
 
-/* Quadrado da arte original no azul índigo */
+/* Quadrado da arte original, agora no azul índigo, com sombra "pixel" violeta */
 .avatar__card {
   position: absolute;
   inset: 9.8% 0 8.2% 0;
   overflow: hidden;
   border-radius: var(--radius-lg);
   background: linear-gradient(155deg, #5a5f9c 0%, var(--brand) 45%, var(--brand-deep) 100%);
-  box-shadow: var(--shadow-lg);
-  animation: avatar-card-in var(--dur-slow) var(--ease-out) both;
+  box-shadow: 14px 14px 0 var(--violet);
+  transform: translateZ(-30px);
+  animation: avatar-card-in 0.9s var(--ease-out) both;
 }
 
 /* Grade de pixels sutil dentro do quadrado */
 .avatar__grid {
   position: absolute;
   inset: 0;
-  background-image:
-    linear-gradient(rgba(255, 255, 255, 0.07) 1px, transparent 1px),
+  background-image: linear-gradient(rgba(255, 255, 255, 0.07) 1px, transparent 1px),
     linear-gradient(90deg, rgba(255, 255, 255, 0.07) 1px, transparent 1px);
   background-size: 24px 24px;
   mask-image: linear-gradient(to bottom, #000, transparent 85%);
@@ -35,6 +41,7 @@
 .avatar__float {
   position: relative;
   height: 100%;
+  transform: translateZ(40px);
   animation: avatar-float 5s ease-in-out infinite alternate;
 }
 
@@ -65,9 +72,9 @@
   font-family: ui-monospace, 'SFMono-Regular', Menlo, monospace;
   font-size: var(--text-sm);
   font-weight: 600;
-  box-shadow: 0 10px 22px -10px rgba(21, 22, 46, 0.5);
-  transform: rotate(-6deg);
-  animation: avatar-sticker 0.5s var(--ease-out) 0.7s both;
+  box-shadow: 4px 4px 0 var(--ink);
+  transform: translateZ(70px) rotate(-6deg);
+  animation: avatar-sticker 0.8s var(--ease-out) 0.9s both;
 }
 
 /* Brilhos em pixel (uma cruz de 5 quadradinhos) piscando em volta */
@@ -78,11 +85,9 @@
   width: var(--s);
   height: var(--s);
   background: var(--c);
-  box-shadow:
-    0 calc(var(--s) * -1) 0 var(--c),
-    0 var(--s) 0 var(--c),
-    calc(var(--s) * -1) 0 0 var(--c),
+  box-shadow: 0 calc(var(--s) * -1) 0 var(--c), 0 var(--s) 0 var(--c), calc(var(--s) * -1) 0 0 var(--c),
     var(--s) 0 0 var(--c);
+  transform: translateZ(60px);
   animation: avatar-blink 2.4s steps(1, end) infinite;
 }
 
@@ -92,7 +97,7 @@
 }
 
 .avatar__spark--1 {
-  --c: var(--mark);
+  --c: var(--violet);
   top: 36%;
   left: -3%;
   animation-delay: 0.6s;
@@ -113,7 +118,7 @@
 }
 
 .avatar__spark--4 {
-  --c: var(--mark);
+  --c: var(--violet);
   --s: 6px;
   bottom: 3%;
   left: 34%;
@@ -135,7 +140,7 @@
 
 @keyframes avatar-float {
   to {
-    translate: 0 -6px;
+    translate: 0 -10px;
   }
 }
 
@@ -148,20 +153,13 @@
 @keyframes avatar-card-in {
   from {
     opacity: 0;
-    transform: translateY(24px) scale(0.96);
+    transform: translateZ(-30px) translateY(40px) scale(0.9);
   }
 }
 
 @keyframes avatar-sticker {
   from {
     opacity: 0;
-    transform: rotate(-14deg) scale(0.9);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .avatar__float,
-  .avatar__spark {
-    animation: none;
+    transform: translateZ(70px) rotate(-20deg) scale(0.6);
   }
 }

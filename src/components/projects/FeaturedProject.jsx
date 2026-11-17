@@ -10,7 +10,7 @@ export default function FeaturedProject({ project }) {
 
   return (
     <article className="featured">
-      <div className="featured__gallery">
+      <div className="featured__gallery" data-reveal>
         <div className="featured__window">
           <div className="featured__bar" aria-hidden="true">
             <i />
@@ -48,36 +48,61 @@ export default function FeaturedProject({ project }) {
       </div>
 
       <div className="featured__info">
-        <h2 className="featured__title display">{project.name}</h2>
-        <p className="featured__subtitle">{project.subtitle}</p>
-        <p className="featured__role">
-          <strong>{project.role}</strong> · {project.period} · {project.badges.join(' · ')}
-        </p>
-        <p className="featured__desc">{project.description}</p>
+        <div className="featured__badges" data-reveal>
+          <span className="chip featured__chip">★ Projeto em destaque</span>
+          {project.badges.map((badge) => (
+            <span key={badge} className="chip">
+              {badge}
+            </span>
+          ))}
+        </div>
 
-        <ul className="featured__highlights">
+        <h2 className="featured__title display" data-reveal style={{ '--delay': '0.06s' }}>
+          {project.name}
+        </h2>
+        <p className="featured__subtitle" data-reveal style={{ '--delay': '0.1s' }}>
+          {project.subtitle}
+        </p>
+        <p className="featured__role" data-reveal style={{ '--delay': '0.12s' }}>
+          <strong>{project.role}</strong> · {project.period}
+        </p>
+        <p className="featured__desc" data-reveal style={{ '--delay': '0.14s' }}>
+          {project.description}
+        </p>
+
+        <ul className="featured__highlights" data-reveal style={{ '--delay': '0.18s' }}>
           {project.highlights.map((item) => (
             <li key={item}>{item}</li>
           ))}
         </ul>
 
-        <a href={project.site} target="_blank" rel="noopener noreferrer" className="btn btn--primary featured__site">
+        <a
+          href={project.site}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="btn btn--primary featured__site"
+          data-reveal
+          style={{ '--delay': '0.2s' }}
+        >
           Acessar o site <Icon name="external" size={16} />
         </a>
 
-        <dl className="featured__phases">
-          {project.phases.map((phase) => (
-            <div key={phase.name} className="phase">
-              <dt className="phase__name">{phase.name}</dt>
-              <dd className="phase__detail">{phase.detail}</dd>
-              <dd className="phase__logos">
-                {phase.logos.map((logo) => (
-                  <TechLogo key={logo} name={logo} size={18} />
-                ))}
-              </dd>
+        <div className="featured__phases">
+          {project.phases.map((phase, index) => (
+            <div key={phase.name} className="phase" data-reveal style={{ '--delay': `${0.24 + index * 0.08}s` }}>
+              <span className="phase__step">0{index + 1}</span>
+              <span className="phase__body">
+                <span className="phase__name">{phase.name}</span>
+                <span className="phase__detail">{phase.detail}</span>
+                <span className="phase__logos">
+                  {phase.logos.map((logo) => (
+                    <TechLogo key={logo} name={logo} size={18} />
+                  ))}
+                </span>
+              </span>
             </div>
           ))}
-        </dl>
+        </div>
       </div>
     </article>
   )

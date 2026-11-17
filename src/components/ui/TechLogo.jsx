@@ -105,10 +105,7 @@ const BRANDS = {
 const CUSTOM = {
   neural: (
     <g fill="none" stroke="#d6488f" strokeWidth="1.6" strokeLinecap="round">
-      <path
-        d="M5 6 12 4M5 6l7 6M5 6l7 14M5 18l7-14M5 18l7-6M5 18l7 2M12 4l7 5M12 12l7-3M12 12l7 3M12 20l7-5"
-        opacity=".55"
-      />
+      <path d="M5 6 12 4M5 6l7 6M5 6l7 14M5 18l7-14M5 18l7-6M5 18l7 2M12 4l7 5M12 12l7-3M12 12l7 3M12 20l7-5" opacity=".55" />
       <g fill="#d6488f" stroke="none">
         <circle cx="5" cy="6" r="2" />
         <circle cx="5" cy="18" r="2" />

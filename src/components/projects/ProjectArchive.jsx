@@ -5,8 +5,8 @@ import './ProjectArchive.css'
 export default function ProjectArchive({ items }) {
   return (
     <ul className="archive">
-      {items.map((item) => (
-        <li key={item.url}>
+      {items.map((item, index) => (
+        <li key={item.url} data-reveal style={{ '--delay': `${(index % 2) * 0.06}s` }}>
           <a href={item.url} target="_blank" rel="noopener noreferrer" className="archive__row">
             <span className="archive__lang">{item.lang}</span>
             <span className="archive__text">

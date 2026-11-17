@@ -20,6 +20,26 @@
   letter-spacing: -0.005em;
 }
 
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-label);
+  color: var(--accent);
+}
+
+/* Quadradinho de pixel antes do texto */
+.eyebrow::before {
+  content: '';
+  width: 8px;
+  height: 8px;
+  background: currentColor;
+  box-shadow: 8px 8px 0 var(--violet);
+}
+
 .section-head {
   display: grid;
   gap: var(--space-3);
@@ -38,17 +58,24 @@
   color: var(--muted);
 }
 
-/* Palavra gigante ao fundo: impressa em tom sobre tom, sem desfoque */
-.watermark {
+/* Palavra gigante desfocada no fundo */
+.blur-word {
   position: absolute;
   font-family: var(--font-display);
   font-weight: 400;
   text-transform: uppercase;
-  line-height: 0.78;
-  color: var(--bg-alt);
+  line-height: 0.8;
+  color: #5b63d6;
+  opacity: 0.3;
+  filter: blur(clamp(10px, 1.6vw, 22px));
   user-select: none;
   pointer-events: none;
   white-space: nowrap;
+}
+
+:root[data-theme='dark'] .blur-word {
+  color: #6168d8;
+  opacity: 0.38;
 }
 
 /* ---------- Botões ---------- */
@@ -64,36 +91,40 @@
   font-size: var(--text-sm);
   font-weight: 600;
   line-height: 1;
-  transition:
-    transform 160ms var(--ease-out),
-    background-color var(--dur-fast) ease,
-    border-color var(--dur-fast) ease,
-    color var(--dur-fast) ease,
-    box-shadow var(--dur-fast) ease;
+  transition: transform var(--dur) var(--ease-out), background-color var(--dur-fast) ease,
+    border-color var(--dur-fast) ease, color var(--dur-fast) ease, box-shadow var(--dur) var(--ease-out);
 }
 
 .btn svg {
-  transition: transform var(--dur-fast) var(--ease-out);
+  transition: transform 0.35s var(--ease-out);
 }
 
-/* Pressionar responde na hora; hover só onde existe mouse */
-.btn:active {
-  transform: scale(0.97);
+.btn:hover {
+  transform: translateY(-2px);
 }
 
-@media (hover: hover) and (pointer: fine) {
-  .btn:hover .icon-arrow {
-    transform: translateX(3px);
-  }
+.btn:hover .icon-arrow {
+  transform: translateX(4px);
 }
 
 .btn--primary {
   background: var(--brand);
   color: var(--on-brand);
+  box-shadow: var(--shadow-pixel-sm);
+}
+
+.btn--primary:hover {
+  background: var(--brand-strong);
+  box-shadow: var(--shadow-pixel);
 }
 
 .btn--outline {
   border-color: var(--ink);
+}
+
+.btn--outline:hover {
+  background: var(--ink);
+  color: var(--bg);
 }
 
 .btn--icon {
@@ -102,30 +133,18 @@
   border-color: var(--line-strong);
 }
 
+.btn--icon:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
 .btn--light {
   background: #fff;
   color: var(--brand-deep);
 }
 
-@media (hover: hover) and (pointer: fine) {
-  .btn--primary:hover {
-    background: var(--brand-strong);
-  }
-
-  .btn--outline:hover {
-    background: var(--ink);
-    color: var(--bg);
-  }
-
-  .btn--icon:hover {
-    border-color: var(--ink);
-    background: var(--ink);
-    color: var(--bg);
-  }
-
-  .btn--light:hover {
-    background: var(--sky);
-  }
+.btn--light:hover {
+  box-shadow: 5px 5px 0 var(--sky);
 }
 
 .btn:disabled {
@@ -159,8 +178,8 @@
   right: 0;
   top: -16px;
   height: 16px;
-  background: conic-gradient(var(--edge-color) 25%, transparent 0 50%, var(--edge-color) 0 75%, transparent 0) 0 0 /
-    32px 32px;
+  background: conic-gradient(var(--edge-color) 25%, transparent 0 50%, var(--edge-color) 0 75%, transparent 0) 0 0 / 32px
+    32px;
 }
 
 .sr-only {
@@ -187,6 +206,37 @@
   font-weight: 700;
 }
 
+/* ---------- Entrada ao rolar (useReveal) ---------- */
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.8s var(--ease-out), transform 0.8s var(--ease-out);
+  transition-delay: var(--delay, 0s);
+}
+
+[data-reveal].is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* ---------- Parallax ligado à rolagem (só onde o navegador suporta) ---------- */
+@supports (animation-timeline: view()) {
+  .parallax {
+    animation: parallax-drift linear both;
+    animation-timeline: view();
+  }
+
+  @keyframes parallax-drift {
+    /* --px-y preserva o deslocamento vertical do elemento (ex.: centralização) */
+    from {
+      translate: var(--px-from, -6%) var(--px-y, 0);
+    }
+    to {
+      translate: var(--px-to, 6%) var(--px-y, 0);
+    }
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
@@ -199,6 +249,11 @@
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     transition-delay: 0s !important;
+  }
+
+  [data-reveal] {
+    opacity: 1;
+    transform: none;
   }
 }
 
@@ -239,16 +294,14 @@
   right: 0;
   bottom: -1px;
   height: 3px;
-  background: var(--tab-color, var(--mark));
+  background: var(--tab-color, var(--violet));
   transform: scaleX(0);
   transform-origin: left;
   transition: transform var(--dur) var(--ease-out);
 }
 
-@media (hover: hover) and (pointer: fine) {
-  .tab:hover {
-    color: var(--ink);
-  }
+.tab:hover {
+  color: var(--ink);
 }
 
 .tab[aria-pressed='true'] {

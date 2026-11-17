@@ -18,13 +18,10 @@ export default function ProjectsPage() {
 
   return (
     <main className="projects-page">
-      <PageHero
-        title="Projetos"
-        lead="O que construí, como fiz e com quais tecnologias: sistemas web, distribuídos, mobile e inteligência artificial."
-      />
+      <PageHero title="Projetos" />
 
       {/* ---------- Destaque ---------- */}
-      <section className="section pj-featured">
+      <section className="section pj-featured pixel-edge">
         <div className="container">
           <FeaturedProject project={featuredProject} />
         </div>
@@ -34,10 +31,16 @@ export default function ProjectsPage() {
       <section className="section pj-grid-section pixel-edge">
         <div className="container">
           <header className="section-head">
-            <h2 className="section-title display">Selecionados</h2>
+            <h2 className="section-title display" data-reveal>
+              Selecionados
+            </h2>
+            <p className="section-lead" data-reveal style={{ '--delay': '0.08s' }}>
+              Sistemas web, sistemas distribuídos, mobile e inteligência artificial: o que construí, como fiz e com
+              quais tecnologias.
+            </p>
           </header>
 
-          <div className="tabs pj-tabs" role="group" aria-label="Filtrar projetos">
+          <div className="tabs pj-tabs" role="group" aria-label="Filtrar projetos" data-reveal>
             {filters.map((filter) => (
               <button
                 key={filter.id}
@@ -54,6 +57,7 @@ export default function ProjectsPage() {
             ))}
           </div>
 
+          {/* key: ao trocar o filtro, as linhas entram de novo em sequência */}
           <ProjectIndex key={active} projects={visible} categoryNames={CATEGORY_NAMES} />
         </div>
       </section>
@@ -62,8 +66,10 @@ export default function ProjectsPage() {
       <section className="section pj-archive pixel-edge">
         <div className="container">
           <header className="section-head pj-archive__head">
-            <h2 className="section-title display">Mais projetos</h2>
-            <a href={githubProfile} target="_blank" rel="noopener noreferrer" className="btn btn--primary">
+            <h2 className="section-title display" data-reveal>
+              Mais projetos
+            </h2>
+            <a href={githubProfile} target="_blank" rel="noopener noreferrer" className="btn btn--primary" data-reveal>
               <Icon name="github" /> Ver tudo no GitHub
             </a>
           </header>

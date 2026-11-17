@@ -1,0 +1,107 @@
+.building {
+  position: relative;
+  overflow: hidden;
+  min-height: 100svh;
+  display: flex;
+  align-items: center;
+  padding: calc(var(--topbar-h) + 48px) 0 88px;
+  background: radial-gradient(60% 50% at 85% 30%, rgba(123, 63, 196, 0.14), transparent 70%);
+}
+
+.building__blur {
+  right: -4%;
+  top: 50%;
+  translate: 0 -50%;
+  font-size: clamp(7rem, 24vw, 21rem);
+}
+
+.building__inner {
+  position: relative;
+  display: grid;
+  gap: 2.5rem;
+}
+
+.building__copy {
+  display: grid;
+  justify-items: start;
+  gap: 1.3rem;
+  max-width: 760px;
+}
+
+.building__title {
+  font-size: var(--display-lg);
+  animation: building-rise 0.9s var(--ease-out) both;
+}
+
+.building__text {
+  max-width: 50ch;
+  font-size: var(--text-md);
+  color: var(--muted);
+}
+
+.building__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+}
+
+/* Barra de "carregando" em blocos */
+.building__progress {
+  display: flex;
+  gap: 6px;
+}
+
+.building__progress span {
+  width: 22px;
+  height: 22px;
+  background: var(--accent-soft);
+  animation: building-load 2.4s steps(1, end) infinite;
+  animation-delay: calc(var(--i) * 0.15s);
+}
+
+.building__bat {
+  position: absolute;
+  right: 6%;
+  bottom: -20px;
+  color: var(--brand);
+  animation: building-float 4s ease-in-out infinite alternate;
+}
+
+@keyframes building-rise {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+}
+
+@keyframes building-load {
+  0%,
+  45% {
+    background: var(--brand);
+  }
+  50%,
+  100% {
+    background: var(--accent-soft);
+  }
+}
+
+@keyframes building-float {
+  to {
+    transform: translateY(-16px) rotate(-4deg);
+  }
+}
+
+@media (max-width: 720px) {
+  .building__bat {
+    position: relative;
+    right: auto;
+    bottom: auto;
+    justify-self: end;
+  }
+
+  .building__progress span {
+    width: 16px;
+    height: 16px;
+  }
+}

@@ -40,42 +40,45 @@ function BrowserFrame({ screen, host }) {
   )
 }
 
-// Um projeto de design: manchete e texto em cima, a janela larga embaixo e as telas como abas.
-export default function DesignCase({ project }) {
+export default function DesignCase({ project, index }) {
   const [current, setCurrent] = useState(0)
   // Endereço real quando o site está no ar; senão, só o nome do protótipo
   const host = project.liveUrl ? new URL(project.liveUrl).host.replace(/^www\./, '') : `Protótipo · ${project.title}`
 
   return (
-    <article id={project.id} className="dcase">
-      <header className="dcase__head">
+    <article id={project.id} className={`dcase${index % 2 ? ' is-flipped' : ''}`}>
+      <div className="dcase__text" data-reveal>
+        <span className="dcase__num display" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
+        <p className="dcase__type">{project.type}</p>
         <h2 className="dcase__title display">{project.title}</h2>
-        <div className="dcase__intro">
-          <p className="dcase__type">{project.type}</p>
-          <p className="dcase__desc">{project.description}</p>
-          {project.liveUrl && (
-            <a href={project.liveUrl} target="_blank" rel="noopener noreferrer" className="dcase__live">
-              Ver site no ar <Icon name="external" size={16} />
-            </a>
-          )}
-        </div>
-      </header>
+        <p className="dcase__desc">{project.description}</p>
 
-      <div className="tabs dcase__tabs" role="group" aria-label={`Telas de ${project.title}`}>
-        {project.screens.map((screen, i) => (
-          <button
-            key={screen.src}
-            type="button"
-            className="tab"
-            aria-pressed={i === current}
-            onClick={() => setCurrent(i)}
-          >
-            {screen.label}
-          </button>
-        ))}
+        {/* Lista das telas: escolhe qual aparece na janela */}
+        <ol className="dcase__screens" aria-label={`Telas de ${project.title}`}>
+          {project.screens.map((screen, i) => (
+            <li key={screen.src}>
+              <button
+                type="button"
+                className="dcase__screen-btn"
+                aria-pressed={i === current}
+                onClick={() => setCurrent(i)}
+              >
+                <span>{String(i + 1).padStart(2, '0')}</span> {screen.label}
+              </button>
+            </li>
+          ))}
+        </ol>
+
+        {project.liveUrl && (
+          <a href={project.liveUrl} target="_blank" rel="noopener noreferrer" className="dcase__live">
+            Ver site no ar <Icon name="external" size={16} />
+          </a>
+        )}
       </div>
 
-      <BrowserFrame screen={project.screens[current]} host={host} />
+      <div className="dcase__visual" data-reveal style={{ '--delay': '0.1s' }}>
+        <BrowserFrame screen={project.screens[current]} host={host} />
+      </div>
     </article>
   )
 }
