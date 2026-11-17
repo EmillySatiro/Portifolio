@@ -1,15 +1,16 @@
 // Projetos de design (base: a antiga página Designer do portfólio, sem os arquivos .fig).
 // Imagens em public/images/design/.
-// spread: como o projeto aparece como página dupla de revista
-//   layout: cover | bleed | collage | collage-r | figure | spine · paper: light | dark
-//   images: índices das telas usadas na página (versão -view, recorte 16:10 do topo)
+// spread: como o projeto aparece como página da revista (uma por tela)
+//   layout: cover | stage | stage-r | collage | collage-r | figure | spine
+//   color: cor do papel, tirada do próprio projeto (o texto fica claro ou escuro sozinho)
+//   images: telas impressas na página; crop 'tall' = cartaz em pé (4:5), senão recorte 16:10
 
 const img = (name) => `/images/design/${name}.webp`
 
 export const designProjects = [
   {
     id: 'sinfo',
-    spread: { layout: 'cover', paper: 'light', images: [0] },
+    spread: { layout: 'cover', color: '#0f2f6b', images: [{ i: 0, crop: 'tall' }, { i: 1 }] },
     title: 'SINFO 2026',
     type: 'Identidade visual · Site',
     description:
@@ -24,7 +25,7 @@ export const designProjects = [
   },
   {
     id: 'jua',
-    spread: { layout: 'bleed', paper: 'dark', images: [0] },
+    spread: { layout: 'stage', color: '#3f4636', images: [{ i: 0 }, { i: 3 }] },
     title: 'Juá 2025',
     type: 'Site institucional',
     description:
@@ -41,7 +42,7 @@ export const designProjects = [
   },
   {
     id: 'premaut',
-    spread: { layout: 'collage', paper: 'light', images: [0, 1] },
+    spread: { layout: 'collage', color: '#d4e6e3', images: [{ i: 0 }, { i: 1 }] },
     title: 'PREMAUT',
     type: 'UI/UX · Sistema web',
     description:
@@ -55,7 +56,7 @@ export const designProjects = [
   },
   {
     id: 'cronometrai',
-    spread: { layout: 'figure', paper: 'dark', images: [0] },
+    spread: { layout: 'figure', color: '#1f3a52', images: [{ i: 0, crop: 'tall' }] },
     title: 'Cronometraí',
     type: 'UI/UX · Plataforma',
     description:
@@ -68,7 +69,7 @@ export const designProjects = [
   },
   {
     id: 'ecomadeira',
-    spread: { layout: 'bleed', paper: 'dark', images: [0] },
+    spread: { layout: 'stage-r', color: '#2a2723', images: [{ i: 0 }, { i: 1 }] },
     title: 'EcoMadeira',
     type: 'UI/UX · Ferramenta',
     liveUrl: 'https://ecomadeiraweb.com/',
@@ -81,7 +82,7 @@ export const designProjects = [
   },
   {
     id: 'plantando-ideias',
-    spread: { layout: 'collage-r', paper: 'light', images: [0, 1] },
+    spread: { layout: 'collage-r', color: '#dfe2d6', images: [{ i: 0 }, { i: 1 }] },
     title: 'Plantando Ideias',
     type: 'UI/UX · Plataforma',
     description:
@@ -95,7 +96,7 @@ export const designProjects = [
   },
   {
     id: 'geek-day',
-    spread: { layout: 'spine', paper: 'dark', images: [0] },
+    spread: { layout: 'spine', color: '#2f4530', images: [{ i: 0, crop: 'tall' }] },
     title: 'Geek Day Workshop',
     type: 'Minicurso · Design web',
     description:

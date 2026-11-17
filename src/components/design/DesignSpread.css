@@ -1,10 +1,8 @@
 /*
-  Página dupla de revista ocupando a tela inteira, como um slide.
-  Regras de composição:
-  - margem única --m em todas as bordas e entre blocos;
-  - no máximo duas imagens; telas aparecem inteiras (recorte 16:10) ou sangrando uma página inteira;
-  - texto nunca por cima de tela, só sobre papel liso ou sobre o degradê escuro do sangrado;
-  - tamanhos em cqw: tudo escala junto com a largura da página.
+  Página de revista ocupando a tela inteira (referência: home da Magazine B).
+  - Cada projeto tem o papel na própria cor: a troca de cor marca a passagem de um projeto ao outro.
+  - Telas são "impressas" sobre o papel (sombra de foto), nunca se misturam com o fundo.
+  - Margem única --m; tamanhos em cqw/cqh, então tudo escala com a página.
 */
 .spread-wrap {
   position: relative;
@@ -14,10 +12,10 @@
 .spread {
   --paper: #fff;
   --print: #111;
-  --print-soft: #4a4a4a;
+  --print-soft: rgba(17, 17, 17, 0.7);
   --m: 4cqw;
   position: relative;
-  container-type: inline-size;
+  container-type: size;
   display: grid;
   grid-template-columns: repeat(12, 1fr);
   grid-template-rows: repeat(8, 1fr);
@@ -30,19 +28,28 @@
 }
 
 .spread.is-dark {
-  --paper: #111;
-  --print: #f4f3ef;
-  --print-soft: #bdbcb6;
+  --print: #fff;
+  --print-soft: rgba(255, 255, 255, 0.78);
 }
 
-/* ---------- Peças ---------- */
+/* ---------- Telas impressas ---------- */
 .spread__img {
   position: relative;
+  z-index: 1;
   display: block;
+  align-self: start;
   min-width: 0;
   min-height: 0;
+  aspect-ratio: 16 / 10;
   overflow: hidden;
-  background: #e5e5e5;
+  /* Enquanto carrega: um retângulo um tom acima do papel, no lugar exato da tela */
+  background: color-mix(in srgb, var(--paper) 86%, var(--print));
+  box-shadow: 0 2.2cqw 4cqw -1.6cqw rgba(0, 0, 0, 0.5), 0 0.3cqw 0.8cqw rgba(0, 0, 0, 0.18);
+  transition: transform 0.6s var(--ease-out), box-shadow 0.6s var(--ease-out);
+}
+
+.spread__img.is-tall {
+  aspect-ratio: 4 / 5;
 }
 
 .spread__img img {
@@ -50,23 +57,30 @@
   height: 100%;
   object-fit: cover;
   object-position: center top;
-  transition: transform 0.8s var(--ease-out);
+  opacity: 0;
+  transition: opacity 0.6s ease;
+}
+
+.spread__img.is-loaded img {
+  opacity: 1;
 }
 
 @media (hover: hover) and (pointer: fine) {
-  .spread__img:hover img {
-    transform: scale(1.03);
+  .spread__img:hover {
+    transform: translateY(-0.5cqw);
+    box-shadow: 0 3cqw 5cqw -1.6cqw rgba(0, 0, 0, 0.55), 0 0.3cqw 0.8cqw rgba(0, 0, 0, 0.18);
   }
 }
 
-/* Tela "impressa": inteira, em 16:10, com uma sombra curta de papel */
-.spread--collage .spread__img,
-.spread--collage-r .spread__img {
-  align-self: start;
-  aspect-ratio: 16 / 10;
-  box-shadow: 0 1.2cqw 2.4cqw -1cqw rgba(0, 0, 0, 0.35);
+/* Cartaz em pé: ocupa a altura da página menos as margens */
+.spread__img.is-tall {
+  align-self: center;
+  justify-self: center;
+  height: calc(100cqh - var(--m) * 2);
+  width: auto;
 }
 
+/* ---------- Texto ---------- */
 .spread__head {
   position: relative;
   z-index: 2;
@@ -128,24 +142,19 @@
 /* Numeração das duas páginas, no pé de cada metade */
 .spread__pages {
   position: absolute;
-  inset: auto 0 1.2cqw;
+  inset: auto 0 1.4cqw;
   z-index: 3;
   display: grid;
   grid-template-columns: 1fr 1fr;
+  margin: 0;
   font-size: var(--text-xs);
   font-variant-numeric: tabular-nums;
   text-align: center;
-  color: rgba(255, 255, 255, 0.75);
-  mix-blend-mode: difference;
+  color: var(--print-soft);
   pointer-events: none;
 }
 
-/* ---------- Capa: título e texto na página da esquerda, tela sangrando a da direita ---------- */
-.spread--cover .spread__img--0 {
-  grid-column: 7 / 13;
-  grid-row: 1 / 9;
-}
-
+/* ---------- Capa: título à esquerda, cartaz na direita com uma tela menor por cima ---------- */
 .spread--cover .spread__head {
   grid-column: 1 / 7;
   grid-row: 1 / 5;
@@ -162,52 +171,101 @@
   margin: 0 0 var(--m) var(--m);
 }
 
-/* ---------- Sangrado: a tela ocupa a página dupla; título e texto sobre o degradê de baixo ---------- */
-.spread--bleed .spread__img--0 {
-  grid-column: 1 / 13;
+.spread--cover .spread__img--0 {
+  grid-column: 7 / 13;
   grid-row: 1 / 9;
 }
 
-.spread--bleed .spread__img--0::after {
-  /* Metade de baixo desfocada e escurecida: o texto do site some e o título fica limpo */
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg, transparent 30%, rgba(0, 0, 0, 0.6) 58%, rgba(0, 0, 0, 0.92) 100%);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  mask-image: linear-gradient(180deg, transparent 32%, #000 56%);
-  -webkit-mask-image: linear-gradient(180deg, transparent 32%, #000 56%);
+.spread--cover .spread__img--1 {
+  grid-column: 6 / 10;
+  grid-row: 1 / 9;
+  align-self: end;
+  z-index: 2;
+  margin-bottom: calc(var(--m) * 1.5);
 }
 
-.spread--bleed .spread__head {
-  grid-column: 1 / 9;
+/* ---------- Palco: uma tela grande no alto, título enorme embaixo ---------- */
+.spread--stage .spread__img--0,
+.spread--stage-r .spread__img--0 {
+  grid-column: 1 / 13;
+  grid-row: 1 / 9;
+  width: 56cqw;
+  margin-top: var(--m);
+}
+
+.spread--stage .spread__img--0 {
+  justify-self: end;
+  margin-right: var(--m);
+}
+
+.spread--stage-r .spread__img--0 {
+  justify-self: start;
+  margin-left: var(--m);
+}
+
+.spread--stage .spread__img--1,
+.spread--stage-r .spread__img--1 {
+  grid-column: 1 / 13;
+  grid-row: 1 / 9;
+  align-self: end;
+  z-index: 2;
+  width: 24cqw;
+  margin-bottom: var(--m);
+}
+
+.spread--stage .spread__img--1 {
+  justify-self: end;
+  margin-right: calc(var(--m) * 2);
+}
+
+.spread--stage-r .spread__img--1 {
+  justify-self: start;
+  margin-left: calc(var(--m) * 2);
+}
+
+.spread--stage .spread__head,
+.spread--stage-r .spread__head {
   grid-row: 5 / 9;
   align-content: end;
-  margin: 0 0 var(--m) var(--m);
-  color: #fff;
+  margin-bottom: var(--m);
 }
 
-.spread--bleed .spread__type {
-  color: rgba(255, 255, 255, 0.8);
+.spread--stage .spread__head {
+  grid-column: 1 / 9;
+  margin-left: var(--m);
 }
 
-.spread--bleed .spread__title {
-  font-size: min(10cqw, calc(62cqw / var(--chars)));
+.spread--stage-r .spread__head {
+  grid-column: 5 / 13;
+  justify-items: end;
+  margin-right: var(--m);
+  text-align: right;
 }
 
-.spread--bleed .spread__text {
+.spread--stage .spread__title,
+.spread--stage-r .spread__title {
+  font-size: min(10cqw, calc(60cqw / var(--chars)));
+}
+
+.spread--stage .spread__text,
+.spread--stage-r .spread__text {
+  grid-row: 1 / 5;
+  align-content: start;
+  margin-top: var(--m);
+}
+
+.spread--stage .spread__text {
+  grid-column: 1 / 5;
+  margin-left: var(--m);
+}
+
+.spread--stage-r .spread__text {
   grid-column: 9 / 13;
-  grid-row: 5 / 9;
-  margin: 0 var(--m) var(--m) 0;
-  color: rgba(255, 255, 255, 0.85);
+  justify-self: end;
+  margin-right: var(--m);
 }
 
-.spread--bleed .spread__link {
-  color: #fff;
-}
-
-/* ---------- Colagem: duas telas impressas numa página, título e texto na outra ---------- */
+/* ---------- Colagem: duas telas sobrepostas numa página, título e texto na outra ---------- */
 .spread--collage .spread__img--0 {
   grid-column: 1 / 6;
   grid-row: 1 / 6;
@@ -218,9 +276,8 @@
   grid-column: 3 / 7;
   grid-row: 5 / 9;
   align-self: end;
-  z-index: 1;
+  z-index: 2;
   margin: 0 -2cqw var(--m) 0;
-  outline: 0.6cqw solid var(--paper);
 }
 
 .spread--collage .spread__head {
@@ -235,7 +292,6 @@
   margin: 0 var(--m) var(--m) 0;
 }
 
-/* Espelhada: título e texto à esquerda, telas à direita */
 .spread--collage-r .spread__head {
   grid-column: 1 / 7;
   grid-row: 1 / 5;
@@ -258,22 +314,15 @@
   grid-column: 7 / 11;
   grid-row: 5 / 9;
   align-self: end;
-  z-index: 1;
+  z-index: 2;
   margin: 0 0 var(--m) -2cqw;
-  outline: 0.6cqw solid var(--paper);
 }
 
-/* ---------- Figura e lombada: tela sangrando a página da esquerda ---------- */
+/* ---------- Figura e lombada: cartaz em pé na página da esquerda ---------- */
 .spread--figure .spread__img--0,
 .spread--spine .spread__img--0 {
   grid-column: 1 / 7;
   grid-row: 1 / 9;
-}
-
-/* Meia página é mais estreita que a tela: ancora à esquerda, onde começa o texto do site */
-.spread--figure .spread__img--0 img,
-.spread--spine .spread__img--0 img {
-  object-position: left top;
 }
 
 .spread--figure .spread__head {
@@ -291,7 +340,7 @@
   margin: 0 var(--m) var(--m) 0;
 }
 
-/* Faixa vertical com o nome, entre a tela e o texto */
+/* Faixa vertical com o nome, entre o cartaz e o texto */
 .spread__spine {
   grid-column: 7 / 8;
   grid-row: 1 / 9;
@@ -330,6 +379,7 @@
 /* ---------- Tablet e celular: a página vira uma coluna de revista ---------- */
 @media (max-width: 1024px) {
   .spread {
+    container-type: inline-size;
     display: flex;
     flex-direction: column;
     gap: var(--space-5);
@@ -345,53 +395,44 @@
   }
 
   .spread > * {
+    width: auto !important;
     margin: 0 !important;
-    outline: 0 !important;
   }
 
   .spread__head {
     order: 1;
     justify-items: start !important;
     text-align: left !important;
-    color: var(--print) !important;
   }
 
   .spread__title,
   .spread--cover .spread__title,
-  .spread--bleed .spread__title,
+  .spread--stage .spread__title,
+  .spread--stage-r .spread__title,
   .spread--spine .spread__title {
     font-size: min(12cqw, calc(80cqw / var(--chars)));
   }
 
-  .spread__type {
-    color: var(--print-soft) !important;
-  }
-
-  .spread__img--0 {
+  /* No celular todas as telas aparecem deitadas, uma depois da outra */
+  .spread__img,
+  .spread__img.is-tall {
     order: 2;
+    align-self: stretch !important;
+    height: auto;
     aspect-ratio: 16 / 10;
-  }
-
-  .spread__img--0::after {
-    display: none;
   }
 
   .spread__img--1 {
     order: 3;
-    width: 70%;
+    width: 72% !important;
     align-self: flex-end !important;
-    margin-top: calc(var(--space-7) * -1) !important;
-    outline: 4px solid var(--paper) !important;
+    margin-top: calc(var(--space-8) * -1) !important;
   }
 
   .spread__text {
     order: 4;
+    justify-self: auto !important;
     max-width: none;
     font-size: var(--text-sm);
-    color: var(--print-soft) !important;
-  }
-
-  .spread__link {
-    color: var(--print) !important;
   }
 }

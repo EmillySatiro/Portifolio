@@ -1,13 +1,43 @@
+import { useState } from 'react'
 import Icon from '../ui/Icon'
 import './DesignSpread.css'
 
-// Recorte 16:10 do topo da tela (gerado ao lado da imagem original, com sufixo -view)
-const viewOf = (src) => src.replace(/\.webp$/, '-view.webp')
+// Recortes gerados ao lado da imagem original: -view (16:10 do topo) e -tall (cartaz 4:5)
+const cropOf = (src, crop) => src.replace(/\.webp$/, crop === 'tall' ? '-tall.webp' : '-view.webp')
 
-// Um projeto como página dupla de revista: título enorme, telas impressas e texto curto.
-// O layout e o papel (claro/escuro) vêm de project.spread; clicar numa tela abre o visualizador.
+// Papel claro pede texto escuro, e vice-versa
+const isLight = (hex) => {
+  const n = parseInt(hex.slice(1), 16)
+  return 0.299 * (n >> 16) + 0.587 * ((n >> 8) & 255) + 0.114 * (n & 255) > 150
+}
+
+// Tela "impressa": aparece suavemente sobre a cor do papel quando termina de carregar
+function Print({ src, slot, crop, eager, label, onClick }) {
+  const [loaded, setLoaded] = useState(false)
+  return (
+    <button
+      type="button"
+      className={`spread__img spread__img--${slot}${crop === 'tall' ? ' is-tall' : ''}${loaded ? ' is-loaded' : ''}`}
+      onClick={onClick}
+      aria-label={label}
+    >
+      <img
+        src={src}
+        alt=""
+        loading={eager ? 'eager' : 'lazy'}
+        fetchPriority={eager ? 'high' : 'auto'}
+        decoding="async"
+        ref={(el) => el?.complete && el.naturalWidth && !loaded && setLoaded(true)}
+        onLoad={() => setLoaded(true)}
+      />
+    </button>
+  )
+}
+
+// Um projeto como página de revista ocupando a tela: papel na cor do projeto, telas impressas,
+// título enorme e texto curto. Clicar numa tela abre o visualizador.
 export default function DesignSpread({ project, index, onOpen }) {
-  const { layout, paper, images } = project.spread
+  const { layout, color, images } = project.spread
   const page = index * 2 + 1
   // Palavra mais longa do título: o tamanho da fonte se ajusta para ela caber na página
   const chars = Math.max(...project.title.split(/\s+/).map((word) => word.length))
@@ -15,19 +45,22 @@ export default function DesignSpread({ project, index, onOpen }) {
 
   return (
     <article id={project.id} className="spread-wrap">
-      <div className={`spread spread--${layout} is-${paper}`} style={{ '--chars': chars }}>
-        {images.map((screenIndex, slot) => {
-          const screen = project.screens[screenIndex]
+      <div
+        className={`spread spread--${layout} ${isLight(color) ? 'is-light' : 'is-dark'}`}
+        style={{ '--chars': chars, '--paper': color }}
+      >
+        {images.map(({ i, crop }, slot) => {
+          const screen = project.screens[i]
           return (
-            <button
-              key={screen.src}
-              type="button"
-              className={`spread__img spread__img--${slot}`}
-              onClick={() => onOpen(screenIndex)}
-              aria-label={`Ver a tela ${screen.label} de ${project.title}`}
-            >
-              <img src={viewOf(screen.src)} alt="" loading="lazy" decoding="async" />
-            </button>
+            <Print
+              key={`${screen.src}-${crop}`}
+              src={cropOf(screen.src, crop)}
+              slot={slot}
+              crop={crop}
+              eager={index === 0}
+              label={`Ver a tela ${screen.label} de ${project.title}`}
+              onClick={() => onOpen(i)}
+            />
           )
         })}
 
@@ -55,12 +88,12 @@ export default function DesignSpread({ project, index, onOpen }) {
             {project.title}
           </span>
         )}
-      </div>
 
-      <p className="spread__pages" aria-hidden="true">
-        <span>{String(page).padStart(2, '0')}</span>
-        <span>{String(page + 1).padStart(2, '0')}</span>
-      </p>
+        <p className="spread__pages" aria-hidden="true">
+          <span>{String(page).padStart(2, '0')}</span>
+          <span>{String(page + 1).padStart(2, '0')}</span>
+        </p>
+      </div>
     </article>
   )
 }
