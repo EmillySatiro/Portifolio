@@ -1,11 +1,13 @@
 // Projetos de design (base: a antiga página Designer do portfólio, sem os arquivos .fig).
-// Imagens em public/images/design/. Páginas longas rolam sozinhas dentro da janela no hover.
+// Imagens em public/images/design/. tint = cor de fundo da "capa" (tirada da própria tela do projeto).
+// A primeira tela vira a capa; a segunda, a foto ao lado. Todas abrem no visualizador.
 
 const img = (name) => `/images/design/${name}.webp`
 
 export const designProjects = [
   {
     id: 'sinfo',
+    tint: '#0f2f6b',
     title: 'SINFO 2026',
     type: 'Identidade visual · Site',
     description:
@@ -20,6 +22,7 @@ export const designProjects = [
   },
   {
     id: 'jua',
+    tint: '#3f4636',
     title: 'Juá 2025',
     type: 'Site institucional',
     description:
@@ -34,6 +37,7 @@ export const designProjects = [
   },
   {
     id: 'premaut',
+    tint: '#d4e6e3',
     title: 'PREMAUT',
     type: 'UI/UX · Sistema web',
     description:
@@ -41,12 +45,13 @@ export const designProjects = [
     liveUrl: 'https://premaut.ufpi.br/',
     screens: [
       { src: img('premaut-home-login'), label: 'Página inicial' },
-      { src: img('premaut-login'), label: 'Login' },
+      { src: img('premaut-login'), label: 'Login', focus: '6% 0' },
       { src: img('premaut-cadastro-paciente'), label: 'Cadastro' },
     ],
   },
   {
     id: 'cronometrai',
+    tint: '#1f3a52',
     title: 'Cronometraí',
     type: 'UI/UX · Plataforma',
     description:
@@ -59,6 +64,7 @@ export const designProjects = [
   },
   {
     id: 'ecomadeira',
+    tint: '#2a2723',
     title: 'EcoMadeira',
     type: 'UI/UX · Ferramenta',
     liveUrl: 'https://ecomadeiraweb.com/',
@@ -71,6 +77,7 @@ export const designProjects = [
   },
   {
     id: 'plantando-ideias',
+    tint: '#dfe2d6',
     title: 'Plantando Ideias',
     type: 'UI/UX · Plataforma',
     description:
@@ -84,6 +91,7 @@ export const designProjects = [
   },
   {
     id: 'geek-day',
+    tint: '#2f4530',
     title: 'Geek Day Workshop',
     type: 'Minicurso · Design web',
     description:

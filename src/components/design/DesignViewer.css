@@ -1,0 +1,128 @@
+/* Visualizador das telas: painel grande, abas no topo, tela rolando embaixo */
+.dviewer {
+  width: min(1180px, 100vw - 32px);
+  max-width: none;
+  height: calc(100dvh - 48px);
+  max-height: none;
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  color: var(--ink);
+  overflow: hidden;
+}
+
+.dviewer::backdrop {
+  background: rgba(10, 11, 22, 0.78);
+}
+
+.dviewer[open] {
+  animation: dviewer-in 0.25s var(--ease-out);
+}
+
+.dviewer__panel {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  height: 100%;
+}
+
+.dviewer__bar {
+  display: flex;
+  align-items: center;
+  gap: var(--space-5);
+  padding: 0 var(--space-3) 0 var(--space-5);
+  border-bottom: 1px solid var(--line);
+}
+
+.dviewer__name {
+  flex-shrink: 0;
+  font-size: var(--text-sm);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.dviewer__tabs {
+  display: flex;
+  flex: 1;
+  gap: var(--space-5);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.dviewer__tab {
+  position: relative;
+  flex-shrink: 0;
+  min-height: 52px;
+  font-size: var(--text-sm);
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+.dviewer__tab[aria-pressed='true'] {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.dviewer__tab[aria-pressed='true']::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 2px;
+  background: currentColor;
+}
+
+.dviewer__close {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: var(--tap);
+  height: var(--tap);
+  border-radius: 50%;
+}
+
+.dviewer__close:hover {
+  background: var(--accent-soft);
+}
+
+.dviewer__body {
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  background: var(--bg-alt);
+}
+
+.dviewer__body img {
+  width: 100%;
+  animation: dviewer-img 0.3s ease;
+}
+
+@keyframes dviewer-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.98);
+  }
+}
+
+@keyframes dviewer-img {
+  from {
+    opacity: 0;
+  }
+}
+
+@media (max-width: 640px) {
+  .dviewer {
+    width: 100vw;
+    height: 100dvh;
+    border-radius: 0;
+  }
+
+  .dviewer__name {
+    display: none;
+  }
+
+  .dviewer__bar {
+    padding-left: var(--space-4);
+  }
+}
