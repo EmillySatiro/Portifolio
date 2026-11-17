@@ -87,8 +87,6 @@ export const projects = [
     description:
       'Automação das vendas de um restaurante em Python orientado a objetos, com sincronização cliente–servidor, envio de e-mails e PostgreSQL. Projeto final de POO II.',
     logos: ['python', 'postgres', 'docker'],
-    image: '/images/projects/beiramar.webp',
-    imagePosition: 'left top',
     links: [{ type: 'github', url: gh('JonasCGN/Projeto-Final-POO-II') }],
   },
   {

@@ -8,10 +8,8 @@ const REPLAY_COOLDOWN = 2500
 
 const prefersReducedMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
-// Ilustração com efeitos: aparece "pixelando" ao carregar (e de novo no hover),
-// inclina em 3D seguindo o ponteiro e flutua levemente.
+// Ilustração com efeitos: aparece "pixelando" ao carregar (e de novo no hover) e flutua levemente.
 export default function PixelAvatar() {
-  const stageRef = useRef(null)
   const imgRef = useRef(null)
   const canvasRef = useRef(null)
   const lastRun = useRef(0)
@@ -71,44 +69,13 @@ export default function PixelAvatar() {
     }
   }, [pixelate])
 
-  // Inclinação 3D seguindo o ponteiro (escreve direto no estilo, sem re-render)
-  useEffect(() => {
-    const stage = stageRef.current
-    if (prefersReducedMotion() || window.matchMedia('(pointer: coarse)').matches) return undefined
-    let frame = 0
-
-    const onMove = (e) => {
-      cancelAnimationFrame(frame)
-      frame = requestAnimationFrame(() => {
-        const rect = stage.getBoundingClientRect()
-        const x = (e.clientX - rect.left) / rect.width - 0.5
-        const y = (e.clientY - rect.top) / rect.height - 0.5
-        stage.style.setProperty('--ry', `${(x * 14).toFixed(2)}deg`)
-        stage.style.setProperty('--rx', `${(-y * 10).toFixed(2)}deg`)
-      })
-    }
-    const onLeave = () => {
-      cancelAnimationFrame(frame)
-      stage.style.setProperty('--ry', '0deg')
-      stage.style.setProperty('--rx', '0deg')
-    }
-
-    stage.addEventListener('pointermove', onMove)
-    stage.addEventListener('pointerleave', onLeave)
-    return () => {
-      cancelAnimationFrame(frame)
-      stage.removeEventListener('pointermove', onMove)
-      stage.removeEventListener('pointerleave', onLeave)
-    }
-  }, [])
-
   const replay = () => {
     if (!pixelating && Date.now() - lastRun.current > REPLAY_COOLDOWN) pixelate()
   }
 
   return (
-    <div ref={stageRef} className="avatar" onPointerEnter={replay}>
-      <div className="avatar__tilt">
+    <div className="avatar" onPointerEnter={(e) => e.pointerType === 'mouse' && replay()}>
+      <div className="avatar__stage">
         <div className="avatar__card" aria-hidden="true">
           <span className="avatar__grid" />
         </div>
@@ -130,7 +97,7 @@ export default function PixelAvatar() {
         </div>
 
         <span className="avatar__sticker" aria-hidden="true">
-          Hello, World! 👋
+          Hello, World!
         </span>
         {[0, 1, 2, 3, 4].map((i) => (
           <span key={i} className={`avatar__spark avatar__spark--${i}`} aria-hidden="true" />

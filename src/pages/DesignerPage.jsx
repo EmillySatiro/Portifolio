@@ -6,15 +6,14 @@ import './DesignerPage.css'
 export default function DesignerPage() {
   return (
     <main className="designer-page">
-      <PageHero title="Designer" word="Design">
-        <p className="dz-lead">
-          Interfaces, identidades visuais e protótipos que desenhei para sites, sistemas e eventos.
-        </p>
-      </PageHero>
+      <PageHero
+        title="Designer"
+        lead="Interfaces, identidades visuais e protótipos que desenhei para sites, sistemas e eventos."
+      />
 
       <div className="container">
-        {designProjects.map((project, i) => (
-          <DesignCase key={project.id} project={project} index={i} />
+        {designProjects.map((project) => (
+          <DesignCase key={project.id} project={project} />
         ))}
       </div>
     </main>

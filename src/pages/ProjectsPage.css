@@ -1,17 +1,12 @@
 /* ---------- Seções ---------- */
-.pj-featured {
+.pj-grid-section {
   --edge-color: var(--bg-alt);
   background: var(--bg-alt);
-}
-
-.pj-grid-section {
-  --edge-color: var(--bg);
-  background: var(--bg);
 }
 
 .pj-archive {
-  --edge-color: var(--bg-alt);
-  background: var(--bg-alt);
+  --edge-color: var(--bg);
+  background: var(--bg);
 }
 
 .pj-archive__head {
@@ -25,4 +20,3 @@
 .pj-tabs {
   margin-bottom: var(--space-6);
 }
-

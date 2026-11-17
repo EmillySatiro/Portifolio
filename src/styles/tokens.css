@@ -2,16 +2,21 @@
   Sistema de design do portfólio
   ------------------------------
   Identidade: editorial + pixel art. Manchetes condensadas (Anton), texto em Inter,
-  índigo do cabelo da ilustração como cor de marca, violeta como acento e a
-  "sombra pixel" (deslocada, sem desfoque) como assinatura.
+  índigo do cabelo da ilustração como única cor de marca e o azul-céu do brilho
+  da ilustração como segunda cor (só em traços e marcas, nunca em texto no tema claro).
+  O pixel aparece em poucos lugares de propósito: a ilustração, o morcego e a borda
+  entre seções. Sombras são macias e com deslocamento, nunca blocos sólidos.
 
   Regras de uso
   - Espaços: sempre da escala --space-* (base 4/8 px).
   - Texto: --text-* para corpo e interface; --display-* só em manchetes (Anton).
   - Cantos: --radius-xs (selos), --radius-sm (campos/ícones), --radius (cartões), --radius-lg (blocos grandes).
-  - Hover de cartões: sobe 4 px + --shadow-pixel. Duração --dur, curva --ease-out.
+  - Movimento: só a entrada do topo e momentos pensados (baralho, avatar). Nada entra ao rolar.
+    Interface em --dur (≤ 300 ms) com --ease-out; hover só em (hover: hover) and (pointer: fine);
+    botões afundam para scale(0.97) ao pressionar.
+  - Sem rótulo acima de título, sem numeração decorativa, sem barra colorida na lateral.
   - Contraste mínimo AA: texto secundário usa --muted (≥ 4.5:1 nos dois temas).
-  - Texto em violeta usa --violet-text (o --violet é só para fundos, traços e sombras).
+  - --mark é só para traços, sublinhados e pontos; texto colorido usa --accent.
   - Contornos de campos e controles usam --line-strong (≥ 3:1); --line é só para divisórias.
 */
 
@@ -64,17 +69,17 @@
   --radius-pill: 999px;
 
   /* Movimento */
-  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
-  --dur-fast: 0.2s;
-  --dur: 0.4s;
-  --dur-slow: 0.8s;
-  --lift: -4px;
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+  --dur-fast: 0.16s;
+  --dur: 0.26s;
+  --dur-slow: 0.7s; /* só a entrada do topo */
+  --lift: -2px;
 
   /* Azul índigo do cabelo da ilustração (fixo nos dois temas) */
   --brand: #414575;
   --brand-strong: #34386a;
   --brand-deep: #23264d;
-  --violet: #7b3fc4;
   --sky: #8ad7eb;
   --on-brand: #ffffff;
 
@@ -86,13 +91,12 @@
   --muted: #62647c;
   --line: rgba(21, 22, 46, 0.14); /* divisórias */
   --line-strong: rgba(21, 22, 46, 0.5); /* contorno de campos e controles (≥ 3:1) */
-  --violet-text: #6a34b8; /* violeta para texto (≥ 4.5:1) */
+  --mark: #414575; /* traços e marcas */
   --accent: #414575;
   --accent-soft: rgba(65, 69, 117, 0.1);
   --field: #f7f6f3;
   --shadow: 0 18px 40px -18px rgba(21, 22, 46, 0.28);
-  --shadow-pixel: 6px 6px 0 var(--violet);
-  --shadow-pixel-sm: 4px 4px 0 var(--violet);
+  --shadow-lg: 0 30px 60px -28px rgba(21, 22, 46, 0.45), 0 8px 18px -10px rgba(21, 22, 46, 0.18);
   --success: #2fb67c;
   color-scheme: light;
 }
@@ -105,10 +109,11 @@
   --muted: #a7a9c6;
   --line: rgba(236, 235, 245, 0.18);
   --line-strong: rgba(236, 235, 245, 0.45);
-  --violet-text: #b794f4;
+  --mark: #8ad7eb;
   --accent: #9ba2ec;
   --accent-soft: rgba(155, 162, 236, 0.14);
   --field: #12142a;
   --shadow: 0 18px 40px -18px rgba(0, 0, 0, 0.7);
+  --shadow-lg: 0 30px 60px -26px rgba(0, 0, 0, 0.85), 0 8px 18px -10px rgba(0, 0, 0, 0.5);
   color-scheme: dark;
 }

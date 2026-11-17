@@ -2,7 +2,6 @@ import { lazy, Suspense } from 'react'
 import { Navigate, Route, Routes } from 'react-router-dom'
 import Footer from './components/layout/Footer'
 import Topbar from './components/layout/Topbar'
-import { useReveal } from './hooks/useReveal'
 import { useScrollOnNavigate } from './hooks/useScrollOnNavigate'
 import HomePage from './pages/HomePage'
 
@@ -13,7 +12,6 @@ const AcademicPage = lazy(() => import('./pages/AcademicPage'))
 
 export default function App() {
   useScrollOnNavigate()
-  useReveal()
 
   return (
     <>
@@ -30,7 +28,7 @@ export default function App() {
       </a>
       <Topbar />
       <div id="conteudo" tabIndex={-1}>
-        <Suspense fallback={<main className="building" />}>
+        <Suspense fallback={<main className="page-loading" />}>
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/projetos" element={<ProjectsPage />} />

@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { contactMethods, formspreeEndpoint } from '../../data/portfolio'
 import Icon from '../ui/Icon'
-import SentModal from './SentModal'
+import BatLogo from '../ui/BatLogo'
 import './Contact.css'
 
 const EMPTY_FORM = { name: '', email: '', message: '' }
@@ -45,119 +45,115 @@ export default function Contact() {
       setStatus('error')
       setErrorMessage(
         err.message === 'send-failed'
-          ? 'Ops! Ocorreu um erro ao enviar a mensagem. Por favor, tente novamente ou envie por e-mail.'
-          : 'Ops! Ocorreu um erro de conexão. Por favor, tente novamente.',
+          ? 'A mensagem não foi enviada. Tente de novo ou escreva direto para o meu e-mail ao lado.'
+          : 'Sem conexão com o servidor. Confira a internet e tente de novo.',
       )
     }
   }
 
   return (
     <section id="contact" className="section contact pixel-edge">
-
-      <div className="container">
-        <header className="section-head contact__head">
-          <p className="eyebrow" data-reveal>
-            Contato
+      <div className="container contact__grid">
+        {/* Esquerda: convite e canais diretos */}
+        <div className="contact__intro">
+          <h2 className="section-title display">Vamos conversar?</h2>
+          <p className="section-lead">
+            Tem um projeto, uma vaga ou uma ideia de pesquisa? Escreva pelo formulário ou fale direto por um dos canais.
           </p>
-          <h2 className="section-title display" data-reveal style={{ '--delay': '0.08s' }}>
-            Vamos conversar?
-          </h2>
-          <p className="section-lead" data-reveal style={{ '--delay': '0.12s' }}>
-            Vamos conversar sobre o seu próximo projeto? Envie uma mensagem pelo formulário ou use um dos canais.
-          </p>
-        </header>
 
-        <div className="contact__card" data-reveal style={{ '--delay': '0.16s' }}>
-          {/* Canais */}
-          <aside className="contact__panel">
-            <h3 className="contact__panel-title display">Fale comigo</h3>
-            <ul className="contact__channels">
-              {contactMethods.map((method) => (
-                <li key={method.title} className="contact__channel">
-                  <a href={method.link} target="_blank" rel="noopener noreferrer" className="contact__channel-link">
-                    <span className="contact__channel-icon">
-                      <Icon name={method.icon} size={20} />
-                    </span>
-                    <span className="contact__channel-text">
-                      <span className="contact__channel-name">{method.title}</span>
-                      <span className="contact__channel-detail">{method.detail}</span>
-                    </span>
-                  </a>
-                  <button
-                    type="button"
-                    className={`contact__copy${copied === method.title ? ' is-copied' : ''}`}
-                    onClick={() => copy(method)}
-                    aria-label={`Copiar ${method.title}`}
-                    title={copied === method.title ? 'Copiado!' : 'Copiar'}
-                  >
-                    <Icon name={copied === method.title ? 'check' : 'copy'} size={16} />
-                  </button>
-                </li>
-              ))}
-            </ul>
-          </aside>
+          <ul className="contact__channels">
+            {contactMethods.map((method) => (
+              <li key={method.title} className="contact__channel">
+                <a href={method.link} target="_blank" rel="noopener noreferrer" className="contact__channel-link">
+                  <Icon name={method.icon} size={20} />
+                  <span className="contact__channel-text">
+                    <span className="contact__channel-name">{method.title}</span>
+                    <span className="contact__channel-detail">{method.detail}</span>
+                  </span>
+                </a>
+                <button
+                  type="button"
+                  className={`contact__copy${copied === method.title ? ' is-copied' : ''}`}
+                  onClick={() => copy(method)}
+                  aria-label={`Copiar ${method.title}`}
+                >
+                  <Icon name={copied === method.title ? 'check' : 'copy'} size={16} />
+                  <span>{copied === method.title ? 'Copiado' : 'Copiar'}</span>
+                </button>
+              </li>
+            ))}
+          </ul>
+        </div>
 
-          {/* Formulário */}
-          <form className="contact__form" onSubmit={handleSubmit}>
-            <h3 className="contact__form-title">Envie uma mensagem</h3>
+        {/* Direita: formulário, que vira a confirmação depois do envio */}
+        <div className="contact__box">
+          {status === 'sent' ? (
+            <div className="contact__sent" role="status">
+              <BatLogo size={88} className="contact__bat" />
+              <h3 className="contact__sent-title display">O morcego entregou sua mensagem</h3>
+              <p>Ela já está na minha caixa de entrada. Obrigada pelo contato, respondo em breve.</p>
+              <button type="button" className="btn btn--outline" onClick={() => setStatus('idle')}>
+                Escrever outra mensagem
+              </button>
+            </div>
+          ) : (
+            <form className="contact__form" onSubmit={handleSubmit}>
+              {status === 'error' && (
+                <p className="contact__error" role="alert">
+                  <Icon name="alert" size={18} /> {errorMessage}
+                </p>
+              )}
 
-            {status === 'error' && (
-              <p className="contact__error" role="alert">
-                <Icon name="alert" size={18} /> {errorMessage}
-              </p>
-            )}
+              <div className="contact__row">
+                <div className="field">
+                  <label htmlFor="contact-name">Seu nome</label>
+                  <input
+                    id="contact-name"
+                    name="name"
+                    type="text"
+                    autoComplete="name"
+                    placeholder="Ex: Maria Silva"
+                    value={form.name}
+                    onChange={updateField}
+                    required
+                  />
+                </div>
+                <div className="field">
+                  <label htmlFor="contact-email">Seu e-mail</label>
+                  <input
+                    id="contact-email"
+                    name="email"
+                    type="email"
+                    autoComplete="email"
+                    placeholder="seu@email.com"
+                    value={form.email}
+                    onChange={updateField}
+                    required
+                  />
+                </div>
+              </div>
 
-            <div className="contact__row">
               <div className="field">
-                <label htmlFor="contact-name">Seu nome</label>
-                <input
-                  id="contact-name"
-                  name="name"
-                  type="text"
-                  autoComplete="name"
-                  placeholder="Ex: Maria Silva"
-                  value={form.name}
+                <label htmlFor="contact-message">Sua mensagem</label>
+                <textarea
+                  id="contact-message"
+                  name="message"
+                  rows={6}
+                  placeholder="Conte a sua ideia, projeto ou dúvida"
+                  value={form.message}
                   onChange={updateField}
                   required
                 />
               </div>
-              <div className="field">
-                <label htmlFor="contact-email">Seu e-mail</label>
-                <input
-                  id="contact-email"
-                  name="email"
-                  type="email"
-                  autoComplete="email"
-                  placeholder="seu@email.com"
-                  value={form.email}
-                  onChange={updateField}
-                  required
-                />
-              </div>
-            </div>
 
-            <div className="field">
-              <label htmlFor="contact-message">Sua mensagem</label>
-              <textarea
-                id="contact-message"
-                name="message"
-                rows={5}
-                placeholder="Descreva a sua ideia, projeto ou dúvida..."
-                value={form.message}
-                onChange={updateField}
-                required
-              />
-            </div>
-
-            <button type="submit" className="btn btn--primary contact__submit" disabled={status === 'sending'}>
-              {status === 'sending' ? 'Enviando mensagem...' : 'Enviar mensagem'}
-              <Icon name="send" className="icon-arrow" />
-            </button>
-          </form>
+              <button type="submit" className="btn btn--primary contact__submit" disabled={status === 'sending'}>
+                {status === 'sending' ? 'Enviando...' : 'Enviar mensagem'}
+                <Icon name="send" className="icon-arrow" />
+              </button>
+            </form>
+          )}
         </div>
       </div>
-
-      {status === 'sent' && <SentModal onClose={() => setStatus('idle')} />}
     </section>
   )
 }

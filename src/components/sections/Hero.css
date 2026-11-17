@@ -4,27 +4,16 @@
   min-height: min(100svh, 920px);
   display: flex;
   align-items: center;
-  padding: calc(var(--topbar-h) + 32px) 0 72px;
+  padding: calc(var(--topbar-h) + 32px) 0 calc(var(--space-7) + 10vw);
   overflow: hidden;
-  /* Luzes suaves de fundo nas cores da ilustração */
-  /* Luzes suaves que somem antes da borda de baixo (sem corte visível) */
-  background: radial-gradient(60% 50% at 85% 30%, rgba(123, 63, 196, 0.14), transparent 70%),
-    radial-gradient(45% 40% at 15% 55%, rgba(65, 69, 117, 0.14), transparent 70%);
 }
 
-.hero__blur {
+.hero__mark {
+  /* Palavra impressa tom sobre tom, apoiada na borda de baixo e cortada pelas laterais */
   left: 50%;
-  top: 50%;
-  translate: -50% -50%;
-  font-size: clamp(7rem, 24vw, 22rem);
-  --px-from: -55%;
-  --px-to: -45%;
-  --px-y: -50%;
-  opacity: 0.42;
-}
-
-:root[data-theme='dark'] .hero__blur {
-  opacity: 0.6;
+  bottom: -0.1em;
+  translate: -50% 0;
+  font-size: clamp(6rem, 19vw, 18rem);
 }
 
 .hero__grid {
@@ -42,8 +31,6 @@
   gap: var(--space-5);
 }
 
-
-
 .hero__name {
   display: grid;
   font-size: var(--display-xl);
@@ -52,12 +39,12 @@
 
 .hero__line {
   display: block;
-  animation: hero-in 0.9s var(--ease-out) both;
+  animation: hero-in var(--dur-slow) var(--ease-out) both;
 }
 
 .hero__line--accent {
   color: var(--accent);
-  animation-delay: 0.12s;
+  animation-delay: 70ms;
 }
 
 .hero__role {
@@ -65,20 +52,20 @@
   font-size: var(--text-lg);
   font-weight: 600;
   color: var(--accent);
-  animation: hero-in 0.9s var(--ease-out) 0.25s both;
+  animation: hero-in var(--dur-slow) var(--ease-out) 140ms both;
 }
 
 .hero__role-text {
   display: inline-block;
   font-weight: 700;
-  animation: hero-role 0.6s var(--ease-out) both;
+  animation: hero-role 0.45s var(--ease-out) both;
 }
 
 .hero__actions {
   display: flex;
   flex-wrap: wrap;
   gap: 0.75rem;
-  animation: hero-in 0.9s var(--ease-out) 0.35s both;
+  animation: hero-in var(--dur-slow) var(--ease-out) 210ms both;
 }
 
 /* ---------- Arte ---------- */
@@ -87,13 +74,10 @@
   padding-right: 14px;
 }
 
-/* ---------- Indicador de rolagem ---------- */
-
-
 @keyframes hero-in {
   from {
     opacity: 0;
-    transform: translateY(30px);
+    transform: translateY(20px);
   }
 }
 
@@ -104,8 +88,6 @@
     filter: blur(6px);
   }
 }
-
-
 
 @media (max-width: 860px) {
   .hero {

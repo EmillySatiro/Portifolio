@@ -60,66 +60,85 @@ export function ProjectCover({ project }) {
 
 // Nomes das tecnologias (para a stack escrita por extenso)
 const TECH_NAMES = {
-  react: 'React', vue: 'Vue 3', vite: 'Vite', typescript: 'TypeScript', node: 'Node.js', express: 'Express',
-  flask: 'Flask', fastapi: 'FastAPI', postgres: 'PostgreSQL', supabase: 'Supabase', sqlite: 'SQLite',
-  chartjs: 'Chart.js', docker: 'Docker', axios: 'Axios', python: 'Python', bash: 'Shell', locust: 'Locust',
-  java: 'Java', rabbitmq: 'RabbitMQ', cpp: 'C++', kotlin: 'Kotlin', android: 'Android', pytorch: 'PyTorch',
-  opencv: 'OpenCV', sklearn: 'Scikit-learn', pandas: 'Pandas', jupyter: 'Jupyter', next: 'Next.js',
+  react: 'React',
+  vue: 'Vue 3',
+  vite: 'Vite',
+  typescript: 'TypeScript',
+  node: 'Node.js',
+  express: 'Express',
+  flask: 'Flask',
+  fastapi: 'FastAPI',
+  postgres: 'PostgreSQL',
+  supabase: 'Supabase',
+  sqlite: 'SQLite',
+  chartjs: 'Chart.js',
+  docker: 'Docker',
+  axios: 'Axios',
+  python: 'Python',
+  bash: 'Shell',
+  locust: 'Locust',
+  java: 'Java',
+  rabbitmq: 'RabbitMQ',
+  cpp: 'C++',
+  kotlin: 'Kotlin',
+  android: 'Android',
+  pytorch: 'PyTorch',
+  opencv: 'OpenCV',
+  sklearn: 'Scikit-learn',
+  pandas: 'Pandas',
+  jupyter: 'Jupyter',
+  next: 'Next.js',
 }
 
-// Estudos de caso alternados: capa de um lado, informações do outro.
+// Índice de estudos de caso: capa à esquerda, ficha do projeto à direita, cada um sob um fio.
 export default function ProjectIndex({ projects, categoryNames }) {
   return (
     <ol className="pcase-list">
       {projects.map((project, index) => (
-        <li
-          key={project.name}
-          className={`pcase${index % 2 ? ' is-flipped' : ''}`}
-          data-cat={project.category}
-          style={{ '--i': index }}
-        >
+        <li key={project.name} className="pcase" data-cat={project.category} style={{ '--i': Math.min(index, 4) }}>
           <div className="pcase__cover">
             <ProjectCover project={project} />
           </div>
 
           <div className="pcase__body">
-            <p className="pcase__meta">
-              <span className="pcase__cat">{categoryNames[project.category]}</span>
-              <span>{project.year}</span>
-              <span className={project.owner ? 'is-collab' : undefined}>
-                {project.owner ? `Em equipe com @${project.owner}` : project.role}
-              </span>
-            </p>
+            <header className="pcase__head">
+              <h3 className="pcase__name display">{project.name}</h3>
+              <p className="pcase__meta">
+                <span className="pcase__cat">{categoryNames[project.category]}</span>
+                <time>{project.year}</time>
+                <span className={project.owner ? 'is-collab' : undefined}>
+                  {project.owner ? `Em equipe com @${project.owner}` : project.role}
+                </span>
+              </p>
+            </header>
 
-            <h3 className="pcase__name display">{project.name}</h3>
             <p className="pcase__pitch">{project.pitch}</p>
 
             <div className="pcase__details">
               <div>
-                <p className="pcase__label">O que foi feito</p>
+                <h4 className="pcase__label">O que foi feito</h4>
                 <ul className="pcase__did">
                   {project.did.map((item) => (
                     <li key={item}>{item}</li>
                   ))}
+                  {project.stat && (
+                    <li className="pcase__fact">
+                      <strong className="num">{project.stat.value}</strong> {project.stat.label}
+                    </li>
+                  )}
                 </ul>
               </div>
-              {project.stat && (
-                <p className="pcase__stat">
-                  <strong className="display">{project.stat.value}</strong>
-                  <span>{project.stat.label}</span>
-                </p>
-              )}
-            </div>
 
-            <div>
-              <p className="pcase__label">Stack</p>
-              <ul className="pcase__stack">
-                {project.logos.map((logo) => (
-                  <li key={logo}>
-                    <TechLogo name={logo} size={16} /> {TECH_NAMES[logo] ?? logo}
-                  </li>
-                ))}
-              </ul>
+              <div>
+                <h4 className="pcase__label">Stack</h4>
+                <ul className="pcase__stack">
+                  {project.logos.map((logo) => (
+                    <li key={logo}>
+                      <TechLogo name={logo} size={16} /> {TECH_NAMES[logo] ?? logo}
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </div>
 
             <div className="pcase__links">

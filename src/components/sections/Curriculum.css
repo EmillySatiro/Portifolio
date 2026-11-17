@@ -13,21 +13,14 @@
   margin-bottom: var(--space-7);
 }
 
-.cv-head__title {
-  display: grid;
-  gap: var(--space-3);
-}
-
 .cv-download {
   display: grid;
   gap: var(--space-3);
 }
 
 .cv-download__label {
-  font-size: var(--text-xs);
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: var(--tracking-label);
+  font-size: var(--text-sm);
+  font-weight: 600;
   color: var(--muted);
 }
 
@@ -48,7 +41,7 @@
 .cv-row {
   position: relative;
   display: grid;
-  grid-template-columns: 3rem 11rem 1fr var(--tap);
+  grid-template-columns: 12rem 1fr var(--tap);
   align-items: start;
   gap: var(--space-5);
   padding: var(--space-5) var(--space-3);
@@ -58,20 +51,6 @@
   transition: background-color var(--dur) var(--ease-out);
 }
 
-.cv-row::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  width: 3px;
-  background: var(--violet);
-  transform: scaleY(0);
-  transform-origin: top;
-  transition: transform var(--dur) var(--ease-out);
-}
-
-.cv-row__num,
 .cv-row__period {
   padding-top: 0.45rem;
   font-size: var(--text-sm);
@@ -80,16 +59,9 @@
   font-variant-numeric: tabular-nums;
 }
 
-.cv-row__num {
-  font-family: var(--font-display);
-  font-size: var(--text-md);
-  font-weight: 400;
-  color: var(--accent);
-}
-
 .cv-row__role {
   font-size: var(--display-sm);
-  transition: transform var(--dur) var(--ease-out), color var(--dur-fast) ease;
+  transition: color var(--dur-fast) ease;
 }
 
 .cv-row__company {
@@ -102,7 +74,9 @@
   display: grid;
   grid-template-rows: 0fr;
   opacity: 0;
-  transition: grid-template-rows var(--dur) var(--ease-out), opacity var(--dur) ease;
+  transition:
+    grid-template-rows var(--dur) var(--ease-out),
+    opacity var(--dur) ease;
 }
 
 .cv-row__more > p {
@@ -138,20 +112,13 @@
 }
 
 .cv-row:hover,
-.cv-row:focus-visible,
-.cv-row:focus-within {
+.cv-row:focus-visible {
   background: color-mix(in srgb, var(--surface) 70%, transparent);
-}
-
-.cv-row:hover::before,
-.cv-row:focus-visible::before {
-  transform: scaleY(1);
 }
 
 .cv-row:hover .cv-row__role,
 .cv-row:focus-visible .cv-row__role {
   color: var(--accent);
-  transform: translateX(6px);
 }
 
 .cv-row:hover .cv-row__more,
@@ -170,89 +137,26 @@
   transform: rotate(0deg);
 }
 
-/* ---------- Fechamento ---------- */
-.cv-close {
-  display: grid;
-  gap: var(--space-4);
-  margin-top: var(--space-8);
-}
-
-.cv-close__status {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-2);
-  font-size: var(--text-xs);
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: var(--tracking-label);
-  color: var(--violet-text);
-}
-
-.cv-close__pixel {
-  width: 8px;
-  height: 8px;
-  background: var(--success);
-  animation: cv-blink 1.6s steps(1, end) infinite;
-}
-
-.cv-close__line {
-  max-width: 18ch;
-  font-size: var(--display-md);
-}
-
-.cv-close__links {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-2) var(--space-6);
-}
-
-.cv-close__link {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-2);
-  min-height: var(--tap);
-  font-size: var(--text-lg);
-  font-weight: 700;
-  color: var(--accent);
-  background: linear-gradient(currentColor, currentColor) 0 calc(100% - 8px) / 0 2px no-repeat;
-  transition: background-size var(--dur) var(--ease-out), gap var(--dur) var(--ease-out);
-}
-
-.cv-close__link:hover {
-  gap: var(--space-3);
-  background-size: 100% 2px;
-}
-
-@keyframes cv-blink {
-  50% {
-    opacity: 0.25;
-  }
-}
-
 /* ---------- Celular: período sobe para cima do cargo ---------- */
 @media (max-width: 760px) {
   .cv-row {
-    grid-template-columns: 2.2rem 1fr var(--tap);
+    grid-template-columns: 1fr var(--tap);
     gap: var(--space-1) var(--space-3);
     padding: var(--space-5) 0;
   }
 
   .cv-row__period {
-    grid-column: 2;
+    grid-column: 1;
     grid-row: 1;
     padding-top: 0;
   }
 
-  .cv-row__num {
-    grid-row: 1 / span 2;
-  }
-
   .cv-row__main {
-    grid-column: 2;
+    grid-column: 1;
   }
 
   .cv-row__toggle {
-    grid-column: 3;
+    grid-column: 2;
     grid-row: 1;
   }
 }

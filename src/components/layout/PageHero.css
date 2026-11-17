@@ -1,45 +1,58 @@
-/* Topo padrão das páginas internas (Projetos, Acadêmico) */
+/* Topo padrão das páginas internas: manchete à esquerda, linha fina à direita, um fio embaixo */
 .page-hero {
-  position: relative;
-  overflow: hidden;
-  padding: calc(var(--topbar-h) + var(--space-8)) 0 var(--space-8);
-  background: radial-gradient(55% 60% at 85% 20%, rgba(123, 63, 196, 0.14), transparent 70%),
-    radial-gradient(45% 45% at 10% 55%, rgba(65, 69, 117, 0.14), transparent 70%);
-}
-
-.page-hero__blur {
-  right: -3%;
-  top: 50%;
-  translate: 0 -50%;
-  --px-from: -4%;
-  --px-to: 4%;
-  --px-y: -50%;
-  font-size: clamp(7rem, 23vw, 21rem);
-  opacity: 0.32;
+  padding: calc(var(--topbar-h) + var(--space-8)) 0 0;
 }
 
 .page-hero__inner {
-  position: relative;
   display: grid;
-  gap: var(--space-5);
+  grid-template-columns: max-content minmax(240px, 1fr);
+  align-items: end;
+  gap: var(--space-5) var(--space-8);
+  padding-bottom: var(--space-6);
+  border-bottom: 2px solid var(--ink);
 }
 
 .page-hero__title {
   font-size: var(--display-lg);
-  line-height: 0.95;
+  line-height: 0.9;
   animation: page-hero-rise var(--dur-slow) var(--ease-out) both;
+}
+
+.page-hero__side {
+  justify-self: end;
+  display: grid;
+  gap: var(--space-4);
+  justify-items: start;
+  padding-bottom: var(--space-2);
+  animation: page-hero-rise var(--dur-slow) var(--ease-out) 80ms both;
+}
+
+.page-hero__lead {
+  max-width: 44ch;
+  font-size: var(--text-md);
+  line-height: var(--leading-snug);
+  color: var(--muted);
 }
 
 .page-hero__extra {
   display: flex;
   flex-wrap: wrap;
   gap: var(--space-3);
-  animation: page-hero-rise var(--dur-slow) var(--ease-out) 0.15s both;
 }
 
 @keyframes page-hero-rise {
   from {
     opacity: 0;
-    transform: translateY(24px);
+    transform: translateY(16px);
+  }
+}
+
+@media (max-width: 900px) {
+  .page-hero__inner {
+    grid-template-columns: 1fr;
+  }
+
+  .page-hero__side {
+    justify-self: start;
   }
 }

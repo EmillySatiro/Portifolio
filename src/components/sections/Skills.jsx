@@ -10,14 +10,15 @@ const TOTAL = String(technologies.length).padStart(2, '0')
 
 // Inclinação + brilho holográfico seguindo o ponteiro (escreve direto no estilo, sem re-render).
 function handleMove(e) {
+  if (e.pointerType !== 'mouse') return
   const card = e.currentTarget
   const rect = card.getBoundingClientRect()
   const x = (e.clientX - rect.left) / rect.width
   const y = (e.clientY - rect.top) / rect.height
   card.style.setProperty('--mx', `${(x * 100).toFixed(1)}%`)
   card.style.setProperty('--my', `${(y * 100).toFixed(1)}%`)
-  card.style.setProperty('--ry', `${((x - 0.5) * 18).toFixed(2)}deg`)
-  card.style.setProperty('--rx', `${((0.5 - y) * 18).toFixed(2)}deg`)
+  card.style.setProperty('--ry', `${((x - 0.5) * 10).toFixed(2)}deg`)
+  card.style.setProperty('--rx', `${((0.5 - y) * 10).toFixed(2)}deg`)
 }
 
 function handleLeave(e) {
@@ -52,16 +53,14 @@ function TechCard({ tech, index, order = 0, static: isStatic = false }) {
           ))}
         </div>
 
-        <p className="tcard__strip">
-          Tipo: {tech.categories.map((cat) => SHORT_NAMES[cat]).join(' / ')}
-        </p>
+        <p className="tcard__strip">Tipo: {tech.categories.map((cat) => SHORT_NAMES[cat]).join(' / ')}</p>
         <p className="tcard__desc">{tech.description}</p>
 
         <footer className="tcard__foot">
           <span>
             {String(index + 1).padStart(2, '0')}/{TOTAL}
           </span>
-          <span aria-hidden="true">✦</span>
+          <span className="tcard__pip" aria-hidden="true" />
         </footer>
       </article>
       <span className="tcard__holo" aria-hidden="true" />
@@ -98,10 +97,10 @@ function ShuffleDeck({ onOpen }) {
         ))}
       </div>
       <div className="deck__info">
-        <p className="deck__count">
-          <strong>{TOTAL}</strong> cartas no baralho
+        <p className="deck__hint">
+          <strong>{technologies.length} cartas</strong> embaralhadas. Escolha um tipo acima para abrir só as dele, ou
+          clique no monte para ver todas.
         </p>
-        <p className="deck__hint">Escolha um tipo acima para abrir as cartas, ou clique no baralho para ver todas.</p>
       </div>
     </div>
   )
@@ -112,22 +111,17 @@ export default function Skills() {
   const [active, setActive] = useState(null)
   const visible = active ? technologies.filter((tech) => active === ALL || tech.categories.includes(active)) : []
   const filters = [{ id: ALL, name: 'Todas' }, ...techCategories]
-  const countFor = (id) => (id === ALL ? technologies.length : technologies.filter((t) => t.categories.includes(id)).length)
+  const countFor = (id) =>
+    id === ALL ? technologies.length : technologies.filter((t) => t.categories.includes(id)).length
 
   return (
     <section id="skills" className="section skills pixel-edge">
-
       <div className="container">
         <header className="section-head">
-          <p className="eyebrow skills__eyebrow" data-reveal>
-            Tecnologias
-          </p>
-          <h2 className="section-title display" data-reveal style={{ '--delay': '0.08s' }}>
-            Minha coleção de cartas
-          </h2>
+          <h2 className="section-title display">Minha coleção de cartas</h2>
         </header>
 
-        <div className="skills__toolbar" data-reveal style={{ '--delay': '0.12s' }}>
+        <div className="skills__toolbar">
           <div className="tabs tabs--on-dark skills__tabs" role="group" aria-label="Escolher tipo de carta">
             {filters.map((filter) => (
               <button
@@ -150,7 +144,7 @@ export default function Skills() {
           )}
         </div>
 
-        <div data-reveal style={{ '--delay': '0.16s' }}>
+        <div>
           {active ? (
             // key: ao trocar de filtro a lista remonta e as cartas são "distribuídas" de novo
             <ul key={active} className="skills__grid" aria-live="polite">

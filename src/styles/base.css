@@ -22,7 +22,9 @@ body {
   line-height: var(--leading-body);
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
-  transition: background-color 0.4s ease, color 0.4s ease;
+  transition:
+    background-color 0.4s ease,
+    color 0.4s ease;
 }
 
 h1,
@@ -57,9 +59,45 @@ button {
   padding: 0;
 }
 
+/* Superfícies do navegador também seguem a paleta */
 ::selection {
   background: var(--brand);
   color: #fff;
+}
+
+html {
+  accent-color: var(--brand);
+  caret-color: var(--accent);
+  scrollbar-color: color-mix(in srgb, var(--ink) 35%, transparent) var(--bg);
+  scrollbar-width: thin;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg);
+}
+
+::-webkit-scrollbar-thumb {
+  background: color-mix(in srgb, var(--ink) 35%, transparent);
+  border: 3px solid var(--bg);
+  border-radius: var(--radius-pill);
+}
+
+a:not([class]) {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.22em;
+}
+
+/* Números em listas e datas alinham na mesma largura */
+time,
+dd,
+.num {
+  font-variant-numeric: tabular-nums;
 }
 
 :focus-visible {
@@ -73,4 +111,13 @@ h1,
 h2,
 h3 {
   text-wrap: balance;
+}
+
+p,
+li {
+  text-wrap: pretty;
+}
+
+.page-loading {
+  min-height: 100vh;
 }

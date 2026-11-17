@@ -27,7 +27,7 @@
 
 .footer__logo {
   color: #fff;
-  --bat-eyes: var(--violet);
+  --bat-eyes: var(--mark);
 }
 
 .footer__copy {
@@ -48,7 +48,10 @@
   border-radius: 50%;
   border: 1.5px solid rgba(255, 255, 255, 0.25);
   color: #fff;
-  transition: background-color 0.25s ease, border-color 0.25s ease, transform 0.35s var(--ease-out);
+  transition:
+    background-color 0.25s ease,
+    border-color 0.25s ease,
+    transform 0.35s var(--ease-out);
 }
 
 .footer__icon:hover {
