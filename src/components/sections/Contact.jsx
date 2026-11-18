@@ -53,96 +53,108 @@ export default function Contact() {
 
   return (
     <section id="contact" className="section contact pixel-edge">
-      <div className="container contact__inner">
-        <header className="contact__head">
-          <h2 className="contact__title">Vamos conversar?</h2>
-          <p className="contact__lead">
-            Tem um projeto, uma vaga ou uma ideia de pesquisa? Mande uma mensagem pelo formulário ou fale direto por
-            um dos canais.
+
+      <div className="container">
+        <header className="section-head contact__head">
+          <p className="eyebrow" data-reveal>
+            Contato
+          </p>
+          <h2 className="section-title display" data-reveal style={{ '--delay': '0.08s' }}>
+            Vamos conversar?
+          </h2>
+          <p className="section-lead" data-reveal style={{ '--delay': '0.12s' }}>
+            Vamos conversar sobre o seu próximo projeto? Envie uma mensagem pelo formulário ou use um dos canais.
           </p>
         </header>
 
-        {/* Canais: pílulas de vidro com botão de copiar */}
-        <ul className="contact__channels">
-          {contactMethods.map((method) => (
-            <li key={method.title} className="contact__channel">
-              <a href={method.link} target="_blank" rel="noopener noreferrer" className="contact__channel-link">
-                <span className="contact__channel-icon">
-                  <Icon name={method.icon} size={18} />
-                </span>
-                <span className="contact__channel-text">
-                  <span className="contact__channel-name">{method.title}</span>
-                  <span className="contact__channel-detail">{method.detail}</span>
-                </span>
-              </a>
-              <button
-                type="button"
-                className={`contact__copy${copied === method.title ? ' is-copied' : ''}`}
-                onClick={() => copy(method)}
-                aria-label={`Copiar ${method.title}`}
-                title={copied === method.title ? 'Copiado!' : 'Copiar'}
-              >
-                <Icon name={copied === method.title ? 'check' : 'copy'} size={15} />
-              </button>
-            </li>
-          ))}
-        </ul>
+        <div className="contact__card" data-reveal style={{ '--delay': '0.16s' }}>
+          {/* Canais */}
+          <aside className="contact__panel">
+            <h3 className="contact__panel-title display">Fale comigo</h3>
+            <ul className="contact__channels">
+              {contactMethods.map((method) => (
+                <li key={method.title} className="contact__channel">
+                  <a href={method.link} target="_blank" rel="noopener noreferrer" className="contact__channel-link">
+                    <span className="contact__channel-icon">
+                      <Icon name={method.icon} size={20} />
+                    </span>
+                    <span className="contact__channel-text">
+                      <span className="contact__channel-name">{method.title}</span>
+                      <span className="contact__channel-detail">{method.detail}</span>
+                    </span>
+                  </a>
+                  <button
+                    type="button"
+                    className={`contact__copy${copied === method.title ? ' is-copied' : ''}`}
+                    onClick={() => copy(method)}
+                    aria-label={`Copiar ${method.title}`}
+                    title={copied === method.title ? 'Copiado!' : 'Copiar'}
+                  >
+                    <Icon name={copied === method.title ? 'check' : 'copy'} size={16} />
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </aside>
 
-        {/* Formulário numa placa de vidro */}
-        <form className="contact__form" onSubmit={handleSubmit}>
-          {status === 'error' && (
-            <p className="contact__error" role="alert">
-              <Icon name="alert" size={18} /> {errorMessage}
-            </p>
-          )}
+          {/* Formulário */}
+          <form className="contact__form" onSubmit={handleSubmit}>
+            <h3 className="contact__form-title">Envie uma mensagem</h3>
 
-          <div className="contact__row">
+            {status === 'error' && (
+              <p className="contact__error" role="alert">
+                <Icon name="alert" size={18} /> {errorMessage}
+              </p>
+            )}
+
+            <div className="contact__row">
+              <div className="field">
+                <label htmlFor="contact-name">Seu nome</label>
+                <input
+                  id="contact-name"
+                  name="name"
+                  type="text"
+                  autoComplete="name"
+                  placeholder="Ex: Maria Silva"
+                  value={form.name}
+                  onChange={updateField}
+                  required
+                />
+              </div>
+              <div className="field">
+                <label htmlFor="contact-email">Seu e-mail</label>
+                <input
+                  id="contact-email"
+                  name="email"
+                  type="email"
+                  autoComplete="email"
+                  placeholder="seu@email.com"
+                  value={form.email}
+                  onChange={updateField}
+                  required
+                />
+              </div>
+            </div>
+
             <div className="field">
-              <label htmlFor="contact-name">Seu nome</label>
-              <input
-                id="contact-name"
-                name="name"
-                type="text"
-                autoComplete="name"
-                placeholder="Ex: Maria Silva"
-                value={form.name}
+              <label htmlFor="contact-message">Sua mensagem</label>
+              <textarea
+                id="contact-message"
+                name="message"
+                rows={5}
+                placeholder="Descreva a sua ideia, projeto ou dúvida..."
+                value={form.message}
                 onChange={updateField}
                 required
               />
             </div>
-            <div className="field">
-              <label htmlFor="contact-email">Seu e-mail</label>
-              <input
-                id="contact-email"
-                name="email"
-                type="email"
-                autoComplete="email"
-                placeholder="seu@email.com"
-                value={form.email}
-                onChange={updateField}
-                required
-              />
-            </div>
-          </div>
 
-          <div className="field">
-            <label htmlFor="contact-message">Sua mensagem</label>
-            <textarea
-              id="contact-message"
-              name="message"
-              rows={5}
-              placeholder="Conte a sua ideia, projeto ou dúvida"
-              value={form.message}
-              onChange={updateField}
-              required
-            />
-          </div>
-
-          <button type="submit" className="pbtn pbtn--main contact__submit" disabled={status === 'sending'}>
-            <span>{status === 'sending' ? 'Enviando mensagem...' : 'Enviar mensagem'}</span>
-            <Icon name="send" className="icon-arrow" />
-          </button>
-        </form>
+            <button type="submit" className="btn btn--primary contact__submit" disabled={status === 'sending'}>
+              {status === 'sending' ? 'Enviando mensagem...' : 'Enviar mensagem'}
+              <Icon name="send" className="icon-arrow" />
+            </button>
+          </form>
+        </div>
       </div>
 
       {status === 'sent' && <SentModal onClose={() => setStatus('idle')} />}
