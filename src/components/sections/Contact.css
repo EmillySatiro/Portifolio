@@ -63,7 +63,7 @@
   gap: var(--space-1);
   padding: 6px 6px 6px 6px;
   border: 1px solid rgba(255, 255, 255, 0.14);
-  border-radius: var(--radius-pill);
+  border-radius: var(--radius-btn);
   background: rgba(255, 255, 255, 0.06);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
@@ -90,7 +90,7 @@
   flex-shrink: 0;
   width: 40px;
   height: 40px;
-  border-radius: 50%;
+  border-radius: var(--radius-btn);
   background: linear-gradient(135deg, #414575, #7b3fc4);
   color: #fff;
 }
@@ -121,7 +121,7 @@
   flex-shrink: 0;
   width: 36px;
   height: 36px;
-  border-radius: 50%;
+  border-radius: var(--radius-btn);
   color: rgba(241, 240, 250, 0.75);
   transition: background-color 0.2s ease, color 0.2s ease;
 }

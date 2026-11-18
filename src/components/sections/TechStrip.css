@@ -15,7 +15,7 @@
   min-height: 32px;
   padding: 0 var(--space-3);
   border: 1px solid rgba(255, 255, 255, 0.9);
-  border-radius: var(--radius-pill);
+  border-radius: var(--radius-btn);
   background: rgba(255, 255, 255, 0.5);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);

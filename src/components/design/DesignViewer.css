@@ -80,7 +80,7 @@
   flex-shrink: 0;
   width: var(--tap);
   height: var(--tap);
-  border-radius: 50%;
+  border-radius: var(--radius-btn);
 }
 
 .dviewer__close:hover {

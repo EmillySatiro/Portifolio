@@ -71,7 +71,7 @@
   position: relative;
   display: block;
   padding: 0.5rem 0.8rem;
-  border-radius: var(--radius-pill);
+  border-radius: var(--radius-btn);
   font-size: var(--text-sm);
   font-weight: 500;
   color: var(--muted);
@@ -116,7 +116,7 @@
   place-items: center;
   width: var(--tap);
   height: var(--tap);
-  border-radius: 50%;
+  border-radius: var(--radius-btn);
   border: 1.5px solid var(--line-strong);
 }
 

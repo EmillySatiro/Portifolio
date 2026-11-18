@@ -321,7 +321,7 @@
   place-items: center;
   width: 44px;
   height: 44px;
-  border-radius: 50%;
+  border-radius: var(--radius-btn);
   background: rgba(255, 255, 255, 0.92);
   color: #15162e;
 }
