@@ -1,9 +1,9 @@
 import { aboutFacts, interests } from '../../data/portfolio'
 import Icon from '../ui/Icon'
-import PixelComputer from '../ui/PixelComputer'
+import RetroComputer from '../ui/RetroComputer'
 import './About.css'
 
-// Layout de "objeto central": título no alto, o computador em pixel art no meio,
+// Layout de "objeto central": título no alto, o computador retrô no meio,
 // dois textos de cada lado e, embaixo, a ficha (formação, mestrado, startup) e os interesses.
 export default function About() {
   return (
@@ -34,7 +34,7 @@ export default function About() {
           </div>
 
           <div className="about__center">
-            <PixelComputer />
+            <RetroComputer />
           </div>
 
           <div className="about__col about__col--right">

@@ -1,6 +1,6 @@
 import { avatar } from '../../data/portfolio'
 import BatLogo from './BatLogo'
-import './PixelComputer.css'
+import './RetroComputer.css'
 
 // Linhas de código da cena 1: recuo e larguras (em "caracteres") de cada trecho colorido
 const CODE = [
@@ -12,14 +12,15 @@ const CODE = [
   [0, ['k', 6], ['v', 9]],
 ]
 
-// Computador em pixel art; a tela alterna três cenas sobre o meu trabalho:
+// Computador retrô realista (plástico com textura, vidro curvo de tubo); a tela alterna três cenas:
 // código (desenvolvimento) → detecção na imagem (visão computacional) → interface montando (design).
-export default function PixelComputer() {
+export default function RetroComputer() {
   return (
     <div className="pc" aria-hidden="true">
       <div className="pc__float">
-        <div className="pc__monitor">
-          <div className="pc__screen">
+        <div className="pc__body">
+          <div className="pc__bezel">
+            <div className="pc__screen">
             {/* Cena 1: código sendo digitado */}
             <div className="pc__scene pc__scene--code">
               {CODE.map(([indent, ...tokens], line) => (
@@ -53,13 +54,16 @@ export default function PixelComputer() {
 
             <span className="pc__glare" />
           </div>
-          <div className="pc__chin">
-            <BatLogo size={26} />
+          </div>
+          {/* Frente do gabinete: logo, entrada de disquete, grade de ventilação e luz */}
+          <div className="pc__front">
+            <BatLogo size={22} className="pc__logo" />
+            <span className="pc__slot" />
+            <span className="pc__vents" />
             <span className="pc__led" />
           </div>
         </div>
-        <div className="pc__neck" />
-        <div className="pc__base" />
+        <div className="pc__foot" />
       </div>
       <span className="pc__shadow" />
     </div>

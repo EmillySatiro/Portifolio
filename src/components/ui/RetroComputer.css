@@ -1,17 +1,18 @@
 /*
-  Computador em pixel art (cantos em degrau, contornos de 4 px), flutuando.
+  Computador retrô "de verdade": gabinete de plástico bege com textura granulada e luz vinda de cima,
+  tela de tubo com vidro curvo, linhas de varredura, vinheta e reflexo; flutua devagar.
   A tela troca de cena a cada 4 s em um ciclo de 12 s: código → visão computacional → interface.
 */
 .pc {
-  --px: clamp(3px, 0.32vw, 4px); /* "pixel" do desenho */
-  --body: #e9e6f2;
-  --body-dark: #c9c3dc;
-  --line: #23264d;
-  --glass: #12142b;
+  /* Grão do plástico (ruído gerado por SVG, sem imagem externa) */
+  --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.35 0 0 0 0 0.3 0 0 0 0 0.22 0 0 0 0.55 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  --plastic: #e6dfcc;
+  --plastic-light: #f3eee0;
+  --plastic-dark: #c9bfa6;
   position: relative;
   display: grid;
   justify-items: center;
-  width: clamp(260px, 30vw, 420px);
+  width: clamp(270px, 29vw, 420px);
 }
 
 .pc__float {
@@ -21,92 +22,142 @@
   animation: pc-float 4.5s ease-in-out infinite alternate;
 }
 
-/* Cantos em degrau: um clip-path que tira um "pixel" de cada canto */
-.pc__monitor,
-.pc__base {
-  clip-path: polygon(
-    var(--px) 0,
-    calc(100% - var(--px)) 0,
-    calc(100% - var(--px)) var(--px),
-    100% var(--px),
-    100% calc(100% - var(--px)),
-    calc(100% - var(--px)) calc(100% - var(--px)),
-    calc(100% - var(--px)) 100%,
-    var(--px) 100%,
-    var(--px) calc(100% - var(--px)),
-    0 calc(100% - var(--px)),
-    0 var(--px),
-    var(--px) var(--px)
-  );
-}
-
-.pc__monitor {
+/* ---------- Gabinete ---------- */
+.pc__body {
+  position: relative;
   width: 100%;
-  padding: calc(var(--px) * 4);
-  padding-bottom: 0;
-  background: var(--line);
+  padding: 7% 7% 0;
+  border-radius: 7% 7% 4% 4% / 6% 6% 3% 3%;
+  background:
+    var(--grain),
+    linear-gradient(100deg, rgba(255, 255, 255, 0.35), transparent 22%, transparent 78%, rgba(0, 0, 0, 0.08)),
+    linear-gradient(180deg, var(--plastic-light) 0%, var(--plastic) 45%, var(--plastic-dark) 100%);
+  background-size: 160px 160px, auto, auto;
+  box-shadow:
+    inset 0 2px 0 rgba(255, 255, 255, 0.85),
+    inset 0 -10px 18px rgba(80, 65, 40, 0.18),
+    inset 8px 0 14px rgba(255, 255, 255, 0.25),
+    inset -10px 0 16px rgba(80, 65, 40, 0.14),
+    0 2px 0 #b4a98d,
+    0 40px 60px -30px rgba(20, 18, 40, 0.55),
+    0 14px 24px -12px rgba(20, 18, 40, 0.3);
 }
 
+/* Moldura rebaixada em volta da tela */
+.pc__bezel {
+  padding: 6.5%;
+  border-radius: 6% / 7%;
+  background: var(--grain), linear-gradient(180deg, #d8cfb8, #e9e2d0);
+  background-size: 160px 160px, auto;
+  box-shadow:
+    inset 0 4px 8px rgba(60, 48, 28, 0.35),
+    inset 0 -2px 0 rgba(255, 255, 255, 0.7),
+    inset 0 0 0 1px rgba(60, 48, 28, 0.12);
+}
+
+/* ---------- Tela de tubo ---------- */
 .pc__screen {
   position: relative;
   aspect-ratio: 4 / 3;
   overflow: hidden;
-  background: var(--glass);
-  box-shadow: 0 0 0 calc(var(--px) * 3) var(--body), 0 0 0 calc(var(--px) * 4) var(--body-dark);
-  margin: calc(var(--px) * 3);
-  /* Linhas de varredura de monitor antigo */
-  background-image: repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.035) 0 2px, transparent 2px 4px);
+  border-radius: 9% / 11%;
+  background: radial-gradient(120% 100% at 50% 45%, #1c2040, #0b0c19 80%);
+  box-shadow: 0 0 0 3px #1d1b18, 0 0 0 4px rgba(255, 255, 255, 0.25);
 }
 
-.pc__chin {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin: calc(var(--px) * 3) calc(var(--px) * -4) 0;
-  padding: calc(var(--px) * 3) calc(var(--px) * 7) calc(var(--px) * 4);
-  background: var(--body);
-  color: var(--line);
+/* Linhas de varredura + vinheta escura nas bordas do vidro curvo */
+.pc__screen::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  border-radius: inherit;
+  background:
+    repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.22) 0 1px, transparent 1px 3px),
+    radial-gradient(110% 95% at 50% 50%, transparent 55%, rgba(0, 0, 0, 0.55) 100%);
+  box-shadow: inset 0 0 26px rgba(0, 0, 0, 0.7);
+  pointer-events: none;
 }
 
-.pc__led {
-  width: calc(var(--px) * 2);
-  height: calc(var(--px) * 2);
-  background: #3fd68a;
-  box-shadow: 0 0 8px #3fd68a;
-  animation: pc-led 2.4s steps(1, end) infinite;
-}
-
-.pc__neck {
-  width: 16%;
-  height: calc(var(--px) * 7);
-  background: linear-gradient(90deg, var(--body-dark), var(--body) 40%, var(--body-dark));
-  border-inline: var(--px) solid var(--line);
-}
-
-.pc__base {
-  width: 46%;
-  height: calc(var(--px) * 5);
-  background: var(--line);
-  box-shadow: inset 0 calc(var(--px) * -2) 0 var(--body-dark), inset 0 0 0 var(--px) var(--line);
-  background: linear-gradient(var(--line) 0 var(--px), var(--body) var(--px) calc(100% - var(--px)), var(--line) 0);
-}
-
-.pc__shadow {
-  width: 70%;
-  height: 18px;
-  margin-top: var(--space-2);
-  border-radius: 50%;
-  background: radial-gradient(closest-side, rgba(10, 10, 30, 0.28), transparent);
-  animation: pc-shadow 4.5s ease-in-out infinite alternate;
-}
-
-/* Reflexo diagonal no vidro */
+/* Reflexo curvo de luz no vidro */
 .pc__glare {
   position: absolute;
   inset: 0;
-  z-index: 3;
-  background: linear-gradient(125deg, rgba(255, 255, 255, 0.1) 0 22%, transparent 22% 30%, rgba(255, 255, 255, 0.05) 30% 34%, transparent 34%);
+  z-index: 5;
+  border-radius: inherit;
+  background:
+    radial-gradient(70% 45% at 30% 8%, rgba(255, 255, 255, 0.22), transparent 70%),
+    linear-gradient(125deg, transparent 58%, rgba(255, 255, 255, 0.06) 62%, transparent 70%);
   pointer-events: none;
+}
+
+/* ---------- Frente: logo gravado, disquete, ventilação e luz ---------- */
+.pc__front {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  grid-template-rows: auto auto;
+  align-items: center;
+  gap: 10px 14px;
+  padding: 7% 2% 8%;
+}
+
+.pc__logo {
+  grid-row: 1 / 3;
+  color: rgba(70, 60, 40, 0.55);
+  filter: drop-shadow(0 1px 0 rgba(255, 255, 255, 0.8));
+}
+
+.pc__slot {
+  grid-column: 3;
+  grid-row: 1;
+  width: clamp(70px, 9vw, 120px);
+  height: 9px;
+  border-radius: 3px;
+  background: linear-gradient(#3a352c, #1b1915);
+  box-shadow: inset 0 2px 3px rgba(0, 0, 0, 0.8), 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+.pc__vents {
+  grid-column: 2;
+  grid-row: 1 / 3;
+  justify-self: center;
+  width: 60%;
+  height: 22px;
+  background: repeating-linear-gradient(90deg, rgba(60, 48, 28, 0.38) 0 2px, transparent 2px 7px);
+  mask-image: linear-gradient(90deg, transparent, #000 15%, #000 85%, transparent);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 15%, #000 85%, transparent);
+  filter: drop-shadow(0 1px 0 rgba(255, 255, 255, 0.6));
+}
+
+.pc__led {
+  grid-column: 3;
+  grid-row: 2;
+  justify-self: end;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #3fd68a;
+  box-shadow: 0 0 6px 1px rgba(63, 214, 138, 0.9), inset 0 -1px 1px rgba(0, 0, 0, 0.3);
+  animation: pc-led 2.4s steps(1, end) infinite;
+}
+
+/* Pé: a base recuada, mais escura, sob o gabinete */
+.pc__foot {
+  width: 78%;
+  height: clamp(10px, 1.3vw, 16px);
+  border-radius: 0 0 10px 10px;
+  background: var(--grain), linear-gradient(180deg, #a99e83, #c9bfa6);
+  background-size: 160px 160px, auto;
+  box-shadow: inset 0 3px 4px rgba(40, 30, 15, 0.35);
+}
+
+.pc__shadow {
+  width: 86%;
+  height: 22px;
+  margin-top: var(--space-2);
+  border-radius: 50%;
+  background: radial-gradient(closest-side, rgba(10, 10, 30, 0.32), transparent);
+  animation: pc-shadow 4.5s ease-in-out infinite alternate;
 }
 
 /* ---------- Cenas: cada uma aparece por 4 s de um ciclo de 12 s ---------- */
@@ -456,4 +507,10 @@
     opacity: 1;
     transform: none;
   }
+}
+
+/* Brilho de fósforo do tubo nas cenas escuras */
+.pc__scene--code,
+.pc__scene--vision {
+  filter: drop-shadow(0 0 3px rgba(150, 190, 255, 0.45));
 }
