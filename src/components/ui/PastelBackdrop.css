@@ -1,0 +1,80 @@
+/*
+  Fundo pastel do site (o mesmo da capa): manchas de cor passeando devagar, grade de pixel nas bordas
+  e cruzinhas de pixel piscando. Fica atrás do conteúdo da seção que o usa.
+*/
+.pastel {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.pastel::before {
+  content: '';
+  position: absolute;
+  inset: -15%;
+  background:
+    radial-gradient(closest-side, rgba(138, 215, 235, 0.85), transparent),
+    radial-gradient(closest-side, rgba(181, 151, 240, 0.75), transparent),
+    radial-gradient(closest-side, rgba(255, 184, 154, 0.7), transparent),
+    radial-gradient(closest-side, rgba(110, 118, 210, 0.4), transparent),
+    radial-gradient(closest-side, rgba(255, 226, 150, 0.55), transparent);
+  background-size: 70% 80%, 65% 75%, 60% 70%, 55% 60%, 45% 50%;
+  background-position: 0% 10%, 100% 0%, 95% 100%, 5% 100%, 50% 30%;
+  background-repeat: no-repeat;
+  filter: blur(20px);
+  animation: pastel-blobs 22s ease-in-out infinite alternate;
+}
+
+/* Grade de pixel bem leve, mais visível nas bordas e sumindo no centro */
+.pastel::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: linear-gradient(rgba(65, 69, 117, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(65, 69, 117, 0.08) 1px, transparent 1px);
+  background-size: 28px 28px;
+  mask-image: radial-gradient(70% 70% at 50% 45%, transparent 35%, #000 100%);
+  -webkit-mask-image: radial-gradient(70% 70% at 50% 45%, transparent 35%, #000 100%);
+}
+
+/* Cruz de 5 quadradinhos que pisca e flutua */
+.pastel__px {
+  position: absolute;
+  z-index: 1;
+  width: var(--s);
+  height: var(--s);
+  background: var(--c);
+  box-shadow: 0 calc(var(--s) * -1) 0 var(--c), 0 var(--s) 0 var(--c), calc(var(--s) * -1) 0 0 var(--c),
+    var(--s) 0 0 var(--c);
+  animation: pastel-px 4s steps(1, end) var(--d) infinite, pastel-px-float 6s ease-in-out var(--d) infinite alternate;
+}
+
+@keyframes pastel-blobs {
+  to {
+    background-position: 14% 26%, 84% 18%, 72% 84%, 18% 78%, 40% 18%;
+  }
+}
+
+@keyframes pastel-px {
+  70% {
+    opacity: 1;
+  }
+  85% {
+    opacity: 0.15;
+  }
+}
+
+@keyframes pastel-px-float {
+  to {
+    translate: 0 -14px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pastel::before,
+  .pastel__px {
+    animation: none;
+  }
+}

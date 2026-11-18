@@ -1,0 +1,115 @@
+/*
+  Botões em pílula do site: principal em degradê índigo → violeta com reflexo passando,
+  "vidro" translúcido para os secundários e ícones redondos que ganham a cor da marca.
+*/
+.pbtn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  height: 44px;
+  padding: 0 var(--space-5);
+  overflow: hidden;
+  border-radius: var(--radius-pill);
+  font-size: var(--text-sm);
+  font-weight: 700;
+  line-height: 1;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: transform 0.25s var(--ease-out), box-shadow 0.25s ease, background-color 0.25s ease, color 0.25s ease;
+}
+
+.pbtn:active {
+  transform: scale(0.97);
+}
+
+/* Principal: degradê índigo → violeta, brilho colorido e um reflexo que atravessa de tempos em tempos */
+.pbtn--main {
+  color: #fff;
+  background: linear-gradient(120deg, #2d3170 0%, #414575 35%, #7b3fc4 100%);
+  background-size: 160% 100%;
+  box-shadow: 0 10px 24px -8px rgba(123, 63, 196, 0.65), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+}
+
+.pbtn--main::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(105deg, transparent 35%, rgba(255, 255, 255, 0.45) 50%, transparent 65%);
+  translate: -120% 0;
+  animation: pbtn-shine 4.5s ease-in-out 2.5s infinite;
+}
+
+/* Vidro: fundo translúcido com desfoque e contorno fino */
+.pbtn--glass,
+.pbtn--icon {
+  color: #15162e;
+  background: rgba(255, 255, 255, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  box-shadow: 0 8px 20px -10px rgba(35, 38, 77, 0.45), inset 0 1px 0 #fff;
+  backdrop-filter: blur(10px) saturate(1.4);
+  -webkit-backdrop-filter: blur(10px) saturate(1.4);
+}
+
+.pbtn--icon {
+  width: 44px;
+  padding: 0;
+}
+
+.pbtn svg {
+  transition: transform 0.25s var(--ease-out);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .pbtn:hover {
+    transform: translateY(-3px);
+  }
+
+  .pbtn--main:hover {
+    background-position: 100% 0;
+    box-shadow: 0 14px 30px -8px rgba(123, 63, 196, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  }
+
+  .pbtn--main:hover .icon-arrow {
+    transform: translateX(4px);
+  }
+
+  .pbtn--glass:hover {
+    background: #fff;
+    box-shadow: 0 12px 26px -10px rgba(35, 38, 77, 0.55), inset 0 1px 0 #fff;
+  }
+
+  /* Ícones ganham a cor da rede no hover */
+  .pbtn--github:hover {
+    background: #181717;
+    border-color: #181717;
+    color: #fff;
+  }
+
+  .pbtn--linkedin:hover {
+    background: #0a66c2;
+    border-color: #0a66c2;
+    color: #fff;
+  }
+
+  .pbtn--icon:hover svg {
+    transform: scale(1.1);
+  }
+}
+
+@keyframes pbtn-shine {
+  0% {
+    translate: -120% 0;
+  }
+  30%,
+  100% {
+    translate: 120% 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pbtn--main::after {
+    animation: none;
+  }
+}

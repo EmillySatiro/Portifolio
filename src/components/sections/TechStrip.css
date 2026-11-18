@@ -1,0 +1,120 @@
+/* Faixa de tecnologias: filtros pequenos em pílulas e logos passando devagar */
+.tstrip {
+  display: grid;
+  gap: var(--space-5);
+}
+
+.tstrip__filters {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-2);
+}
+
+.tstrip__chip {
+  min-height: 32px;
+  padding: 0 var(--space-3);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  border-radius: var(--radius-pill);
+  background: rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  color: #2a2c45;
+  transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s var(--ease-out);
+}
+
+.tstrip__chip:hover {
+  background: #fff;
+}
+
+.tstrip__chip:active {
+  transform: scale(0.96);
+}
+
+.tstrip__chip[aria-pressed='true'] {
+  border-color: transparent;
+  background: linear-gradient(120deg, #2d3170, #414575 40%, #7b3fc4);
+  color: #fff;
+  box-shadow: 0 6px 16px -6px rgba(123, 63, 196, 0.6);
+}
+
+.tstrip__viewport {
+  /* Folga em cima para o nome que aparece no hover */
+  padding: 34px 0 12px;
+  overflow: hidden;
+  mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent);
+}
+
+.tstrip__track {
+  display: flex;
+  gap: var(--space-3);
+  width: max-content;
+  animation: tstrip-move var(--dur) linear infinite, tstrip-in 0.5s ease both;
+}
+
+.tstrip__viewport:hover .tstrip__track {
+  animation-play-state: paused;
+}
+
+.tstrip__item {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  width: 60px;
+  height: 60px;
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: 0 8px 18px -10px rgba(35, 38, 77, 0.5), inset 0 0 0 1px rgba(35, 38, 77, 0.06);
+  transition: transform 0.25s var(--ease-out);
+}
+
+/* Nome da tecnologia num balão acima do logo */
+.tstrip__item::after {
+  content: attr(data-name);
+  position: absolute;
+  bottom: calc(100% + 6px);
+  left: 50%;
+  padding: 2px 8px;
+  border-radius: var(--radius-pill);
+  background: #15162e;
+  color: #fff;
+  font-size: 0.7rem;
+  font-weight: 700;
+  white-space: nowrap;
+  opacity: 0;
+  translate: -50% 4px;
+  transition: opacity 0.2s ease, translate 0.2s var(--ease-out);
+  pointer-events: none;
+}
+
+.tstrip__item:hover {
+  transform: translateY(-4px) scale(1.06);
+}
+
+.tstrip__item:hover::after {
+  opacity: 1;
+  translate: -50% 0;
+}
+
+@keyframes tstrip-move {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes tstrip-in {
+  from {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tstrip__track {
+    animation: none;
+  }
+}

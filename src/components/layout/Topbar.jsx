@@ -6,9 +6,9 @@ import BatLogo from '../ui/BatLogo'
 import Icon from '../ui/Icon'
 import './Topbar.css'
 
-const HOME_SECTIONS = ['home', 'about', 'skills', 'curriculum', 'contact']
+const HOME_SECTIONS = ['home', 'about', 'curriculum', 'contact']
 // "Tecnologias" faz parte de "Sobre" no menu
-const SECTION_TO_NAV = { skills: 'about' }
+const SECTION_TO_NAV = {}
 
 function useScrolled(threshold = 8) {
   const [scrolled, setScrolled] = useState(false)
