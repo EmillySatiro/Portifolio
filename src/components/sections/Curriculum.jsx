@@ -1,39 +1,50 @@
 import { useEffect, useRef, useState } from 'react'
 import { cvFiles, experiences } from '../../data/portfolio'
-import BatLogo from '../ui/BatLogo'
 import Icon from '../ui/Icon'
 import PastelBackdrop from '../ui/PastelBackdrop'
 import TechStrip from './TechStrip'
 import './Curriculum.css'
 
+const SWIPE = 50 // px de arrasto para trocar de experiência
+const pad = (n) => String(n).padStart(2, '0')
+// Ano de início de cada experiência, para a linha do tempo ("mar. 2026 — jun. 2026" → 2026)
+const yearOf = (period) => period.match(/\d{4}/)?.[0] ?? ''
 
-const SWIPE = 50 // px de arrasto para trocar de cartão
-
-// Trajetória como carrossel: um cartão em destaque no centro e os vizinhos menores dos lados.
-// Passa com as setas, o teclado, arrastando ou clicando num cartão do lado.
+// Trajetória no estilo da capa: o cargo em letras enormes troca com animação (sobe saindo de uma
+// "janela"), os detalhes ficam em colunas embaixo e uma linha do tempo com marcadores de pixel navega.
 export default function Curriculum() {
   const [current, setCurrent] = useState(0)
+  const [dir, setDir] = useState(1)
   const drag = useRef(null)
+  const sectionRef = useRef(null)
   const total = experiences.length
-  const go = (i) => setCurrent(Math.max(0, Math.min(total - 1, i)))
+  const item = experiences[current]
 
-  // Setas do teclado quando o carrossel está em foco
-  const stageRef = useRef(null)
+  const go = (i) => {
+    const next = Math.max(0, Math.min(total - 1, i))
+    if (next === current) return
+    setDir(next > current ? 1 : -1)
+    setCurrent(next)
+  }
+
+  // Setas do teclado enquanto a seção está em foco
+  const goRef = useRef(go)
+  goRef.current = go
   useEffect(() => {
-    const stage = stageRef.current
+    const el = sectionRef.current
     const onKey = (e) => {
-      if (e.key === 'ArrowRight') setCurrent((c) => Math.min(total - 1, c + 1))
-      if (e.key === 'ArrowLeft') setCurrent((c) => Math.max(0, c - 1))
+      if (e.key === 'ArrowRight') goRef.current(current + 1)
+      if (e.key === 'ArrowLeft') goRef.current(current - 1)
     }
-    stage.addEventListener('keydown', onKey)
-    return () => stage.removeEventListener('keydown', onKey)
-  }, [total])
+    el.addEventListener('keydown', onKey)
+    return () => el.removeEventListener('keydown', onKey)
+  }, [current])
 
   return (
-    <section id="curriculum" className="curriculum pixel-edge">
+    <section id="curriculum" className="curriculum pixel-edge" ref={sectionRef}>
       <PastelBackdrop />
 
-      <header className="cv-head">
+      <div className="container cv-top">
         <h2 className="cv-title">Minha trajetória</h2>
         <div className="cv-download">
           {cvFiles.map((file, i) => (
@@ -47,15 +58,13 @@ export default function Curriculum() {
             </a>
           ))}
         </div>
-      </header>
+      </div>
 
+      {/* Experiência atual: a key nova faz as animações de entrada rodarem a cada troca */}
       <div
-        ref={stageRef}
-        className="cv-stage"
-        tabIndex={0}
-        role="region"
-        aria-roledescription="carrossel"
-        aria-label="Experiências"
+        className="container cv-stage"
+        style={{ '--dir': dir }}
+        aria-live="polite"
         onPointerDown={(e) => {
           drag.current = e.clientX
         }}
@@ -67,42 +76,32 @@ export default function Curriculum() {
           if (dx > SWIPE) go(current - 1)
         }}
       >
-        {experiences.map((item, i) => {
-          const d = i - current
-          return (
-            <article
-              key={`${item.company}-${item.title}`}
-              className={`cv-card${d === 0 ? ' is-active' : ''}${item.image ? '' : ' is-plain'}`}
-              style={{ '--d': d, '--abs': Math.abs(d) }}
-              aria-hidden={d !== 0}
-              onClick={() => d !== 0 && go(i)}
-            >
-              {/* Foto/tela real do trabalho; sem foto, o fundo pastel da capa com o morcego */}
-              {item.image ? (
-                <img className="cv-card__img" src={item.image} alt="" loading="lazy" decoding="async" draggable="false" />
-              ) : (
-                <span className="cv-card__plain" aria-hidden="true">
-                  <BatLogo size={96} />
-                </span>
-              )}
-              <span className="cv-card__shade" aria-hidden="true" />
-              <div className="cv-card__top">
-                <p className="cv-card__period">{item.period}</p>
-                <span className="cv-card__num" aria-hidden="true">
-                  {String(i + 1).padStart(2, '0')}
-                </span>
-              </div>
-              <div className="cv-card__body">
-                <h3 className="cv-card__role">{item.title}</h3>
-                <p className="cv-card__company">{item.company}</p>
-                <p className="cv-card__desc">{item.description}</p>
-              </div>
-            </article>
-          )
-        })}
+        <div key={current} className="cv-item">
+          <p className="cv-item__meta">
+            <span className="cv-item__index">
+              {pad(current + 1)}
+              <small>/{pad(total)}</small>
+            </span>
+            <span className="cv-item__period">{item.period}</span>
+          </p>
+
+          <h3 className="cv-item__role">
+            {item.title.split(' ').map((word, w) => (
+              <span key={w} className="cv-word">
+                <span style={{ '--w': w }}>{word}</span>
+              </span>
+            ))}
+          </h3>
+
+          <div className="cv-item__details">
+            <p className="cv-item__company">{item.company}</p>
+            <p className="cv-item__desc">{item.description}</p>
+          </div>
+        </div>
       </div>
 
-      <div className="cv-controls">
+      {/* Linha do tempo: um marcador de pixel por experiência, a barra enche até a atual */}
+      <nav className="container cv-timeline" aria-label="Experiências">
         <button
           type="button"
           className="pbtn pbtn--glass pbtn--icon"
@@ -112,12 +111,24 @@ export default function Curriculum() {
         >
           <Icon name="arrowLeft" />
         </button>
-        <p className="cv-count" aria-live="polite">
-          <strong>{String(current + 1).padStart(2, '0')}</strong> / {String(total).padStart(2, '0')}
-        </p>
-        <div className="cv-progress" aria-hidden="true">
-          <span style={{ width: `${((current + 1) / total) * 100}%` }} />
-        </div>
+
+        <ol className="cv-rail" style={{ '--progress': total > 1 ? current / (total - 1) : 0 }}>
+          {experiences.map((exp, i) => (
+            <li key={`${exp.company}-${exp.title}`}>
+              <button
+                type="button"
+                className={`cv-stop${i === current ? ' is-active' : ''}${i < current ? ' is-past' : ''}`}
+                onClick={() => go(i)}
+                aria-current={i === current ? 'step' : undefined}
+                aria-label={`${exp.title} · ${exp.company}`}
+              >
+                <span className="cv-stop__dot" />
+                <span className="cv-stop__year">{yearOf(exp.period)}</span>
+              </button>
+            </li>
+          ))}
+        </ol>
+
         <button
           type="button"
           className="pbtn pbtn--main pbtn--icon"
@@ -127,7 +138,7 @@ export default function Curriculum() {
         >
           <Icon name="arrowRight" />
         </button>
-      </div>
+      </nav>
 
       <div className="cv-stack">
         <TechStrip />
