@@ -1,17 +1,11 @@
 import { useEffect, useRef, useState } from 'react'
 import { cvFiles, experiences } from '../../data/portfolio'
+import BatLogo from '../ui/BatLogo'
 import Icon from '../ui/Icon'
 import PastelBackdrop from '../ui/PastelBackdrop'
 import TechStrip from './TechStrip'
 import './Curriculum.css'
 
-// Fundo de cada cartão, nas cores da capa (repete em ciclo)
-const TINTS = [
-  ['#23264d', '#7b3fc4'],
-  ['#1d3557', '#5cc6e3'],
-  ['#3b1f4f', '#e0559c'],
-  ['#2a2c45', '#f2a65a'],
-]
 
 const SWIPE = 50 // px de arrasto para trocar de cartão
 
@@ -75,20 +69,29 @@ export default function Curriculum() {
       >
         {experiences.map((item, i) => {
           const d = i - current
-          const [from, to] = TINTS[i % TINTS.length]
           return (
             <article
               key={`${item.company}-${item.title}`}
-              className={`cv-card${d === 0 ? ' is-active' : ''}`}
-              style={{ '--d': d, '--abs': Math.abs(d), '--from': from, '--to': to }}
+              className={`cv-card${d === 0 ? ' is-active' : ''}${item.image ? '' : ' is-plain'}`}
+              style={{ '--d': d, '--abs': Math.abs(d) }}
               aria-hidden={d !== 0}
               onClick={() => d !== 0 && go(i)}
             >
-              <span className="cv-card__glow" aria-hidden="true" />
-              <span className="cv-card__num" aria-hidden="true">
-                {String(i + 1).padStart(2, '0')}
-              </span>
-              <p className="cv-card__period">{item.period}</p>
+              {/* Foto/tela real do trabalho; sem foto, o fundo pastel da capa com o morcego */}
+              {item.image ? (
+                <img className="cv-card__img" src={item.image} alt="" loading="lazy" decoding="async" draggable="false" />
+              ) : (
+                <span className="cv-card__plain" aria-hidden="true">
+                  <BatLogo size={96} />
+                </span>
+              )}
+              <span className="cv-card__shade" aria-hidden="true" />
+              <div className="cv-card__top">
+                <p className="cv-card__period">{item.period}</p>
+                <span className="cv-card__num" aria-hidden="true">
+                  {String(i + 1).padStart(2, '0')}
+                </span>
+              </div>
               <div className="cv-card__body">
                 <h3 className="cv-card__role">{item.title}</h3>
                 <p className="cv-card__company">{item.company}</p>

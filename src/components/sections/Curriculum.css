@@ -11,7 +11,7 @@
   isolation: isolate;
   display: grid;
   align-content: center;
-  gap: clamp(var(--space-5), 3.5vh, var(--space-7));
+  gap: clamp(var(--space-4), 3vh, var(--space-6));
   min-height: 100svh;
   padding: calc(var(--topbar-h) + var(--space-6)) 0 calc(var(--space-6) + 16px);
   /* clip (e não hidden): os cartões de fora não podem virar uma área rolável */
@@ -40,7 +40,7 @@
   font-family: 'Archivo', var(--font-display);
   font-stretch: 125%;
   font-weight: 900;
-  font-size: clamp(2.1rem, 5.6vw, 5rem);
+  font-size: clamp(2rem, 4.6vw, 4.2rem);
   line-height: 0.92;
   letter-spacing: -0.02em;
   text-transform: uppercase;
@@ -55,10 +55,11 @@
 
 /* ---------- Carrossel ---------- */
 .cv-stage {
-  --card-w: min(clamp(260px, 27vw, 380px), 36svh);
-  --gap: calc(var(--card-w) * 0.78);
+  /* Cartão grande (4:5), limitado pela altura da tela para a seção caber inteira */
+  --card-w: min(clamp(300px, 38vw, 560px), (100svh - 320px) * 0.8);
+  --gap: calc(var(--card-w) * 0.86);
   position: relative;
-  height: calc(var(--card-w) * 1.18);
+  height: calc(var(--card-w) * 1.25);
   perspective: 1400px;
   overflow-x: clip;
   overflow-y: visible;
@@ -76,62 +77,96 @@
   width: var(--card-w);
   height: 100%;
   margin-left: calc(var(--card-w) / -2);
-  padding: clamp(20px, 2.2vw, 30px);
+  padding: clamp(18px, 2vw, 28px);
   overflow: hidden;
-  border-radius: 14px;
+  border-radius: 12px;
   color: #fff;
-  background: linear-gradient(155deg, var(--from) 0%, color-mix(in srgb, var(--from) 70%, var(--to)) 55%, var(--to) 140%);
-  box-shadow: 0 30px 60px -30px rgba(20, 18, 50, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.18);
+  background: #1a1c3a;
+  box-shadow: 0 40px 70px -35px rgba(20, 18, 50, 0.75), 0 0 0 1px rgba(255, 255, 255, 0.5);
   /* Posição pela distância ao ativo: anda para o lado, encolhe, inclina e escurece */
-  transform: translateX(calc(var(--d) * var(--gap))) translateZ(calc(var(--abs) * -120px))
-    rotateY(calc(var(--d) * -14deg)) scale(calc(1 - min(var(--abs), 3) * 0.1));
+  transform: translateX(calc(var(--d) * var(--gap))) translateZ(calc(var(--abs) * -90px))
+    rotateY(calc(var(--d) * -10deg)) scale(calc(1 - min(var(--abs), 3) * 0.12));
   z-index: calc(20 - var(--abs));
-  opacity: clamp(0, calc(1.6 - var(--abs) * 0.45), 1);
-  filter: saturate(calc(1 - min(var(--abs), 2) * 0.25)) brightness(calc(1 - min(var(--abs), 2) * 0.12));
+  opacity: clamp(0, calc(1.7 - var(--abs) * 0.5), 1);
   cursor: pointer;
-  transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.5s ease, filter 0.5s ease;
+  transition: transform 0.75s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.5s ease;
 }
 
 .cv-card.is-active {
   cursor: default;
 }
 
-/* Luz que passeia dentro do cartão ativo */
-.cv-card__glow {
+/* Imagem cobrindo o cartão; nos vizinhos fica em tons de cinza */
+.cv-card__img {
   position: absolute;
-  inset: -30%;
-  background: radial-gradient(closest-side, color-mix(in srgb, var(--to) 75%, #fff), transparent 70%);
-  opacity: 0.35;
-  translate: 35% 40%;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  filter: grayscale(0.85) brightness(0.8);
+  transform: scale(1.08);
+  transition: filter 0.6s ease, transform 1.2s cubic-bezier(0.22, 1, 0.36, 1);
   pointer-events: none;
 }
 
-.cv-card.is-active .cv-card__glow {
-  animation: cv-glow 7s ease-in-out infinite alternate;
+.cv-card.is-active .cv-card__img {
+  filter: none;
+  transform: scale(1);
 }
 
-/* Número gigante vazado ao fundo */
-.cv-card__num {
+/* Sem imagem: fundo pastel da capa com grade de pixel e o morcego */
+.cv-card__plain {
   position: absolute;
-  right: -0.04em;
-  top: -0.16em;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  color: #23264d;
+  background:
+    linear-gradient(rgba(65, 69, 117, 0.1) 1px, transparent 1px) 0 0 / 24px 24px,
+    linear-gradient(90deg, rgba(65, 69, 117, 0.1) 1px, transparent 1px) 0 0 / 24px 24px,
+    radial-gradient(70% 60% at 20% 15%, #8ad7eb, transparent 70%),
+    radial-gradient(70% 60% at 85% 30%, #b597f0, transparent 70%),
+    radial-gradient(80% 70% at 60% 95%, #ffb89a, transparent 70%),
+    #f1efea;
+}
+
+.cv-card__plain svg {
+  translate: 0 -20%;
+  opacity: 0.85;
+}
+
+/* Escurecido embaixo para o texto branco ler bem */
+.cv-card__shade {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(10, 10, 25, 0.4) 0%, transparent 22%, transparent 34%, rgba(12, 12, 30, 0.82) 58%, rgba(10, 10, 25, 0.95) 100%);
+  pointer-events: none;
+}
+
+.cv-card__top {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+}
+
+.cv-card__num {
   font-family: 'Archivo', var(--font-display);
   font-stretch: 125%;
   font-weight: 900;
-  font-size: calc(var(--card-w) * 0.5);
-  line-height: 1;
-  color: transparent;
-  -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.22);
-  pointer-events: none;
+  font-size: var(--text-sm);
+  color: rgba(255, 255, 255, 0.85);
+  font-variant-numeric: tabular-nums;
 }
 
 .cv-card__period {
-  position: relative;
-  justify-self: start;
-  padding: 5px 10px;
+  padding: 6px 10px;
+  border: 1px solid rgba(255, 255, 255, 0.35);
   border-radius: var(--radius-btn);
-  background: rgba(255, 255, 255, 0.16);
-  backdrop-filter: blur(6px);
+  background: rgba(255, 255, 255, 0.18);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   font-size: var(--text-xs);
   font-weight: 700;
   text-transform: uppercase;
@@ -150,20 +185,20 @@
   font-family: 'Archivo', var(--font-display);
   font-stretch: 125%;
   font-weight: 900;
-  font-size: clamp(1.2rem, 2vw, 1.75rem);
-  line-height: 1.02;
+  font-size: clamp(1.4rem, 2.5vw, 2.3rem);
+  line-height: 0.98;
   text-transform: uppercase;
   text-wrap: balance;
 }
 
 .cv-card__company {
   font-weight: 600;
-  color: rgba(255, 255, 255, 0.82);
+  color: rgba(255, 255, 255, 0.85);
 }
 
 /* Descrição só no ativo: sobe e aparece depois que o cartão chega ao centro */
 .cv-card__desc {
-  max-width: 34ch;
+  max-width: 44ch;
   font-size: var(--text-sm);
   line-height: 1.55;
   color: rgba(255, 255, 255, 0.85);
@@ -238,17 +273,11 @@
   }
 }
 
-@keyframes cv-glow {
-  to {
-    translate: -25% -20%;
-  }
-}
-
 /* ---------- Celular: cartão quase da largura da tela, vizinhos espiando ---------- */
 @media (max-width: 640px) {
   .cv-stage {
-    --card-w: min(76vw, 44svh);
-    --gap: 70vw;
+    --card-w: min(84vw, 56svh);
+    --gap: 78vw;
   }
 
   .cv-download .pbtn {
@@ -262,7 +291,7 @@
     transition: none;
   }
 
-  .cv-card.is-active .cv-card__glow,
+  .cv-card__img,
   .cv-card.is-active .cv-card__role,
   .cv-card.is-active .cv-card__company {
     animation: none;
