@@ -2,10 +2,8 @@ import { useEffect, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { navItems, profile } from '../../data/portfolio'
 import { useActiveSection } from '../../hooks/useActiveSection'
-import { useTheme } from '../../hooks/useTheme'
 import BatLogo from '../ui/BatLogo'
 import Icon from '../ui/Icon'
-import ThemeToggle from '../ui/ThemeToggle'
 import './Topbar.css'
 
 const HOME_SECTIONS = ['home', 'about', 'skills', 'curriculum', 'contact']
@@ -25,7 +23,6 @@ function useScrolled(threshold = 8) {
 
 export default function Topbar() {
   const { pathname, hash } = useLocation()
-  const { theme, toggleTheme } = useTheme()
   const scrolled = useScrolled()
   const [menuOpen, setMenuOpen] = useState(false)
   const section = useActiveSection(HOME_SECTIONS, pathname === '/')
@@ -66,7 +63,6 @@ export default function Topbar() {
         </nav>
 
         <div className="topbar__actions">
-          <ThemeToggle theme={theme} onToggle={toggleTheme} />
           <button
             type="button"
             className="topbar__burger"

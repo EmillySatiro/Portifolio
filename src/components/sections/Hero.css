@@ -6,7 +6,9 @@
 */
 .hero {
   /* O topo é sempre claro: as cores locais não seguem o tema escuro */
-  --edge: 48px; /* altura da borda de pixels que leva à próxima seção */
+  --edge: 48px;
+  /* Onde começa o nome centralizado (a largura dele é ~9,7× o tamanho da fonte): os textos se alinham aqui */
+  --name-left: max(var(--gutter), (100cqw - var(--name-size) * 9.7) / 2); /* altura da borda de pixels que leva à próxima seção */
   --ink: #121212;
   --muted: #55565e;
   --accent: #414575;
@@ -100,6 +102,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .hero__btn--main::after,
   .hero__bg::before,
   .hero__px {
     animation: none;
@@ -171,7 +174,7 @@
 /* Atuação girando, logo acima do começo do nome */
 .hero__role {
   position: absolute;
-  left: var(--gutter);
+  left: var(--name-left);
   bottom: calc(var(--name-bottom) + var(--name-size) * 1.02);
   z-index: 4;
   min-height: 1.5em;
@@ -184,36 +187,133 @@
   animation: hero-role 0.6s var(--ease-out) both;
 }
 
-.hero__foot {
-  position: absolute;
-  left: var(--gutter);
-  bottom: calc(var(--edge) + var(--space-4));
-  z-index: 4;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: var(--space-4) var(--space-6);
-  animation: hero-fade 0.8s ease 1.3s both;
-}
-
 .hero__tagline {
+  position: absolute;
+  left: var(--name-left);
+  bottom: calc(var(--edge) + var(--space-4) + 22px);
+  translate: 0 50%;
+  z-index: 4;
   max-width: 34ch;
   color: var(--ink);
+  animation: hero-fade 0.8s ease 1.3s both;
 }
 
-.hero__actions {
-  display: flex;
-  gap: var(--space-2);
-}
-
-.hero__socials {
+/* ---------- Ações no canto direito ---------- */
+.hero__cta {
   position: absolute;
-  right: var(--gutter);
+  right: var(--name-left);
   bottom: calc(var(--edge) + var(--space-4));
   z-index: 4;
   display: flex;
+  align-items: center;
   gap: var(--space-2);
   animation: hero-fade 0.8s ease 1.3s both;
+}
+
+.hero__btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  height: 44px;
+  padding: 0 var(--space-5);
+  overflow: hidden;
+  border-radius: var(--radius-pill);
+  font-size: var(--text-sm);
+  font-weight: 700;
+  line-height: 1;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: transform 0.25s var(--ease-out), box-shadow 0.25s ease, background-color 0.25s ease, color 0.25s ease;
+}
+
+.hero__btn:active {
+  transform: scale(0.97);
+}
+
+/* Principal: degradê índigo → violeta, brilho colorido e um reflexo que atravessa de tempos em tempos */
+.hero__btn--main {
+  color: #fff;
+  background: linear-gradient(120deg, #2d3170 0%, #414575 35%, #7b3fc4 100%);
+  background-size: 160% 100%;
+  box-shadow: 0 10px 24px -8px rgba(123, 63, 196, 0.65), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+}
+
+.hero__btn--main::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(105deg, transparent 35%, rgba(255, 255, 255, 0.45) 50%, transparent 65%);
+  translate: -120% 0;
+  animation: hero-shine 4.5s ease-in-out 2.5s infinite;
+}
+
+/* Vidro: fundo translúcido com desfoque e contorno fino */
+.hero__btn--glass,
+.hero__btn--icon {
+  color: var(--ink);
+  background: rgba(255, 255, 255, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  box-shadow: 0 8px 20px -10px rgba(35, 38, 77, 0.45), inset 0 1px 0 #fff;
+  backdrop-filter: blur(10px) saturate(1.4);
+  -webkit-backdrop-filter: blur(10px) saturate(1.4);
+}
+
+.hero__btn--icon {
+  width: 44px;
+  padding: 0;
+}
+
+.hero__btn svg {
+  transition: transform 0.25s var(--ease-out);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .hero__btn:hover {
+    transform: translateY(-3px);
+  }
+
+  .hero__btn--main:hover {
+    background-position: 100% 0;
+    box-shadow: 0 14px 30px -8px rgba(123, 63, 196, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  }
+
+  .hero__btn--main:hover .icon-arrow {
+    transform: translateX(4px);
+  }
+
+  .hero__btn--glass:hover {
+    background: #fff;
+    box-shadow: 0 12px 26px -10px rgba(35, 38, 77, 0.55), inset 0 1px 0 #fff;
+  }
+
+  /* Ícones ganham a cor da rede no hover */
+  .hero__btn--github:hover {
+    background: #181717;
+    border-color: #181717;
+    color: #fff;
+  }
+
+  .hero__btn--linkedin:hover {
+    background: #0a66c2;
+    border-color: #0a66c2;
+    color: #fff;
+  }
+
+  .hero__btn--icon:hover svg {
+    transform: scale(1.1);
+  }
+}
+
+@keyframes hero-shine {
+  0% {
+    translate: -120% 0;
+  }
+  30%,
+  100% {
+    translate: 120% 0;
+  }
 }
 
 /* ---------- Passagem para a próxima seção ----------
@@ -232,11 +332,6 @@
     linear-gradient(var(--bg), var(--bg)) 0 32px / 100% 16px no-repeat,
     linear-gradient(90deg, var(--bg) 16px, transparent 0) 0 16px / 32px 16px repeat-x,
     linear-gradient(90deg, var(--bg) 16px, transparent 0) 16px 0 / 64px 16px repeat-x;
-}
-
-/* O botão de contorno no hover usa as cores fixas do topo (a página pode estar no tema escuro) */
-.hero .btn--outline:hover {
-  color: #fff;
 }
 
 /* ---------- Animações de entrada ---------- */
@@ -260,7 +355,7 @@
   }
 }
 
-/* ---------- Tablet: a frase sai, sobra espaço para os botões ---------- */
+/* ---------- Tablet: a frase sobe para baixo da atuação, sobra espaço para os botões ---------- */
 @media (max-width: 1100px) and (min-width: 761px) {
   .hero__tagline {
     display: none;
@@ -268,6 +363,10 @@
 
   .hero__role {
     max-width: 28vw;
+  }
+
+  .hero__cta {
+    right: var(--gutter);
   }
 }
 
@@ -287,23 +386,34 @@
     height: auto;
   }
 
-  .hero__socials {
-    display: none;
-  }
-
   .hero__role {
     bottom: calc(var(--name-bottom) - 2.4em);
     font-size: var(--text-xs);
   }
 
-  .hero__foot {
+  .hero__tagline {
     right: var(--gutter);
-    bottom: var(--edge);
-    display: grid;
-    gap: var(--space-3);
+    bottom: calc(var(--edge) + 44px + var(--space-4));
+    translate: none;
   }
 
-  .hero__actions .btn {
-    flex: 1;
+  .hero__cta {
+    left: var(--gutter);
+    right: var(--gutter);
+    bottom: var(--edge);
+  }
+
+  .hero__btn {
+    padding: 0 var(--space-3);
+  }
+
+  .hero__btn--icon {
+    padding: 0;
+  }
+
+  .hero__btn--main,
+  .hero__btn--glass {
+    flex: 1 1 auto;
+    flex-shrink: 1;
   }
 }

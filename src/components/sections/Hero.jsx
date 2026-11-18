@@ -73,26 +73,23 @@ export default function Hero() {
         </span>
       </p>
 
-      <div className="hero__foot">
-        <p className="hero__tagline">Desenvolvimento, design de interfaces e pesquisa em visão computacional.</p>
-        <div className="hero__actions">
-          <Link to="/projetos" className="btn btn--primary">
-            Ver projetos <Icon name="arrowRight" className="icon-arrow" />
-          </Link>
-          <Link to="/#contact" className="btn btn--outline">
-            Contato <Icon name="mail" />
-          </Link>
-        </div>
-      </div>
+      <p className="hero__tagline">Desenvolvimento, design de interfaces e pesquisa em visão computacional.</p>
 
-      <div className="hero__socials">
+      {/* Ações juntas no canto direito: projetos, contato e redes */}
+      <div className="hero__cta">
+        <Link to="/projetos" className="hero__btn hero__btn--main">
+          <span>Ver projetos</span> <Icon name="arrowRight" className="icon-arrow" />
+        </Link>
+        <Link to="/#contact" className="hero__btn hero__btn--glass">
+          Contato <Icon name="mail" />
+        </Link>
         {socials.map((social) => (
           <a
             key={social.name}
             href={social.url}
             target="_blank"
             rel="noopener noreferrer"
-            className="btn btn--icon"
+            className={`hero__btn hero__btn--icon hero__btn--${social.icon}`}
             aria-label={social.name}
             title={social.name}
           >

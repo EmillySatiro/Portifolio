@@ -1,9 +1,9 @@
 <!doctype html>
-<html lang="pt-BR">
+<html lang="pt-BR" data-theme="dark">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#f4f2ee" />
+    <meta name="theme-color" content="#0b0c17" />
 
     <title>Emílly Sátiro | Portfólio — UI/UX Designer & Desenvolvedora</title>
     <meta
@@ -21,17 +21,6 @@
     <meta property="og:locale" content="pt_BR" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:image" content="/images/og.jpg" />
-
-    <!-- Aplica o tema salvo (ou o do sistema) antes de pintar, sem piscar -->
-    <script>
-      try {
-        var t = localStorage.getItem('theme')
-        if (!t) t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
-        document.documentElement.dataset.theme = t
-      } catch (e) {
-        document.documentElement.dataset.theme = 'light'
-      }
-    </script>
 
     <!-- Fontes: só Anton (títulos) e Inter (texto) -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
