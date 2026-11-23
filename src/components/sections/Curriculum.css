@@ -14,15 +14,34 @@
   position: relative;
   isolation: isolate;
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   grid-template-rows: 1fr auto;
   gap: var(--space-4);
   min-height: 100svh;
-  padding: calc(var(--topbar-h) + var(--space-4)) var(--gutter) calc(var(--space-6) + 16px);
+  padding: calc(var(--topbar-h) + var(--space-7)) var(--gutter) calc(var(--space-6) + 16px);
   overflow: clip;
   background-color: var(--bg-cv);
   color: var(--ink);
   color-scheme: light;
   outline: none;
+}
+
+/* Passagem da seção escura de cima: o escuro se desfaz em pixels (sólido → xadrez → esparso)
+   e num degradê suave, espelhando a passagem da capa para "Sobre mim" */
+.curriculum::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  z-index: 0;
+  height: min(34vh, 300px);
+  pointer-events: none;
+  background:
+    linear-gradient(#0b0c17, #0b0c17) 0 0 / 100% 16px no-repeat,
+    linear-gradient(90deg, #0b0c17 16px, transparent 0) 16px 16px / 32px 16px repeat-x,
+    linear-gradient(90deg, #0b0c17 16px, transparent 0) 0 32px / 64px 16px repeat-x,
+    linear-gradient(180deg, rgba(11, 12, 23, 0.55) 0, rgba(11, 12, 23, 0.18) 40%, transparent 100%) 0 48px / 100% calc(100% - 48px) no-repeat;
 }
 
 .curriculum > :not(.pastel) {
@@ -231,46 +250,87 @@
   animation-delay: 180ms;
 }
 
-/* Navegação: setas, pontinhos e contador */
+/* Linha de progresso: enche em 7 s e passa para a próxima experiência */
+.cv-progress {
+  display: block;
+  width: min(100%, 320px);
+  height: 2px;
+  background: linear-gradient(90deg, #414575, #7b3fc4) 0 0 / 0% 100% no-repeat, rgba(18, 18, 18, 0.12);
+  animation: cv-progress 7s linear forwards;
+}
+
+.cv-center:hover .cv-progress,
+.cv-center:focus-within .cv-progress,
+.cv-center.is-paused .cv-progress {
+  animation-play-state: paused;
+}
+
+/* Navegação em texto: anterior à esquerda, próxima (com o cargo seguinte) à direita */
 .cv-nav {
   display: flex;
   align-items: center;
-  gap: var(--space-3);
+  justify-content: space-between;
+  gap: var(--space-4);
+  width: min(100%, 420px);
+  min-width: 0;
+  margin-top: calc(var(--space-2) * -1);
 }
 
-.cv-nav__btn:disabled {
-  opacity: 0.3;
-  cursor: default;
-}
-
-.cv-dots {
-  display: flex;
-  gap: 6px;
-}
-
-.cv-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 2px;
-  background: rgba(18, 18, 18, 0.2);
-  transition: width 0.35s cubic-bezier(0.22, 1, 0.36, 1), background-color 0.3s ease;
-}
-
-.cv-dot:hover {
-  background: rgba(18, 18, 18, 0.4);
-}
-
-.cv-dot.is-active {
-  width: 24px;
-  background: linear-gradient(90deg, #414575, #7b3fc4);
-}
-
-.cv-nav__count {
-  min-width: 5ch;
-  font-size: var(--text-xs);
-  font-weight: 700;
+.cv-link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: var(--tap);
+  min-width: 0;
+  font-size: var(--text-sm);
+  font-weight: 600;
   color: var(--muted);
-  font-variant-numeric: tabular-nums;
+  transition: color 0.2s ease;
+}
+
+.cv-link svg {
+  flex-shrink: 0;
+  transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.cv-link:hover:not(:disabled) {
+  color: var(--ink);
+}
+
+.cv-link--prev:hover:not(:disabled) svg {
+  transform: translateX(-3px);
+}
+
+.cv-link--next:hover svg {
+  transform: translateX(3px);
+}
+
+.cv-link:disabled {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.cv-link--next {
+  text-align: right;
+}
+
+.cv-link__label {
+  flex-shrink: 0;
+}
+
+/* Cargo seguinte, sublinhado que cresce no hover */
+.cv-link__title {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-weight: 800;
+  color: var(--ink);
+  background: linear-gradient(currentColor, currentColor) 0 100% / 0 1.5px no-repeat;
+  transition: background-size 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.cv-link--next:hover .cv-link__title {
+  background-size: 100% 1.5px;
 }
 
 /* Downloads */
@@ -279,17 +339,6 @@
   flex-wrap: wrap;
   justify-content: center;
   gap: var(--space-2);
-}
-
-.cv-nav__btn {
-  width: 40px;
-  height: 40px;
-}
-
-.cv-nav__btn:disabled {
-  opacity: 0.35;
-  cursor: default;
-  transform: none;
 }
 
 /* ---------- Filtros ---------- */
@@ -331,6 +380,12 @@
 }
 
 /* ---------- Animações ---------- */
+@keyframes cv-progress {
+  to {
+    background-size: 100% 100%, auto;
+  }
+}
+
 @keyframes cv-spin {
   to {
     rotate: 360deg;
@@ -405,5 +460,10 @@
   .cv-tile,
   .cv-item > * {
     animation: none;
+  }
+
+  /* Sem movimento: sem troca automática */
+  .cv-progress {
+    display: none;
   }
 }

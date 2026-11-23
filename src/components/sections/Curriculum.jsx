@@ -7,7 +7,6 @@ import './Curriculum.css'
 
 const ALL = 'all'
 const SWIPE = 50 // px de arrasto para trocar de experiência
-const pad = (n) => String(n).padStart(2, '0')
 
 // Trajetória + tecnologias (referência: anel de imagens em volta de um texto central).
 // As tecnologias giram num anel de azulejos; no centro fica a experiência atual, com navegação
@@ -24,12 +23,20 @@ export default function Curriculum() {
   const filters = [{ id: ALL, name: 'Todas' }, ...techCategories]
   const ring = filter === ALL ? technologies : technologies.filter((tech) => tech.categories.includes(filter))
 
-  const go = (i) => {
+  const go = (i, auto = false) => {
     const next = Math.max(0, Math.min(total - 1, i))
     if (next === current) return
-    setDir(next > current ? 1 : -1)
+    setDir(auto || next > current ? 1 : -1)
     setCurrent(next)
   }
+
+  // A troca automática só corre com a seção na tela (e pausa com o mouse em cima do texto)
+  const [visible, setVisible] = useState(false)
+  useEffect(() => {
+    const io = new IntersectionObserver(([entry]) => setVisible(entry.isIntersecting), { threshold: 0.5 })
+    io.observe(sectionRef.current)
+    return () => io.disconnect()
+  }, [])
 
   // Setas do teclado enquanto a seção está em foco
   const goRef = useRef(go)
@@ -45,7 +52,7 @@ export default function Curriculum() {
   }, [current])
 
   return (
-    <section id="curriculum" className="curriculum pixel-edge" ref={sectionRef} style={{ '--n': ring.length }}>
+    <section id="curriculum" className="curriculum" ref={sectionRef} style={{ '--n': ring.length }}>
       <PastelBackdrop />
 
       {/* Órbita: o anel fica centrado exatamente no texto do meio */}
@@ -68,7 +75,7 @@ export default function Curriculum() {
 
         {/* Centro: experiência atual (a key nova faz a entrada animar a cada troca) */}
         <div
-          className="cv-center"
+          className={`cv-center${visible ? '' : ' is-paused'}`}
           style={{ '--dir': dir }}
           onPointerDown={(e) => {
             drag.current = e.clientX
@@ -90,41 +97,28 @@ export default function Curriculum() {
             <p className="cv-item__desc">{item.description}</p>
           </div>
 
-          <div className="cv-nav" aria-label="Experiências">
+          {/* Linha que enche enquanto a experiência fica na tela; ao encher, passa para a próxima */}
+          <span
+            key={`bar-${current}`}
+            className="cv-progress"
+            aria-hidden="true"
+            onAnimationEnd={() => go(current + 1 < total ? current + 1 : 0, true)}
+          />
+
+          <nav className="cv-nav" aria-label="Experiências">
+            <button type="button" className="cv-link cv-link--prev" onClick={() => go(current - 1)} disabled={current === 0}>
+              <Icon name="arrowLeft" size={16} /> Anterior
+            </button>
             <button
               type="button"
-              className="pbtn pbtn--glass pbtn--icon cv-nav__btn"
-              onClick={() => go(current - 1)}
-              disabled={current === 0}
-              aria-label="Experiência anterior"
+              className="cv-link cv-link--next"
+              onClick={() => go(current + 1 < total ? current + 1 : 0)}
             >
-              <Icon name="arrowLeft" size={18} />
+              <span className="cv-link__label">{current + 1 < total ? 'Próxima' : 'Recomeçar'}</span>
+              <span className="cv-link__title">{experiences[current + 1 < total ? current + 1 : 0].title}</span>
+              <Icon name="arrowRight" size={16} />
             </button>
-            <div className="cv-dots">
-              {experiences.map((exp, i) => (
-                <button
-                  key={`${exp.company}-${exp.title}`}
-                  type="button"
-                  className={`cv-dot${i === current ? ' is-active' : ''}`}
-                  onClick={() => go(i)}
-                  aria-label={`${exp.title} · ${exp.company}`}
-                  aria-current={i === current ? 'step' : undefined}
-                />
-              ))}
-            </div>
-            <span className="cv-nav__count">
-              {pad(current + 1)} / {pad(total)}
-            </span>
-            <button
-              type="button"
-              className="pbtn pbtn--main pbtn--icon cv-nav__btn"
-              onClick={() => go(current + 1)}
-              disabled={current === total - 1}
-              aria-label="Próxima experiência"
-            >
-              <Icon name="arrowRight" size={18} />
-            </button>
-          </div>
+          </nav>
 
           <div className="cv-download">
             {cvFiles.map((file, i) => (
