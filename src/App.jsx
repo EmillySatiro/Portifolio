@@ -1,20 +1,18 @@
-import { lazy, Suspense } from 'react'
+import { Suspense, useEffect } from 'react'
 import { Navigate, Route, Routes } from 'react-router-dom'
 import Footer from './components/layout/Footer'
+import PageSkeleton from './components/layout/PageSkeleton'
 import Topbar from './components/layout/Topbar'
 import { useReveal } from './hooks/useReveal'
 import { useScrollOnNavigate } from './hooks/useScrollOnNavigate'
 import HomePage from './pages/HomePage'
-
-// Páginas secundárias carregam só quando acessadas.
-const ProjectsPage = lazy(() => import('./pages/ProjectsPage'))
-const DesignerPage = lazy(() => import('./pages/DesignerPage'))
-const AcademicPage = lazy(() => import('./pages/AcademicPage'))
-const VitrinePage = lazy(() => import('./pages/VitrinePage'))
+import { AcademicPage, DesignerPage, ProjectsPage, VitrinePage, preloadAllWhenIdle } from './pages/routes'
 
 export default function App() {
   useScrollOnNavigate()
   useReveal()
+  // Depois que o site abriu, baixa as outras páginas no tempo livre: a navegação fica instantânea
+  useEffect(preloadAllWhenIdle, [])
 
   return (
     <>
@@ -31,7 +29,7 @@ export default function App() {
       </a>
       <Topbar />
       <div id="conteudo" tabIndex={-1}>
-        <Suspense fallback={<main className="building" />}>
+        <Suspense fallback={<PageSkeleton />}>
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/projetos" element={<ProjectsPage />} />

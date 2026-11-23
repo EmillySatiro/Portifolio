@@ -2,6 +2,7 @@ import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { navItems, profile } from '../../data/portfolio'
 import { useActiveSection } from '../../hooks/useActiveSection'
+import { preloadRoute } from '../../pages/routes'
 import BatLogo from '../ui/BatLogo'
 import Icon from '../ui/Icon'
 import './Topbar.css'
@@ -106,6 +107,8 @@ export default function Topbar() {
                   data-id={item.id}
                   className={`topbar__link${isActive(item) ? ' is-active' : ''}`}
                   aria-current={isActive(item) ? 'page' : undefined}
+                  onPointerEnter={() => preloadRoute(item.to)}
+                  onFocus={() => preloadRoute(item.to)}
                   onClick={() => setMenuOpen(false)}
                 >
                   {item.name}

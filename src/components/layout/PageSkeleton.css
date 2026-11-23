@@ -1,0 +1,52 @@
+/* Esqueleto de página: blocos no tom do texto, bem suaves, com o brilho em comum (.skel__block) */
+.skel {
+  min-height: 100svh;
+  padding: calc(var(--topbar-h) + var(--space-8)) 0 var(--space-9);
+}
+
+.skel__inner {
+  display: grid;
+  gap: var(--space-4);
+}
+
+.skel__title {
+  width: min(60%, 520px);
+  height: clamp(56px, 9vw, 110px);
+  margin-bottom: var(--space-3);
+}
+
+.skel__line {
+  height: 16px;
+}
+
+.skel__chips {
+  display: flex;
+  gap: var(--space-2);
+  margin: var(--space-4) 0;
+}
+
+.skel__chip {
+  width: 96px;
+  height: 32px;
+}
+
+.skel__grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: var(--space-4);
+}
+
+.skel__card {
+  height: clamp(220px, 32vw, 420px);
+  border-radius: 18px;
+}
+
+@media (max-width: 760px) {
+  .skel__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .skel__card:not(.skel__card--big) {
+    display: none;
+  }
+}
