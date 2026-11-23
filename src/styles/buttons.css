@@ -38,7 +38,14 @@
   inset: 0;
   background: linear-gradient(105deg, transparent 35%, rgba(255, 255, 255, 0.45) 50%, transparent 65%);
   translate: -120% 0;
-  animation: pbtn-shine 4.5s ease-in-out 2.5s infinite;
+  transition: translate 0.8s ease;
+}
+
+/* O reflexo passa só quando o mouse está em cima (sem brilho repetindo sozinho) */
+@media (hover: hover) and (pointer: fine) {
+  .pbtn--main:hover::after {
+    translate: 120% 0;
+  }
 }
 
 /* Vidro: fundo translúcido com desfoque e contorno fino */

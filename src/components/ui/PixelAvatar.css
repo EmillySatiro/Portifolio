@@ -65,40 +65,32 @@
   width: 100%;
   height: 100%;
   fill: #fff;
-  filter: drop-shadow(0 0 10px rgba(160, 225, 255, 1)) drop-shadow(0 0 3px #fff);
+  filter: drop-shadow(0 0 4px rgba(160, 225, 255, 0.6));
 }
 
-/* Só começam depois que a arte terminou de montar; cada um no seu ritmo */
+/* Brilho suave e lento (sem piscar): acende e apaga devagar, num ciclo longo, e nunca chega ao
+   branco total. Seguro para quem tem fotossensibilidade (bem abaixo de 3 variações por segundo). */
 .avatar.is-done .avatar__glint {
-  animation: avatar-glint 3s ease-in-out 0.3s infinite;
+  animation: avatar-glint 7s ease-in-out 0.5s infinite;
 }
 
 .avatar.is-done .avatar__glint:nth-of-type(2) {
-  animation-delay: 1.3s;
+  animation-delay: 2.8s;
 }
 
 .avatar.is-done .avatar__glint:nth-of-type(3) {
-  animation-delay: 2.1s;
+  animation-delay: 5s;
 }
 
 @keyframes avatar-glint {
   0%,
-  45%,
   100% {
     opacity: 0;
-    transform: scale(0.2) rotate(0deg);
+    transform: scale(0.6) rotate(0deg);
   }
-  62% {
-    opacity: 1;
+  50% {
+    opacity: 0.7;
     transform: scale(1) rotate(45deg);
-  }
-  72% {
-    opacity: 1;
-    transform: scale(0.85) rotate(70deg);
-  }
-  85% {
-    opacity: 0;
-    transform: scale(0.3) rotate(90deg);
   }
 }
 

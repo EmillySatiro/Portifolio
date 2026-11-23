@@ -1,6 +1,6 @@
 /*
   Fundo pastel do site (o mesmo da capa): manchas de cor passeando devagar, grade de pixel nas bordas
-  e cruzinhas de pixel piscando. Fica atrás do conteúdo da seção que o usa.
+  e cruzinhas de pixel flutuando. Fica atrás do conteúdo da seção que o usa.
 */
 .pastel {
   position: absolute;
@@ -48,21 +48,12 @@
   background: var(--c);
   box-shadow: 0 calc(var(--s) * -1) 0 var(--c), 0 var(--s) 0 var(--c), calc(var(--s) * -1) 0 0 var(--c),
     var(--s) 0 0 var(--c);
-  animation: pastel-px 4s steps(1, end) var(--d) infinite, pastel-px-float 6s ease-in-out var(--d) infinite alternate;
+  animation: pastel-px-float 6s ease-in-out var(--d) infinite alternate;
 }
 
 @keyframes pastel-blobs {
   to {
     background-position: 14% 26%, 84% 18%, 72% 84%, 18% 78%, 40% 18%;
-  }
-}
-
-@keyframes pastel-px {
-  70% {
-    opacity: 1;
-  }
-  85% {
-    opacity: 0.15;
   }
 }
 
