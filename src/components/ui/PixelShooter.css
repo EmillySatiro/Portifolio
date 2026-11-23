@@ -1,17 +1,10 @@
-/* Telinha escura do joguinho, como um mini monitor */
+/* O jogo cobre o elemento pai inteiro, atrás do conteúdo, com pixels nítidos */
 .shooter {
-  padding: 8px;
-  border-radius: 12px;
-  background: #15162e;
-  box-shadow: 0 16px 30px -18px rgba(21, 22, 46, 0.7), inset 0 0 0 1px rgba(255, 255, 255, 0.08);
-}
-
-.shooter__canvas {
-  display: block;
-  width: min(72vw, 288px);
-  aspect-ratio: 96 / 54;
-  border-radius: 6px;
-  background: radial-gradient(120% 100% at 50% 0%, #262a5c, #0b0c17);
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
   image-rendering: pixelated;
-  cursor: crosshair;
+  pointer-events: none;
 }
