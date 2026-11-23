@@ -1,4 +1,4 @@
-/* Vitrine em construção: o joguinho de pixel é o fundo da tela toda; no centro, uma plaquinha de vidro */
+/* Vitrine em construção: o joguinho de pixel é o fundo da tela toda; o recado fica solto no centro */
 .vitrine {
   --ink: #121212;
   --muted: #4c4e5c;
@@ -19,14 +19,7 @@
   z-index: 1;
   display: grid;
   justify-items: center;
-  gap: var(--space-2);
-  padding: var(--space-5) var(--space-6);
-  border: 1px solid rgba(255, 255, 255, 0.9);
-  border-radius: 14px;
-  background: rgba(255, 255, 255, 0.6);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  box-shadow: 0 20px 40px -24px rgba(35, 38, 77, 0.45);
+  gap: var(--space-4);
   text-align: center;
 }
 
@@ -35,23 +28,30 @@
   font-family: 'Archivo', var(--font-display);
   font-stretch: 125%;
   font-weight: 900;
-  font-size: 1.1rem;
-  letter-spacing: 0.02em;
+  font-size: clamp(2.4rem, 8vw, 6.4rem);
+  line-height: 0.92;
+  letter-spacing: -0.02em;
   text-transform: uppercase;
+  text-wrap: balance;
+  /* Contorno da cor do fundo: o texto se destaca por cima dos pixels do jogo */
+  -webkit-text-stroke: 0.06em #f1efea;
+  paint-order: stroke fill;
 }
 
 .vitrine__lead {
-  font-size: var(--text-sm);
-  color: var(--muted);
+  font-size: clamp(1.05rem, 1.8vw, 1.4rem);
+  font-weight: 600;
+  color: #2a2c3a;
+  text-shadow: 0 0 12px #f1efea, 0 0 4px #f1efea;
 }
 
 .vitrine__cta {
-  margin-top: var(--space-1);
-  padding: 8px 14px;
+  margin-top: var(--space-2);
+  padding: 12px 22px;
   border-radius: var(--radius-btn);
   background: #15162e;
   color: #fff;
-  font-size: var(--text-sm);
+  font-size: var(--text-base);
   font-weight: 700;
   transition: transform 0.2s ease, background-color 0.2s ease;
 }
