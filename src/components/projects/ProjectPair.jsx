@@ -1,23 +1,19 @@
 import { Link } from 'react-router-dom'
 import Icon from '../ui/Icon'
 import TechLogo from '../ui/TechLogo'
+import { isLight, tint } from '../../utils/color'
 import './ProjectPair.css'
 
 const LINK_LABELS = { github: 'Código', video: 'Vídeo', report: 'Relatório', research: 'Pesquisa' }
 
-// Papel claro pede texto escuro, e vice-versa
-const isLight = (hex) => {
-  const n = parseInt(hex.slice(1), 16)
-  return 0.299 * (n >> 16) + 0.587 * ((n >> 8) & 255) + 0.114 * (n & 255) > 150
-}
-
-// Metade de página: faixa vertical com o nome (como a lombada do SimulNet) + o projeto em texto
+// Metade de página: faixa vertical com o nome (como a lombada do SimulNet) + o projeto em texto.
+// O fundo é um tom claro da cor do projeto; a cor forte fica na faixa e nos detalhes.
 function Half({ project, page, meta }) {
   const chars = Math.max(...project.name.split(/\s+/).map((word) => word.length))
   return (
     <article
-      className={`ppage ${isLight(project.color) ? 'is-light' : 'is-dark'}`}
-      style={{ '--paper': project.color, '--chars': chars }}
+      className={`ppage${isLight(project.color) ? ' has-light-accent' : ''}`}
+      style={{ '--paper': tint(project.color), '--accent': project.color, '--chars': chars }}
     >
       <span className="ppage__spine" aria-hidden="true">
         {project.name}

@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import PageHero from '../components/layout/PageHero'
+import { usePageTheme } from '../hooks/usePageTheme'
 import Icon from '../components/ui/Icon'
 import { academicLinks, authorHighlight, news, publications } from '../data/academic'
 import './AcademicPage.css'
@@ -253,6 +254,7 @@ function Publications() {
 }
 
 export default function AcademicPage() {
+  usePageTheme('light')
   return (
     <main className="academic-page">
       <PageHero title="Vida Acadêmica" word="Acadêmico">

@@ -40,9 +40,39 @@
   color: #fff;
 }
 
-/* As páginas da revista, uma por tela, de ponta a ponta */
+/* As páginas ficam sobre o fundo claro, com um respiro entre elas: a passagem de um projeto
+   para o outro fica suave, em vez de blocos de cor colados */
 .pj-board {
+  --gap: clamp(12px, 1.6vw, 24px);
   display: grid;
+  gap: var(--gap);
+  padding: 0 var(--gap) var(--gap);
+}
+
+.pj-board .spread,
+.pj-board .ppair {
+  height: calc(100svh - var(--topbar-h) - var(--gap) * 2);
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 30px 60px -40px rgba(21, 22, 46, 0.45);
+}
+
+.pj-board .spread-wrap,
+.pj-board .ppair {
+  scroll-margin-top: var(--gap); /* a altura da barra do topo já vem do scroll-padding global */
+}
+
+/* Na dupla, um fio claro separa as duas metades */
+.pj-board .ppair {
+  gap: 2px;
+  background: #f7f5f0;
+}
+
+@media (max-width: 1024px) {
+  .pj-board .spread,
+  .pj-board .ppair {
+    height: auto;
+  }
 }
 
 /* Ao rolar, cada página se encaixa na tela (só onde há espaço para a página inteira) */

@@ -212,7 +212,7 @@ export const projects = [
   },
   {
     name: 'ID3 · Câncer de mama',
-    color: '#f4d3e1', // rosa do laço do câncer de mama
+    color: '#c2185b', // rosa do laço do câncer de mama
     pitch: "Árvore de decisão que classifica tumores de mama como benignos ou malignos.",
     did: ["Algoritmo ID3 com critério de entropia", "Validação do desempenho do modelo", "Análise de correlação e visualização da árvore"],
     stat: { value: '569', label: "amostras analisadas" },
@@ -227,7 +227,7 @@ export const projects = [
   },
   {
     name: 'MLP × SVM',
-    color: '#fbe3c4', // laranja do Scikit-learn
+    color: '#d9761a', // laranja do Scikit-learn
     pitch: "Comparação entre redes neurais e máquinas de vetor de suporte em um problema clássico de classificação.",
     did: ["Modelos MLP e SVM treinados no dataset Sonar", "Experimentos com e sem redução de dimensionalidade (PCA)", "Matrizes de confusão e métricas comparadas"],
     stat: { value: '2', label: "modelos comparados" },

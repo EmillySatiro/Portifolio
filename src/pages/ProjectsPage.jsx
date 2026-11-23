@@ -2,6 +2,8 @@ import { useState } from 'react'
 import DesignSpread from '../components/design/DesignSpread'
 import DesignViewer from '../components/design/DesignViewer'
 import PageHero from '../components/layout/PageHero'
+import { usePageTheme } from '../hooks/usePageTheme'
+import { tint } from '../utils/color'
 import ProjectArchive from '../components/projects/ProjectArchive'
 import ProjectPair from '../components/projects/ProjectPair'
 import Icon from '../components/ui/Icon'
@@ -20,7 +22,7 @@ const featured = {
   description: featuredProject.description,
   liveUrl: featuredProject.site,
   screens: featuredProject.images.map((img) => ({ src: img.src, label: img.label })),
-  spread: { layout: 'collage', color: '#1f4f56' /* verde-azulado do site do PREMAUT */, images: [{ i: 0 }, { i: 1 }] },
+  spread: { layout: 'collage', color: tint('#1f4f56') /* verde-azulado do site do PREMAUT */, images: [{ i: 0 }, { i: 1 }] },
   category: 'web',
 }
 
@@ -37,7 +39,7 @@ const toSpread = (project) => ({
   description: project.description,
   screens: [{ src: project.image, label: project.name }],
   links: project.links.map((link) => ({ label: LINK_LABELS[link.type], url: link.url })),
-  spread: { layout: 'stage', color: project.color, images: [{ i: 0 }] },
+  spread: { layout: 'stage', color: tint(project.color), images: [{ i: 0 }] },
   category: project.category,
 })
 
@@ -46,6 +48,7 @@ const WITH_IMAGE = ['Patocast']
 
 // Projetos como páginas de revista (mesmo modelo do Designer): uma por tela, cada uma com sua cor.
 export default function ProjectsPage() {
+  usePageTheme('light')
   const [active, setActive] = useState(ALL)
   const [viewer, setViewer] = useState(null)
   const inFilter = (p) => active === ALL || p.category === active
