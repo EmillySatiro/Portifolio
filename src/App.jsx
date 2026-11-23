@@ -10,6 +10,7 @@ import HomePage from './pages/HomePage'
 const ProjectsPage = lazy(() => import('./pages/ProjectsPage'))
 const DesignerPage = lazy(() => import('./pages/DesignerPage'))
 const AcademicPage = lazy(() => import('./pages/AcademicPage'))
+const VitrinePage = lazy(() => import('./pages/VitrinePage'))
 
 export default function App() {
   useScrollOnNavigate()
@@ -36,6 +37,7 @@ export default function App() {
             <Route path="/projetos" element={<ProjectsPage />} />
             <Route path="/designer" element={<DesignerPage />} />
             <Route path="/academico" element={<AcademicPage />} />
+            <Route path="/vitrine" element={<VitrinePage />} />
             <Route path="/pesquisa" element={<Navigate to="/academico" replace />} />
             <Route path="/programacao" element={<Navigate to="/projetos" replace />} />
             <Route path="*" element={<Navigate to="/" replace />} />

@@ -13,7 +13,7 @@ const CONTACT = navItems.find((item) => item.id === 'contact')
 
 // Seções de fundo claro dentro do site escuro: quando uma delas passa por baixo da barra,
 // a barra vira vidro claro
-const LIGHT_SECTIONS = '.hero, .curriculum'
+const LIGHT_SECTIONS = '.hero, .curriculum, .vitrine'
 
 function useOverLight(pathname) {
   const [overLight, setOverLight] = useState(false)
@@ -29,10 +29,15 @@ function useOverLight(pathname) {
       if (!frame) frame = requestAnimationFrame(check)
     }
     check()
+    // Páginas carregadas sob demanda chegam depois: confere de novo quando o conteúdo muda
+    const content = document.getElementById('conteudo')
+    const mo = new MutationObserver(onScroll)
+    if (content) mo.observe(content, { childList: true, subtree: true })
     window.addEventListener('scroll', onScroll, { passive: true })
     window.addEventListener('resize', onScroll)
     return () => {
       cancelAnimationFrame(frame)
+      mo.disconnect()
       window.removeEventListener('scroll', onScroll)
       window.removeEventListener('resize', onScroll)
     }

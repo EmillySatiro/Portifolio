@@ -24,6 +24,7 @@ export const navItems = [
   { id: 'projects', name: 'Projetos', to: '/projetos' },
   { id: 'designer', name: 'Designer', to: '/designer' },
   { id: 'academic', name: 'Acadêmico', to: '/academico' },
+  { id: 'vitrine', name: 'Vitrine', to: '/vitrine' },
   { id: 'contact', name: 'Contato', to: '/#contact' },
 ]
 
