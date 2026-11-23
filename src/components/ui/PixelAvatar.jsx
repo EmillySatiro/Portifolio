@@ -77,7 +77,7 @@ export default function PixelAvatar({ fieldRef }) {
             sx: (Math.random() * 1.2 - 0.1) * cw,
             sy: (Math.random() * 1.2 - 0.1) * ch,
             delay: (r / rows) * SPREAD_MS * 0.55 + Math.random() * SPREAD_MS * 0.45,
-            color: color | 0xff000000,
+            rgb: color & 0x00ffffff, // a opacidade é calculada a cada quadro
           })
         }
       }
@@ -95,6 +95,9 @@ export default function PixelAvatar({ fieldRef }) {
         for (const p of parts) {
           const t = Math.min(1, Math.max(0, (elapsed - p.delay) / FLY_MS))
           if (t <= 0) continue
+          // Cada pixel surge aos poucos (sem "acender" de repente): evita o efeito de luzes piscando
+          const alpha = Math.round(255 * Math.min(1, t * 2.5))
+          const color = (p.rgb | (alpha << 24)) >>> 0
           const e = easeOutCubic(t)
           const x = Math.round(p.sx + (p.tx - p.sx) * e)
           const y = Math.round(p.sy + (p.ty - p.sy) * e)
@@ -103,7 +106,7 @@ export default function PixelAvatar({ fieldRef }) {
           const x1 = Math.min(cw, x + size)
           const y0 = Math.max(0, y)
           const y1 = Math.min(ch, y + size)
-          for (let yy = y0; yy < y1; yy += 1) buf.fill(p.color, yy * cw + x0, yy * cw + x1)
+          for (let yy = y0; yy < y1; yy += 1) buf.fill(color, yy * cw + x0, yy * cw + x1)
         }
         ctx.putImageData(out, 0, 0)
         if (elapsed < total) frame = requestAnimationFrame(draw)
