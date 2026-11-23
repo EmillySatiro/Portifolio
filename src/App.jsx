@@ -1,18 +1,25 @@
-import { Suspense, useEffect } from 'react'
+import { Suspense, useCallback, useState } from 'react'
 import { Navigate, Route, Routes } from 'react-router-dom'
 import Footer from './components/layout/Footer'
 import PageSkeleton from './components/layout/PageSkeleton'
+import Preloader from './components/layout/Preloader'
 import Topbar from './components/layout/Topbar'
 import { useReveal } from './hooks/useReveal'
 import { useScrollOnNavigate } from './hooks/useScrollOnNavigate'
 import HomePage from './pages/HomePage'
-import { AcademicPage, DesignerPage, ProjectsPage, VitrinePage, preloadAllWhenIdle } from './pages/routes'
+import { AcademicPage, DesignerPage, ProjectsPage, VitrinePage } from './pages/routes'
 
+// Primeiro a tela de entrada baixa tudo (páginas, fontes e imagens); só então o site aparece,
+// já com tudo em cache: a navegação entre as páginas fica instantânea.
 export default function App() {
+  const [ready, setReady] = useState(false)
+  const onDone = useCallback(() => setReady(true), [])
+  return ready ? <Site /> : <Preloader onDone={onDone} />
+}
+
+function Site() {
   useScrollOnNavigate()
   useReveal()
-  // Depois que o site abriu, baixa as outras páginas no tempo livre: a navegação fica instantânea
-  useEffect(preloadAllWhenIdle, [])
 
   return (
     <>

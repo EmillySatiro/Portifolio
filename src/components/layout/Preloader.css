@@ -1,0 +1,92 @@
+/* Tela de entrada: fundo claro, morcego do logo acendendo em pixels, barra e contador */
+.preloader {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: var(--space-4);
+  background:
+    radial-gradient(60% 60% at 25% 25%, rgba(138, 215, 235, 0.45), transparent 70%),
+    radial-gradient(55% 55% at 80% 30%, rgba(181, 151, 240, 0.4), transparent 70%),
+    radial-gradient(60% 60% at 60% 90%, rgba(255, 184, 154, 0.4), transparent 70%),
+    #f1efea;
+  color: #15162e;
+  transition: clip-path 0.7s cubic-bezier(0.77, 0, 0.175, 1);
+  clip-path: inset(0 0 0 0);
+}
+
+/* Ao terminar, a tela "sobe" e revela o site */
+.preloader.is-leaving {
+  clip-path: inset(0 0 100% 0);
+}
+
+.preloader__bat {
+  width: clamp(150px, 22vw, 240px);
+  height: auto;
+}
+
+.preloader__bat rect {
+  fill: rgba(21, 22, 46, 0.08);
+  transition: fill 0.25s ease;
+}
+
+.preloader__bat rect.is-on {
+  fill: #414575;
+  animation: preloader-pop 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.preloader__bat rect.is-eye.is-on {
+  fill: #8ad7eb;
+}
+
+.preloader__name {
+  margin-top: var(--space-2);
+  font-family: 'Archivo', var(--font-display);
+  font-stretch: 125%;
+  font-weight: 900;
+  font-size: 0.95rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.preloader__bar {
+  width: clamp(160px, 24vw, 260px);
+  height: 3px;
+  overflow: hidden;
+  border-radius: 2px;
+  background: rgba(21, 22, 46, 0.12);
+}
+
+.preloader__bar span {
+  display: block;
+  height: 100%;
+  background: linear-gradient(90deg, #414575, #7b3fc4);
+  transform-origin: left;
+  transition: transform 0.3s ease;
+}
+
+.preloader__count {
+  font-size: var(--text-xs);
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: #4c4e5c;
+  font-variant-numeric: tabular-nums;
+}
+
+@keyframes preloader-pop {
+  from {
+    transform: scale(0.2);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .preloader,
+  .preloader__bat rect {
+    transition: none;
+    animation: none;
+  }
+}

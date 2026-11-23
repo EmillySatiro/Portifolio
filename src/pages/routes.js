@@ -23,14 +23,3 @@ export function preloadRoute(path) {
   started.add(path)
   load().catch(() => started.delete(path))
 }
-
-// Depois que o site abriu, usa o tempo livre do navegador para baixar as outras páginas
-export function preloadAllWhenIdle() {
-  const run = () => Object.keys(loaders).forEach(preloadRoute)
-  // Com animações rodando o navegador quase nunca fica "livre": no máximo 2,5 s depois, baixa assim mesmo
-  const idle = window.requestIdleCallback
-    ? (fn) => window.requestIdleCallback(fn, { timeout: 2500 })
-    : (fn) => setTimeout(fn, 1500)
-  if (document.readyState === 'complete') idle(run)
-  else window.addEventListener('load', () => idle(run), { once: true })
-}
