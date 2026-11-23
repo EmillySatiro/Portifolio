@@ -3,6 +3,7 @@ import DesignSpread from '../components/design/DesignSpread'
 import DesignViewer from '../components/design/DesignViewer'
 import PageHero from '../components/layout/PageHero'
 import ProjectArchive from '../components/projects/ProjectArchive'
+import ProjectPair from '../components/projects/ProjectPair'
 import Icon from '../components/ui/Icon'
 import { archive, featuredProject, githubProfile, projectCategories, projects } from '../data/projects'
 import './ProjectsPage.css'
@@ -10,11 +11,6 @@ import './ProjectsPage.css'
 const ALL = 'all'
 const CATEGORY_NAMES = Object.fromEntries(projectCategories.map((cat) => [cat.id, cat.name]))
 const LINK_LABELS = { github: 'Código', video: 'Vídeo', report: 'Relatório', research: 'Pesquisa' }
-
-// Papel de cada página, nas cores do site (repete em ciclo; o texto fica claro ou escuro sozinho)
-const PAPERS = ['#23264d', '#d9e7ee', '#3b1f4f', '#efe6d8', '#1d3a46', '#e7defa', '#2a2c45']
-// Layouts de uma imagem só (os projetos têm uma foto cada); sem foto, a página "capa" com os logos
-const LAYOUTS = ['cover', 'figure', 'stage', 'spine', 'stage-r']
 
 // O PREMAUT em destaque, com as duas telas do site
 const featured = {
@@ -24,40 +20,40 @@ const featured = {
   description: featuredProject.description,
   liveUrl: featuredProject.site,
   screens: featuredProject.images.map((img) => ({ src: img.src, label: img.label })),
-  spread: { layout: 'collage', color: '#1f4f56', images: [{ i: 0 }, { i: 1 }] },
+  spread: { layout: 'collage', color: '#1f4f56' /* verde-azulado do site do PREMAUT */, images: [{ i: 0 }, { i: 1 }] },
   category: 'web',
 }
 
-// Converte um projeto da lista para o formato das páginas de revista
-const toSpread = (project, i) => {
-  const hasImage = Boolean(project.image)
-  const portrait = project.image?.includes('foto-android')
-  return {
-    id: project.name.toLowerCase().normalize('NFD').replace(/[^a-z0-9]+/g, '-'),
-    title: project.name,
-    type: [CATEGORY_NAMES[project.category], project.year, project.owner ? `com @${project.owner}` : project.role]
-      .filter(Boolean)
-      .join(' · '),
-    description: project.description,
-    screens: hasImage ? [{ src: project.image, label: project.name }] : [],
-    logos: project.logos,
-    links: project.links.map((link) => ({ label: LINK_LABELS[link.type], url: link.url })),
-    spread: {
-      layout: hasImage ? (portrait ? 'figure' : LAYOUTS[i % LAYOUTS.length]) : 'cover',
-      color: PAPERS[i % PAPERS.length],
-      images: hasImage ? [{ i: 0, crop: portrait || LAYOUTS[i % LAYOUTS.length] === 'figure' ? 'tall' : undefined }] : [],
-    },
-    category: project.category,
-  }
-}
+const metaOf = (project) =>
+  [CATEGORY_NAMES[project.category], project.year, project.owner ? `com @${project.owner}` : project.role]
+    .filter(Boolean)
+    .join(' · ')
 
-const ALL_SPREADS = [featured, ...projects.map(toSpread)]
+// Projeto com imagem de destaque vira página de revista inteira (mesmo formato do Designer)
+const toSpread = (project) => ({
+  id: project.name.toLowerCase().normalize('NFD').replace(/[^a-z0-9]+/g, '-'),
+  title: project.name,
+  type: metaOf(project),
+  description: project.description,
+  screens: [{ src: project.image, label: project.name }],
+  links: project.links.map((link) => ({ label: LINK_LABELS[link.type], url: link.url })),
+  spread: { layout: 'stage', color: project.color, images: [{ i: 0 }] },
+  category: project.category,
+})
+
+// Ganham página inteira com imagem só os projetos até o Patocast; os outros vão em duplas, sem imagem
+const WITH_IMAGE = ['Patocast']
 
 // Projetos como páginas de revista (mesmo modelo do Designer): uma por tela, cada uma com sua cor.
 export default function ProjectsPage() {
   const [active, setActive] = useState(ALL)
   const [viewer, setViewer] = useState(null)
-  const visible = active === ALL ? ALL_SPREADS : ALL_SPREADS.filter((p) => p.category === active)
+  const inFilter = (p) => active === ALL || p.category === active
+  const spreads = [featured, ...projects.filter((p) => WITH_IMAGE.includes(p.name)).map(toSpread)].filter(inFilter)
+  const rest = projects.filter((p) => !WITH_IMAGE.includes(p.name)).filter(inFilter)
+  // Duplas: dois projetos por página
+  const pairs = []
+  for (let i = 0; i < rest.length; i += 2) pairs.push(rest.slice(i, i + 2))
   const filters = [{ id: ALL, name: 'Todos' }, ...projectCategories]
 
   return (
@@ -81,12 +77,20 @@ export default function ProjectsPage() {
       </div>
 
       <section className="pj-board" key={active}>
-        {visible.map((project, i) => (
+        {spreads.map((project, i) => (
           <DesignSpread
             key={project.id}
             project={project}
             index={i}
             onOpen={(startAt) => setViewer({ ...project, startAt })}
+          />
+        ))}
+        {pairs.map((pair, i) => (
+          <ProjectPair
+            key={pair[0].name}
+            items={pair}
+            firstPage={(spreads.length + i) * 2 + 1}
+            metaOf={metaOf}
           />
         ))}
       </section>

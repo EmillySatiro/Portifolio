@@ -47,6 +47,7 @@ export const featuredProject = {
 export const projects = [
   {
     name: 'Patocast',
+    color: '#3a2d6b', // roxo da tela de login do app
     pitch: "Um app web para organizar as finanças pessoais: transações, metas e relatórios em um só lugar.",
     did: ["Interface em Node.js, Express e Nunjucks, com gráficos interativos em Chart.js", "API REST em Flask com autenticação, regras de negócio e PostgreSQL", "Relatórios em PDF gerados com Playwright e ambiente completo em Docker"],
     stat: { value: '3', label: "serviços em Docker: interface, API e banco" },
@@ -61,6 +62,7 @@ export const projects = [
   },
   {
     name: 'BibSys',
+    color: '#1f4d3c', // verde do Vue
     pitch: "Sistema para gerenciar um acervo de livros, do login ao cadastro e edição de cada título.",
     did: ["Front-end em Vue 3 + Vite consumindo a API com Axios", "Back-end em Node.js com Express e banco no Supabase, com migrações", "Telas de login, cadastro de usuário, listagem, cadastro e edição de livros"],
     category: 'web',
@@ -77,6 +79,7 @@ export const projects = [
   },
   {
     name: 'Beiramar',
+    color: '#123e5c', // azul do mar
     pitch: "Automação das vendas de um restaurante, com clientes e funcionários sincronizados com o servidor.",
     did: ["Arquitetura orientada a objetos em Python", "Sincronização cliente–servidor e envio de e-mails", "Persistência em PostgreSQL e execução com Docker"],
     stat: { value: '53', label: "commits meus no projeto da equipe" },
@@ -93,6 +96,7 @@ export const projects = [
   },
   {
     name: 'SimulNet',
+    color: '#0e3a63', // azul do Docker
     pitch: "Uma rede de computadores inteira simulada em containers, com roteadores que descobrem rotas sozinhos.",
     did: ["Roteadores e hosts como containers Docker, gerados por script Python", "Troca de pacotes Hello e LSA para descobrir vizinhos e o estado dos enlaces", "Tabela de roteamento atualizada em tempo real com o algoritmo de Dijkstra"],
     category: 'systems',
@@ -106,6 +110,7 @@ export const projects = [
   },
   {
     name: 'PetClinic sob carga',
+    color: '#2c5320', // verde do Spring
     pitch: "Testes de carga que mostram como uma aplicação em microsserviços se comporta quando muita gente usa ao mesmo tempo.",
     did: ["Cenários de uso escritos com Locust para o Spring PetClinic", "Script que roda todos os níveis de carga e repete as execuções", "Resultados em CSV, relatório técnico e vídeo de demonstração"],
     category: 'systems',
@@ -123,6 +128,7 @@ export const projects = [
   },
   {
     name: 'IASys',
+    color: '#7a3410', // laranja do RabbitMQ
     pitch: "Sistema distribuído em que mensagens com imagens são roteadas e analisadas por IA em tempo real.",
     did: ["Gerador de mensagens publicando em um exchange do RabbitMQ", "Dois consumidores em Java com IA (Smile): sentimento em rostos e brasões de times", "Tudo orquestrado em containers Docker"],
     stat: { value: '4', label: "containers trabalhando juntos" },
@@ -146,6 +152,7 @@ export const projects = [
   },
   {
     name: 'VideoSys',
+    color: '#4e1517', // vermelho de rolo de filme
     pitch: "Aplicação cliente–servidor para processar vídeos com filtros e acompanhar o histórico.",
     did: ["Cliente desktop em Python com Tkinter, com prévia das imagens", "Servidor com filtros de cinza, bordas e pixel", "Histórico e metadados dos processamentos em SQLite"],
     stat: { value: '3', label: "filtros de vídeo" },
@@ -161,6 +168,7 @@ export const projects = [
   },
   {
     name: 'TextSys',
+    color: '#003a70', // azul do C++
     pitch: "Arquitetura mestre–escravo em C++ que divide o processamento de textos entre servidores.",
     did: ["Mestre que dispara tarefas em paralelo com std::async", "Escravos com endpoints REST (cpp-httplib) e checagem de disponibilidade", "Resultado consolidado em JSON, com cliente GTK e containers Docker"],
     stat: { value: '3', label: "containers: mestre e dois escravos" },
@@ -176,6 +184,7 @@ export const projects = [
   },
   {
     name: 'Foto Android',
+    color: '#3d2a78', // roxo do Kotlin
     pitch: "App Android que tira fotos e envia direto para um servidor.",
     did: ["App nativo em Kotlin com Jetpack Compose", "Envio das imagens por socket TCP", "Servidor em Python que recebe e salva as fotos"],
     category: 'mobile',
@@ -189,6 +198,7 @@ export const projects = [
   },
   {
     name: 'CNNs para Leishmaniose',
+    color: '#4f1f5e', // roxo da coloração de lâminas
     pitch: "Pesquisa que usa visão computacional para apoiar o diagnóstico de leishmaniose visceral canina.",
     did: ["Redes Neurais Convolucionais para classificar macrófagos em imagens de medula óssea", "Pipelines de pré-processamento de imagens microscópicas", "Treinamento em servidores NVIDIA de alto desempenho"],
     stat: { value: '5', label: "publicações científicas" },
@@ -202,6 +212,7 @@ export const projects = [
   },
   {
     name: 'ID3 · Câncer de mama',
+    color: '#f4d3e1', // rosa do laço do câncer de mama
     pitch: "Árvore de decisão que classifica tumores de mama como benignos ou malignos.",
     did: ["Algoritmo ID3 com critério de entropia", "Validação do desempenho do modelo", "Análise de correlação e visualização da árvore"],
     stat: { value: '569', label: "amostras analisadas" },
@@ -216,6 +227,7 @@ export const projects = [
   },
   {
     name: 'MLP × SVM',
+    color: '#fbe3c4', // laranja do Scikit-learn
     pitch: "Comparação entre redes neurais e máquinas de vetor de suporte em um problema clássico de classificação.",
     did: ["Modelos MLP e SVM treinados no dataset Sonar", "Experimentos com e sem redução de dimensionalidade (PCA)", "Matrizes de confusão e métricas comparadas"],
     stat: { value: '2', label: "modelos comparados" },
@@ -229,6 +241,7 @@ export const projects = [
   },
   {
     name: 'Random Forest · Madelon',
+    color: '#1f4227', // verde de floresta
     pitch: "Classificação em um dataset feito para confundir: muito ruído e poucos atributos úteis.",
     did: ["Random Forest e técnicas de ensemble", "Avaliação de diferentes configurações do modelo", "Análises e gráficos em notebook"],
     stat: { value: '500', label: "atributos, só 20 informativos" },
