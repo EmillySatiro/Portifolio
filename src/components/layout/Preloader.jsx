@@ -94,7 +94,7 @@ export default function Preloader({ onDone }) {
         <span style={{ transform: `scaleX(${progress})` }} />
       </div>
       <p className="preloader__count">
-        {String(Math.round(progress * 100)).padStart(3, '0')}%<span className="sr-only"> carregado</span>
+        {Math.round(progress * 100)}%<span className="sr-only"> carregado</span>
       </p>
     </div>
   )
