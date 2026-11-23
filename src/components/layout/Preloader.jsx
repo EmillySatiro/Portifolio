@@ -29,7 +29,7 @@ const loadImage = (src) =>
 
 // Tela de entrada: baixa as páginas, as fontes e todas as imagens do site; o morcego se monta
 // em pixels conforme o progresso. Quando termina, a tela sobe e o site aparece.
-export default function Preloader({ onDone }) {
+export default function Preloader({ onReveal, onDone }) {
   const [progress, setProgress] = useState(0)
   const [leaving, setLeaving] = useState(false)
 
@@ -50,6 +50,7 @@ export default function Preloader({ onDone }) {
       const wait = Math.max(0, MIN_SHOW - (performance.now() - started))
       setTimeout(() => {
         setProgress(1)
+        onReveal?.() // o site já monta por baixo: a cortina revela a capa, sem tela vazia
         setLeaving(true)
         setTimeout(onDone, 700) // tempo da tela subindo
       }, wait)
@@ -71,7 +72,7 @@ export default function Preloader({ onDone }) {
     for (let i = 0; i < PARALLEL; i += 1) runNext()
     const timer = setTimeout(finish, MAX_WAIT)
     return () => clearTimeout(timer)
-  }, [onDone])
+  }, [onReveal, onDone])
 
   const lit = Math.round(progress * CELLS.length)
 

@@ -12,9 +12,16 @@ import { AcademicPage, DesignerPage, ProjectsPage, VitrinePage } from './pages/r
 // Primeiro a tela de entrada baixa tudo (páginas, fontes e imagens); só então o site aparece,
 // já com tudo em cache: a navegação entre as páginas fica instantânea.
 export default function App() {
-  const [ready, setReady] = useState(false)
-  const onDone = useCallback(() => setReady(true), [])
-  return ready ? <Site /> : <Preloader onDone={onDone} />
+  // loading → reveal (o site monta por trás enquanto a cortina sobe) → done
+  const [phase, setPhase] = useState('loading')
+  const onReveal = useCallback(() => setPhase('reveal'), [])
+  const onDone = useCallback(() => setPhase('done'), [])
+  return (
+    <>
+      {phase !== 'loading' && <Site />}
+      {phase !== 'done' && <Preloader onReveal={onReveal} onDone={onDone} />}
+    </>
+  )
 }
 
 function Site() {
