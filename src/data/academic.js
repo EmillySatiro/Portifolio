@@ -25,8 +25,8 @@ export const news = [
       { label: 'PathoVision no Instagram', url: 'https://www.instagram.com/pathovision_/' },
     ],
     photos: [
-      { src: '/images/academic/siupi-1.jpg', alt: 'Emilly ao lado do banner da pesquisa no SIUPI 2026' },
-      { src: '/images/academic/siupi-2.jpg', alt: 'Banner da pesquisa sobre leishmaniose visceral canina no SIUPI 2026' },
+      { src: '/images/academic/siupi-1.webp', alt: 'Emilly ao lado do banner da pesquisa no SIUPI 2026' },
+      { src: '/images/academic/siupi-2.webp', alt: 'Banner da pesquisa sobre leishmaniose visceral canina no SIUPI 2026' },
     ],
   },
   {
@@ -41,9 +41,9 @@ export const news = [
       'O encontro reuniu as equipes participantes e a Reitoria da Universidade Federal do Piauí para compartilhar os próximos passos do Programa StartUFPI e celebrar os projetos que se destacaram no Desafio.',
     ],
     photos: [
-      { src: '/images/academic/solenidade-1.jpg', alt: 'Foto oficial das equipes do Desafio StartUFPI com a Reitoria da UFPI' },
-      { src: '/images/academic/solenidade-2.jpg', alt: 'Emilly com integrantes da Reitoria na solenidade' },
-      { src: '/images/academic/solenidade-3.jpg', alt: 'Auditório durante a solenidade do Desafio StartUFPI' },
+      { src: '/images/academic/solenidade-1.webp', alt: 'Foto oficial das equipes do Desafio StartUFPI com a Reitoria da UFPI' },
+      { src: '/images/academic/solenidade-2.webp', alt: 'Emilly com integrantes da Reitoria na solenidade' },
+      { src: '/images/academic/solenidade-3.webp', alt: 'Auditório durante a solenidade do Desafio StartUFPI' },
     ],
   },
   {
@@ -58,13 +58,13 @@ export const news = [
       'O primeiro dia foi de muito trabalho nos bastidores e de ver as peças criadas saindo do papel e fazendo parte da experiência do público. No segundo, acompanhei apresentações de artigos, palestras e a Maratona de Programação.',
     ],
     photos: [
-      { src: '/images/academic/sinfo-1.jpg', alt: 'Equipe organizadora do SINFO 2026 no palco' },
-      { src: '/images/academic/sinfo-2.jpg', alt: 'Painel quadriculado com a identidade visual do SINFO 2026' },
+      { src: '/images/academic/sinfo-1.webp', alt: 'Equipe organizadora do SINFO 2026 no palco' },
+      { src: '/images/academic/sinfo-2.webp', alt: 'Painel quadriculado com a identidade visual do SINFO 2026' },
       { src: '/images/academic/sinfo-site.webp', alt: 'Página inicial do site do SINFO 2026' },
-      { src: '/images/academic/sinfo-3.jpg', alt: 'Auditório do SINFO 2026 com a identidade visual no telão' },
-      { src: '/images/academic/sinfo-4.jpg', alt: 'Palestra durante o SINFO 2026' },
-      { src: '/images/academic/sinfo-5.jpg', alt: 'Participantes da Maratona de Programação' },
-      { src: '/images/academic/sinfo-6.jpg', alt: 'Cartaz do Simpósio de Sistemas de Informação' },
+      { src: '/images/academic/sinfo-3.webp', alt: 'Auditório do SINFO 2026 com a identidade visual no telão' },
+      { src: '/images/academic/sinfo-4.webp', alt: 'Palestra durante o SINFO 2026' },
+      { src: '/images/academic/sinfo-5.webp', alt: 'Participantes da Maratona de Programação' },
+      { src: '/images/academic/sinfo-6.webp', alt: 'Cartaz do Simpósio de Sistemas de Informação' },
     ],
   },
   {
@@ -79,10 +79,10 @@ export const news = [
       'Na palestra “Prototipação de Interfaces e Integração de Soluções”, falei sobre como transformar necessidades reais em protótipos e compartilhei um pouco da minha experiência com projetos voltados à saúde.',
     ],
     photos: [
-      { src: '/images/academic/genius-1.jpg', alt: 'Emilly palestrando no GENIUS Hackathon 2026' },
-      { src: '/images/academic/genius-2.jpg', alt: 'Palco do Health Hack Lab durante a palestra' },
-      { src: '/images/academic/genius-3.jpg', alt: 'Emilly no palco com o microfone' },
-      { src: '/images/academic/genius-4.jpg', alt: 'Certificado de palestrante do evento' },
+      { src: '/images/academic/genius-1.webp', alt: 'Emilly palestrando no GENIUS Hackathon 2026' },
+      { src: '/images/academic/genius-2.webp', alt: 'Palco do Health Hack Lab durante a palestra' },
+      { src: '/images/academic/genius-3.webp', alt: 'Emilly no palco com o microfone' },
+      { src: '/images/academic/genius-4.webp', alt: 'Certificado de palestrante do evento' },
     ],
   },
   {
@@ -97,10 +97,10 @@ export const news = [
       'Foi um dia de muitas conversas, novas ideias e troca de experiências com quem constrói o ecossistema de inovação da UFPI.',
     ],
     photos: [
-      { src: '/images/academic/startufpi-1.jpg', alt: 'Participantes reunidos em frente ao painel do StartUFPI 2026' },
-      { src: '/images/academic/startufpi-2.jpg', alt: 'Painel de entrada do StartUFPI 2026' },
-      { src: '/images/academic/startufpi-3.jpg', alt: 'Público no auditório do StartUFPI 2026' },
-      { src: '/images/academic/startufpi-4.jpg', alt: 'Credencial e materiais do StartUFPI 2026' },
+      { src: '/images/academic/startufpi-1.webp', alt: 'Participantes reunidos em frente ao painel do StartUFPI 2026' },
+      { src: '/images/academic/startufpi-2.webp', alt: 'Painel de entrada do StartUFPI 2026' },
+      { src: '/images/academic/startufpi-3.webp', alt: 'Público no auditório do StartUFPI 2026' },
+      { src: '/images/academic/startufpi-4.webp', alt: 'Credencial e materiais do StartUFPI 2026' },
     ],
   },
   {
@@ -115,10 +115,10 @@ export const news = [
       'Também participei da organização de eventos como o 1º Hackathon da LADS, além de outras ações com estudantes e a comunidade acadêmica. Encerrei o ciclo para dedicar mais tempo a novos projetos, pesquisas e desafios.',
     ],
     photos: [
-      { src: '/images/academic/lads-1.jpg', alt: 'Integrantes da LADS reunidos em sala de aula' },
-      { src: '/images/academic/lads-2.jpg', alt: 'Apresentação de workshop da LADS' },
-      { src: '/images/academic/lads-3.jpg', alt: 'Crachás da LADS' },
-      { src: '/images/academic/lads-4.jpg', alt: 'Emilly e Cristina Sousa' },
+      { src: '/images/academic/lads-1.webp', alt: 'Integrantes da LADS reunidos em sala de aula' },
+      { src: '/images/academic/lads-2.webp', alt: 'Apresentação de workshop da LADS' },
+      { src: '/images/academic/lads-3.webp', alt: 'Crachás da LADS' },
+      { src: '/images/academic/lads-4.webp', alt: 'Emilly e Cristina Sousa' },
     ],
   },
   {
@@ -133,7 +133,7 @@ export const news = [
       'A ferramenta foi criada para apoiar o Projeto PREMAUT, do campus de Teresina, reunindo em um só lugar o acompanhamento de alunos, monitores e professores, relatórios, materiais de apoio e a comunicação da equipe.',
     ],
     photos: [
-      { src: '/images/academic/premaut-1.jpg', alt: 'Certificado de registro de programa de computador do PREMAUT no INPI' },
+      { src: '/images/academic/premaut-1.webp', alt: 'Certificado de registro de programa de computador do PREMAUT no INPI' },
     ],
   },
 ]

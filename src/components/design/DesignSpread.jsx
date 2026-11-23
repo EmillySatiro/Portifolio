@@ -1,5 +1,7 @@
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 import Icon from '../ui/Icon'
+import TechLogo from '../ui/TechLogo'
 import './DesignSpread.css'
 
 // Recortes gerados ao lado da imagem original: -view (16:10 do topo) e -tall (cartaz 4:5)
@@ -64,6 +66,17 @@ export default function DesignSpread({ project, index, onOpen }) {
           )
         })}
 
+        {/* Sem imagem: os logos da stack "impressos" no lugar da tela */}
+        {images.length === 0 && project.logos?.length > 0 && (
+          <div className="spread__img spread__img--0 spread__logos" aria-hidden="true">
+            {project.logos.map((logo) => (
+              <span key={logo} className="spread__logo">
+                <TechLogo name={logo} size={34} />
+              </span>
+            ))}
+          </div>
+        )}
+
         <header className="spread__head">
           <p className="spread__type">{project.type}</p>
           <h2 className="spread__title">{project.title}</h2>
@@ -72,9 +85,23 @@ export default function DesignSpread({ project, index, onOpen }) {
         <div className="spread__text">
           <p>{project.description}</p>
           <p className="spread__actions">
-            <button type="button" className="spread__link" onClick={() => onOpen(0)}>
-              Ver as {project.screens.length} telas
-            </button>
+            {project.screens.length > 0 && (
+              <button type="button" className="spread__link" onClick={() => onOpen(0)}>
+                {project.screens.length > 1 ? `Ver as ${project.screens.length} telas` : 'Ampliar imagem'}
+              </button>
+            )}
+            {/* Links do projeto (código, vídeo, relatório...); internos usam o roteador */}
+            {project.links?.map((link) =>
+              link.url.startsWith('/') ? (
+                <Link key={link.url} to={link.url} className="spread__link">
+                  {link.label} <Icon name="arrowRight" size={12} />
+                </Link>
+              ) : (
+                <a key={link.url} href={link.url} target="_blank" rel="noopener noreferrer" className="spread__link">
+                  {link.label} <Icon name="external" size={12} />
+                </a>
+              ),
+            )}
             {host && (
               <a href={project.liveUrl} target="_blank" rel="noopener noreferrer" className="spread__link">
                 {host} <Icon name="external" size={12} />

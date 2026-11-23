@@ -1,14 +1,58 @@
-/* ---------- Seções ---------- */
-.pj-featured {
-  --edge-color: var(--bg-alt);
-  background: var(--bg-alt);
+.pj-lead {
+  max-width: 46ch;
+  font-size: var(--text-lg);
+  line-height: 1.5;
+  color: var(--muted);
 }
 
-.pj-grid-section {
-  --edge-color: var(--bg);
-  background: var(--bg);
+/* Filtros pequenos acima das páginas */
+.pj-filters {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-2);
+  padding: 0 var(--gutter) var(--space-6);
 }
 
+.pj-chip {
+  min-height: 34px;
+  padding: 0 var(--space-4);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-btn);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  color: var(--muted);
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+}
+
+.pj-chip:hover {
+  color: var(--ink);
+  border-color: var(--ink);
+}
+
+.pj-chip:active {
+  transform: scale(0.96);
+}
+
+.pj-chip[aria-pressed='true'] {
+  border-color: transparent;
+  background: linear-gradient(120deg, #2d3170, #414575 40%, #7b3fc4);
+  color: #fff;
+}
+
+/* As páginas da revista, uma por tela, de ponta a ponta */
+.pj-board {
+  display: grid;
+}
+
+/* Ao rolar, cada página se encaixa na tela (só onde há espaço para a página inteira) */
+@media (min-width: 1025px) {
+  html:has(.pj-board) {
+    scroll-snap-type: y proximity;
+  }
+}
+
+/* ---------- Arquivo ---------- */
 .pj-archive {
   --edge-color: var(--bg-alt);
   background: var(--bg-alt);
@@ -21,8 +65,3 @@
   justify-content: space-between;
   gap: 1.5rem;
 }
-
-.pj-tabs {
-  margin-bottom: var(--space-6);
-}
-
